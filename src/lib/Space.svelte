@@ -1,8 +1,21 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { spaceWidth } from '../constants';
 	import type { Space as SpaceType } from '../types';
 
 	export let space: SpaceType;
+
+	let spaceNode;
+
+	onMount(() => {
+		if (space.effect === 'zoomOut' && spaceNode) {
+			spaceNode.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center',
+				inline: 'center'
+			});
+		}
+	});
 </script>
 
 <td
@@ -12,6 +25,7 @@
 	class:highlight={space.background === 'highlight'}
 	class:zoomOut={space.effect === 'zoomOut'}
 	title={space.icon.label || null}
+	bind:this={spaceNode}
 >
 	{space.icon.content}
 </td>

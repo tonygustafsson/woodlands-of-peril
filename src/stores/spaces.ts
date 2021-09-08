@@ -4,11 +4,17 @@ import type { Space as SpaceType } from '../types';
 const initValue: SpaceType[] = [];
 
 const spacesStore = () => {
-	const { subscribe, set } = writable(initValue);
+	const { subscribe, set, update } = writable(initValue);
 
 	return {
 		subscribe,
-		set
+		set,
+		setSpace: (id: number, newSpace: SpaceType) => {
+			update((spaces) => {
+				spaces[id] = newSpace;
+				return spaces;
+			});
+		}
 	};
 };
 

@@ -112,23 +112,9 @@
 				effect: 'zoomOut'
 			};
 
-			const newSpaces = [...$spaces];
-			newSpaces[randomSpace.id] = newSpace;
 			userPosition = randomSpace.id;
-			spaces.set(newSpaces);
+			spaces.setSpace(randomSpace.id, newSpace);
 		}
-
-		setTimeout(() => {
-			const userSpaceDomNode = document.querySelector('.zoomOut');
-
-			if (userSpaceDomNode) {
-				userSpaceDomNode.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-					inline: 'center'
-				});
-			}
-		}, 500);
 	});
 </script>
 
