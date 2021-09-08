@@ -71,25 +71,33 @@
 		}
 	};
 
+	const keyDownTimer = null;
+
 	const handleKeydown = (e) => {
-		switch (e.keyCode) {
-			case 87:
-				// W UP
-				go('up');
-				break;
-			case 83:
-				// S Down
-				go('down');
-				break;
-			case 68:
-				// D Right
-				go('right');
-				break;
-			case 65:
-				// A Left
-				go('left');
-				break;
+		if (keyDownTimer) {
+			return clearTimeout(keyDownTimer);
 		}
+
+		setTimeout(() => {
+			switch (e.keyCode) {
+				case 87:
+					// W UP
+					go('up');
+					break;
+				case 83:
+					// S Down
+					go('down');
+					break;
+				case 68:
+					// D Right
+					go('right');
+					break;
+				case 65:
+					// A Left
+					go('left');
+					break;
+			}
+		}, 100);
 	};
 
 	onMount(() => {
@@ -129,10 +137,7 @@
 				effect: 'zoomOut'
 			};
 
-			const newSpaces = [...spaces];
-			newSpaces[randomSpace.id] = newSpace;
-			spaces = newSpaces;
-
+			spaces[randomSpace.id] = newSpace;
 			userPosition = randomSpace.id;
 		}
 
@@ -152,18 +157,26 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="board" style={cssVariableStyle}>
-	{#each spaces as space}
-		<div
-			class="space"
-			class:highlight={space.background === 'highlight'}
-			class:zoomOut={space.effect === 'zoomOut'}
-			title={space.icon.label || null}
-		>
-			{space.icon.content}
-		</div>
-	{/each}
-</div>
+<table class="board" style={cssVariableStyle}>
+	{#if spaces.length > 0}
+		{#each Array(numberOfSpaces / spacesPerRow) as _, rowId}
+			<tr width={spaceWidth * spacesPerRow} height={spaceWidth}>
+				{#each Array(spacesPerRow) as _, spaceId}
+					<td
+						width={spaceWidth}
+						height={spaceWidth}
+						class="space"
+						class:highlight={spaces[rowId * spacesPerRow + spaceId].background === 'highlight'}
+						class:zoomOut={spaces[rowId * spacesPerRow + spaceId].effect === 'zoomOut'}
+						title={spaces[rowId * spacesPerRow + spaceId].icon.label || null}
+					>
+						{spaces[rowId * spacesPerRow + spaceId].icon.content}
+					</td>
+				{/each}
+			</tr>
+		{/each}
+	{/if}
+</table>
 
 <style>
 	@keyframes zoomOut {
@@ -176,19 +189,15 @@
 	}
 
 	.board {
+		table-layout: fixed;
 		width: calc(var(--space-width) * var(--spaces-per-row));
 	}
 
 	.space {
-		width: var(--space-width);
-		height: var(--space-width);
 		font-size: var(--font-size);
 		border: 1px var(--space-border) solid;
-		box-sizing: border-box;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		float: left;
+		vertical-align: middle;
+		text-align: center;
 		user-select: none;
 	}
 
