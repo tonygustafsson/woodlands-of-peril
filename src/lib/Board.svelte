@@ -1,17 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Stuff, Space as SpaceType } from '../types';
+	import { spaceCreator } from '../utils/spaceCreator';
+	import { positionCreator } from '../utils/positionCreator';
 	import { spaces } from '../stores/spaces';
-	import {
-		emptyIcon,
-		userIcon,
-		surroundings,
-		unusualStuff,
-		numberOfSpaces,
-		spaceWidth,
-		spacesPerRow
-	} from '../constants';
-	import { randomInArray } from '../utils/array';
+	import { position } from '../stores/position';
+	import type { Space as SpaceType } from '../types';
+	import { emptyIcon, userIcon, numberOfSpaces, spaceWidth, spacesPerRow } from '../constants';
 	import Space from './Space.svelte';
 
 	const cssVariableStyle = `
@@ -21,28 +15,37 @@
 		--space-border: #0f0f0f;
     `;
 
-	$: userPosition = 0;
-
 	const go = (direction) => {
-		let newUserPosition = userPosition;
+		let newPosition = $position;
 
 		if (direction === 'up') {
-			newUserPosition = userPosition - spacesPerRow;
+			newPosition = $position - spacesPerRow;
 		} else if (direction === 'down') {
-			newUserPosition = userPosition + spacesPerRow;
+			newPosition = $position + spacesPerRow;
 		} else if (direction === 'left') {
-			newUserPosition = userPosition - 1;
+			newPosition = $position - 1;
 		} else if (direction === 'right') {
-			newUserPosition = userPosition + 1;
+			newPosition = $position + 1;
 		}
 
-		if (newUserPosition !== userPosition && !$spaces[newUserPosition].icon.solid) {
-			$spaces[userPosition].icon = emptyIcon;
-			$spaces[userPosition].background = 'default';
-			delete $spaces[userPosition].effect;
-			$spaces[newUserPosition].icon = userIcon;
-			$spaces[newUserPosition].background = 'highlight';
-			userPosition = newUserPosition;
+		if (newPosition !== $position && !$spaces[newPosition].icon.solid) {
+			const newOldSpace: SpaceType = {
+				...$spaces[$position],
+				icon: emptyIcon,
+				background: 'default',
+				effect: null
+			};
+			spaces.setSpace($position, newOldSpace);
+
+			const newNewSpace: SpaceType = {
+				...$spaces[newPosition],
+				icon: userIcon,
+				background: 'highlight',
+				effect: null
+			};
+			spaces.setSpace(newPosition, newNewSpace);
+
+			position.set(newPosition);
 		}
 	};
 
@@ -76,45 +79,8 @@
 	};
 
 	onMount(() => {
-		const newSpaces = [];
-
-		for (let x = 0; x < numberOfSpaces; x++) {
-			let icon: Stuff = emptyIcon;
-
-			if (Math.random() > 0.85) {
-				icon = randomInArray(surroundings);
-			} else if (Math.random() > 0.97) {
-				icon = randomInArray(unusualStuff);
-			}
-
-			const newSpace: SpaceType = {
-				id: x,
-				icon: icon,
-				background: 'default'
-			};
-
-			newSpaces.push(newSpace);
-		}
-
-		spaces.set(newSpaces);
-
-		while (userPosition === 0) {
-			const randomSpace = randomInArray($spaces);
-
-			if (randomSpace.icon.content !== '') {
-				continue;
-			}
-
-			const newSpace: SpaceType = {
-				id: randomSpace.id,
-				icon: userIcon,
-				background: 'highlight',
-				effect: 'zoomOut'
-			};
-
-			userPosition = randomSpace.id;
-			spaces.setSpace(randomSpace.id, newSpace);
-		}
+		spaceCreator();
+		positionCreator();
 	});
 </script>
 
