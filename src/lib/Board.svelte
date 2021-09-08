@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Stuff, Space } from '../types';
+	import type { Stuff, Space as SpaceType } from '../types';
+	import { spaces } from '../stores/spaces';
 	import {
 		emptyIcon,
 		userIcon,
@@ -11,6 +12,7 @@
 		spacesPerRow
 	} from '../constants';
 	import { randomInArray } from '../utils/array';
+	import Space from './Space.svelte';
 
 	const cssVariableStyle = `
         --space-width: ${spaceWidth}px;
@@ -19,7 +21,6 @@
 		--space-border: #0f0f0f;
     `;
 
-	$: spaces = [] as Space[];
 	$: userPosition = 0;
 
 	const go = (direction) => {
@@ -35,12 +36,12 @@
 			newUserPosition = userPosition + 1;
 		}
 
-		if (newUserPosition !== userPosition && !spaces[newUserPosition].icon.solid) {
-			spaces[userPosition].icon = emptyIcon;
-			spaces[userPosition].background = 'default';
-			delete spaces[userPosition].effect;
-			spaces[newUserPosition].icon = userIcon;
-			spaces[newUserPosition].background = 'highlight';
+		if (newUserPosition !== userPosition && !$spaces[newUserPosition].icon.solid) {
+			$spaces[userPosition].icon = emptyIcon;
+			$spaces[userPosition].background = 'default';
+			delete $spaces[userPosition].effect;
+			$spaces[newUserPosition].icon = userIcon;
+			$spaces[newUserPosition].background = 'highlight';
 			userPosition = newUserPosition;
 		}
 	};
@@ -86,7 +87,7 @@
 				icon = randomInArray(unusualStuff);
 			}
 
-			const newSpace: Space = {
+			const newSpace: SpaceType = {
 				id: x,
 				icon: icon,
 				background: 'default'
@@ -95,24 +96,26 @@
 			newSpaces.push(newSpace);
 		}
 
-		spaces = newSpaces;
+		spaces.set(newSpaces);
 
 		while (userPosition === 0) {
-			const randomSpace = randomInArray(spaces);
+			const randomSpace = randomInArray($spaces);
 
 			if (randomSpace.icon.content !== '') {
 				continue;
 			}
 
-			const newSpace: Space = {
+			const newSpace: SpaceType = {
 				id: randomSpace.id,
 				icon: userIcon,
 				background: 'highlight',
 				effect: 'zoomOut'
 			};
 
-			spaces[randomSpace.id] = newSpace;
+			const newSpaces = [...$spaces];
+			newSpaces[randomSpace.id] = newSpace;
 			userPosition = randomSpace.id;
+			spaces.set(newSpaces);
 		}
 
 		setTimeout(() => {
@@ -132,20 +135,11 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <table class="board" style={cssVariableStyle}>
-	{#if spaces.length > 0}
+	{#if $spaces.length > 0}
 		{#each Array(numberOfSpaces / spacesPerRow) as _, rowId}
 			<tr width={spaceWidth * spacesPerRow} height={spaceWidth}>
 				{#each Array(spacesPerRow) as _, spaceId}
-					<td
-						width={spaceWidth}
-						height={spaceWidth}
-						class="space"
-						class:highlight={spaces[rowId * spacesPerRow + spaceId].background === 'highlight'}
-						class:zoomOut={spaces[rowId * spacesPerRow + spaceId].effect === 'zoomOut'}
-						title={spaces[rowId * spacesPerRow + spaceId].icon.label || null}
-					>
-						{spaces[rowId * spacesPerRow + spaceId].icon.content}
-					</td>
+					<Space space={$spaces[rowId * spacesPerRow + spaceId]} />
 				{/each}
 			</tr>
 		{/each}
@@ -153,35 +147,8 @@
 </table>
 
 <style>
-	@keyframes zoomOut {
-		from {
-			transform: scale(50);
-		}
-		to {
-			transform: scale(1.15);
-		}
-	}
-
 	.board {
 		table-layout: fixed;
 		width: calc(var(--space-width) * var(--spaces-per-row));
-	}
-
-	.space {
-		font-size: var(--font-size);
-		border: 1px var(--space-border) solid;
-		vertical-align: middle;
-		text-align: center;
-		user-select: none;
-	}
-
-	.space.highlight {
-		background-color: #333;
-		border: 1px #999 solid;
-		transform: scale(1.15);
-	}
-
-	.space.zoomOut {
-		animation: zoomOut 1s;
 	}
 </style>
