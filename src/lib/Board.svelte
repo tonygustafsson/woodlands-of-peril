@@ -1,40 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { space } from 'svelte/internal';
-
-	type Space = {
-		id: number;
-		icon: Stuff;
-		background?: 'default' | 'highlight';
-		effect?: 'zoomOut';
-	};
-
-	type Stuff = {
-		content: string;
-		label: string;
-		solid: Boolean;
-	};
-
-	const emptyIcon: Stuff = { content: '', label: '', solid: false };
-	const userIcon: Stuff = { content: '😺', label: 'User', solid: true };
-	const surroundings: Stuff[] = [
-		{ content: '🌲', label: 'Pine tree', solid: true },
-		{ content: '🌴', label: 'Palm tree', solid: true },
-		{ content: '🌵', label: 'Cactus', solid: true },
-		{ content: '🪨', label: 'Stone', solid: true }
-	];
-	const unusualStuff: Stuff[] = [
-		{ content: '🍒', label: 'Cherry', solid: false },
-		{ content: '🐙', label: 'Squid', solid: false },
-		{ content: '🐞', label: 'Ladybug', solid: false },
-		{ content: '🕷', label: 'Spider', solid: false },
-		{ content: '🍖', label: 'Meat bone', solid: false },
-		{ content: '💰', label: 'Money bag', solid: false }
-	];
-
-	const numberOfSpaces = 8000;
-	const spaceWidth = 24;
-	const spacesPerRow = 100;
+	import type { Stuff, Space } from '../types';
+	import {
+		emptyIcon,
+		userIcon,
+		surroundings,
+		unusualStuff,
+		numberOfSpaces,
+		spaceWidth,
+		spacesPerRow
+	} from '../constants';
+	import { randomInArray } from '../utils/array';
 
 	const cssVariableStyle = `
         --space-width: ${spaceWidth}px;
@@ -45,8 +21,6 @@
 
 	$: spaces = [] as Space[];
 	$: userPosition = 0;
-
-	const randomInArray = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 	const go = (direction) => {
 		let newUserPosition = userPosition;
