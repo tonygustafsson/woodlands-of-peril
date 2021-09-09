@@ -9,7 +9,7 @@ export const spaceCreator: () => void = () => {
 	for (let x = 0; x < numberOfSpaces; x++) {
 		let newContent: SpaceContent = emptyContent;
 
-		if (Math.random() > 0.85) {
+		if (Math.random() > 0.7) {
 			newContent = randomInArray(surroundings);
 		} else if (Math.random() > 0.97) {
 			newContent = randomInArray(eatables);
