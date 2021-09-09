@@ -1,20 +1,34 @@
-import type { Stuff } from '../types';
+import type { SpaceContent } from '../types';
 
-export const emptyIcon: Stuff = { content: '', label: '', solid: false };
-export const userIcon: Stuff = { content: '😺', label: 'User', solid: true };
-export const surroundings: Stuff[] = [
-	{ content: '🌲', label: 'Pine tree', solid: true },
-	{ content: '🌴', label: 'Palm tree', solid: true },
-	{ content: '🌵', label: 'Cactus', solid: true },
-	{ content: '🪨', label: 'Stone', solid: true }
+export const emptyContent: SpaceContent = {
+	icon: '',
+	label: '',
+	solid: false,
+	eatable: false,
+	enemy: false
+};
+export const userContent: SpaceContent = {
+	icon: '😺',
+	label: 'User',
+	solid: true,
+	eatable: false,
+	enemy: false
+};
+export const surroundings: SpaceContent[] = [
+	{ icon: '🌲', label: 'Pine tree', solid: true, eatable: false, enemy: false },
+	{ icon: '🌴', label: 'Palm tree', solid: true, eatable: false, enemy: false },
+	{ icon: '🌵', label: 'Cactus', solid: true, eatable: false, enemy: false },
+	{ icon: '🪨', label: 'Stone', solid: true, eatable: false, enemy: false }
 ];
-export const unusualStuff: Stuff[] = [
-	{ content: '🍒', label: 'Cherry', solid: false },
-	{ content: '🐙', label: 'Squid', solid: false },
-	{ content: '🐞', label: 'Ladybug', solid: false },
-	{ content: '🕷', label: 'Spider', solid: false },
-	{ content: '🍖', label: 'Meat bone', solid: false },
-	{ content: '💰', label: 'Money bag', solid: false }
+export const eatables: SpaceContent[] = [
+	{ icon: '🍒', label: 'Cherry', solid: false, eatable: true, enemy: false },
+	{ icon: '🍖', label: 'Meat bone', solid: false, eatable: true, enemy: false },
+	{ icon: '💰', label: 'Money bag', solid: false, eatable: true, enemy: false }
+];
+export const enemies: SpaceContent[] = [
+	{ icon: '🐙', label: 'Squid', solid: false, eatable: false, enemy: true },
+	{ icon: '🐞', label: 'Ladybug', solid: false, eatable: false, enemy: true },
+	{ icon: '🕷', label: 'Spider', solid: false, eatable: false, enemy: true }
 ];
 
 export const numberOfSpaces = 6000;

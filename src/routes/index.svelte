@@ -18,10 +18,6 @@
 </section>
 
 <style>
-	h1 {
-		text-align: center;
-	}
-
 	section {
 		display: block;
 		margin: 0 auto;

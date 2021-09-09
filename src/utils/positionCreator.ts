@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 import type { Space as SpaceType } from '../types';
 import { spaces } from '../stores/spaces';
 import { position } from '../stores/position';
-import { userIcon } from '../constants';
+import { userContent } from '../constants';
 import { randomInArray } from '../utils/array';
 
 export const positionCreator: () => void = () => {
@@ -12,13 +12,13 @@ export const positionCreator: () => void = () => {
 	while ($position === 0) {
 		const randomSpace = randomInArray($spaces);
 
-		if (randomSpace.icon.content !== '') {
+		if (randomSpace.content.icon !== '') {
 			continue;
 		}
 
 		const newSpace: SpaceType = {
 			id: randomSpace.id,
-			icon: userIcon,
+			content: userContent,
 			background: 'highlight',
 			effect: 'zoomOut'
 		};

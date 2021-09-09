@@ -2,7 +2,7 @@ import { position } from '../stores/position';
 import { inventory } from '../stores/inventory';
 import { get } from 'svelte/store';
 import { spaces } from '../stores/spaces';
-import { emptyIcon, userIcon, spacesPerRow } from '../constants';
+import { emptyContent, userContent, spacesPerRow } from '../constants';
 import type { Direction, Space as SpaceType } from '../types';
 
 export const move = (direction: Direction): boolean | undefined => {
@@ -34,20 +34,24 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Space does not exist
 	}
 
-	if ($spaces[newPosition].icon.solid) {
+	if ($spaces[newPosition].content.solid) {
 		return; // Cannot move through solid materials
 	}
 
-	if (!$spaces[newPosition].icon.solid && $spaces[newPosition].icon.content !== '') {
+	if ($spaces[newPosition].content.enemy) {
+		return; // Cannot move through enemies materials
+	}
+
+	if ($spaces[newPosition].content.eatable) {
 		// Eat it!
 		inventory.update((inventory) => {
-			const oldValue = inventory.find((item) => item.label === $spaces[newPosition].icon.label);
+			const oldValue = inventory.find((item) => item.label === $spaces[newPosition].content.label);
 
 			if (oldValue) {
 				oldValue.quantity++;
 			} else {
 				inventory.push({
-					label: $spaces[newPosition].icon.label,
+					label: $spaces[newPosition].content.label,
 					quantity: 1
 				});
 			}
@@ -58,7 +62,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	const newOldSpace: SpaceType = {
 		...$spaces[$position],
-		icon: emptyIcon,
+		content: emptyContent,
 		background: 'default',
 		effect: null
 	};
@@ -66,7 +70,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	const newNewSpace: SpaceType = {
 		...$spaces[newPosition],
-		icon: userIcon,
+		content: userContent,
 		background: 'highlight',
 		effect: null
 	};

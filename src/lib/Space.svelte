@@ -24,10 +24,12 @@
 	class="space"
 	class:highlight={space.background === 'highlight'}
 	class:zoomOut={space.effect === 'zoomOut'}
-	title={space.icon.label || null}
+	class:eatable={space.content.eatable}
+	class:enemy={space.content.enemy}
+	title={space.content.label || null}
 	bind:this={spaceNode}
 >
-	{space.icon.content}
+	{space.content.icon}
 </td>
 
 <style>
@@ -37,6 +39,30 @@
 		}
 		to {
 			transform: scale(1.15);
+		}
+	}
+
+	@keyframes enemy {
+		0% {
+			transform: translateX(-2px) translateY(-2px);
+		}
+		33% {
+			transform: translateX(2px) translateY(-2px);
+		}
+		66% {
+			transform: translateX(2px) translateY(2px);
+		}
+		100% {
+			transform: translateX(-2px) translateY(2px);
+		}
+	}
+
+	@keyframes eatable {
+		from {
+			transform: scale(1);
+		}
+		to {
+			transform: scale(1.1);
 		}
 	}
 
@@ -52,9 +78,20 @@
 		background-color: #333;
 		border: 1px #999 solid;
 		transform: scale(1.15);
+		z-index: 1000;
+		position: relative;
 	}
 
 	.space.zoomOut {
 		animation: zoomOut 1s;
+	}
+
+	.space.enemy {
+		animation: enemy 2s infinite alternate;
+	}
+
+	.space.eatable {
+		animation: eatable 200ms infinite alternate;
+		animation-timing-function: cubic-bezier(0.65, 0.01, 1, 0.03);
 	}
 </style>

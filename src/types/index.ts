@@ -1,14 +1,16 @@
 export type Space = {
 	id: number;
-	icon: Stuff;
+	content: SpaceContent;
 	background?: 'default' | 'highlight';
 	effect?: 'zoomOut';
 };
 
-export type Stuff = {
-	content: string;
+export type SpaceContent = {
+	icon: string;
 	label: string;
 	solid: boolean;
+	eatable: boolean;
+	enemy: boolean;
 };
 
 export type Direction = 'left' | 'right' | 'up' | 'down';
