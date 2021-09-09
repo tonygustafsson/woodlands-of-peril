@@ -10,3 +10,5 @@ export type Stuff = {
 	label: string;
 	solid: boolean;
 };
+
+export type Direction = 'left' | 'right' | 'up' | 'down';
