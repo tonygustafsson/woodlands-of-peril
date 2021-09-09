@@ -17,6 +17,6 @@ export const unusualStuff: Stuff[] = [
 	{ content: '💰', label: 'Money bag', solid: false }
 ];
 
-export const numberOfSpaces = 8000;
-export const spaceWidth = 24;
+export const numberOfSpaces = 6000;
+export const spaceWidth = 36;
 export const spacesPerRow = 100;

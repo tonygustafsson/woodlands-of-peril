@@ -4,7 +4,7 @@ import { spaces } from '../stores/spaces';
 import { emptyIcon, userIcon, spacesPerRow } from '../constants';
 import type { Direction, Space as SpaceType } from '../types';
 
-export const move = (direction: Direction): void => {
+export const move = (direction: Direction): boolean | undefined => {
 	const $position = get(position);
 	const $spaces = get(spaces);
 	let newPosition = $position;
@@ -17,30 +17,43 @@ export const move = (direction: Direction): void => {
 			newPosition = $position + spacesPerRow;
 			break;
 		case 'left':
-			newPosition = $position - 1;
+			newPosition = $position % spacesPerRow === 0 ? $position : $position - 1;
 			break;
 		case 'right':
-			newPosition = $position + 1;
+			newPosition = $position % spacesPerRow === spacesPerRow ? $position : $position + 1;
 			break;
 	}
 
-	if (newPosition !== $position && !$spaces[newPosition].icon.solid) {
-		const newOldSpace: SpaceType = {
-			...$spaces[$position],
-			icon: emptyIcon,
-			background: 'default',
-			effect: null
-		};
-		spaces.setSpace($position, newOldSpace);
-
-		const newNewSpace: SpaceType = {
-			...$spaces[newPosition],
-			icon: userIcon,
-			background: 'highlight',
-			effect: null
-		};
-		spaces.setSpace(newPosition, newNewSpace);
-
-		position.set(newPosition);
+	if (newPosition === $position) {
+		return; // Same position as before
 	}
+
+	if (!$spaces[newPosition]) {
+		console.log('Space does not exist', $spaces[newPosition]);
+		return; // Space does not exist
+	}
+
+	if ($spaces[newPosition].icon.solid) {
+		return; // Cannot move through solid materials
+	}
+
+	const newOldSpace: SpaceType = {
+		...$spaces[$position],
+		icon: emptyIcon,
+		background: 'default',
+		effect: null
+	};
+	spaces.setSpace($position, newOldSpace);
+
+	const newNewSpace: SpaceType = {
+		...$spaces[newPosition],
+		icon: userIcon,
+		background: 'highlight',
+		effect: null
+	};
+	spaces.setSpace(newPosition, newNewSpace);
+
+	position.set(newPosition);
+
+	return true;
 };

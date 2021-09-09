@@ -25,19 +25,27 @@
 			switch (e.keyCode) {
 				case 87:
 					// W UP
-					move('up');
+					if (!move('up')) {
+						clearTimeout(keyDownTimer);
+					}
 					break;
 				case 83:
 					// S Down
-					move('down');
+					if (!move('down')) {
+						clearTimeout(keyDownTimer);
+					}
 					break;
 				case 68:
 					// D Right
-					move('right');
+					if (!move('right')) {
+						clearTimeout(keyDownTimer);
+					}
 					break;
 				case 65:
 					// A Left
-					move('left');
+					if (!move('left')) {
+						clearTimeout(keyDownTimer);
+					}
 					break;
 			}
 		}, 100);
