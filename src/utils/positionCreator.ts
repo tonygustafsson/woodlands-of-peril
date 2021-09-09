@@ -5,7 +5,7 @@ import { user } from '../stores/user';
 import { userContent } from '../constants';
 import { randomInArray } from '../utils/array';
 
-export const positionCreator: () => void = () => {
+export const positionCreator: () => void = async () => {
 	const $user = get(user);
 	const $spaces = get(spaces);
 
@@ -24,6 +24,6 @@ export const positionCreator: () => void = () => {
 		};
 
 		user.setPosition(randomSpace.id);
-		spaces.setSpace(randomSpace.id, newSpace);
+		await spaces.setSpace(randomSpace.id, newSpace);
 	}
 };

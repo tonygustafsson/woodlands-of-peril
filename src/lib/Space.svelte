@@ -4,33 +4,24 @@
 	import type { Space as SpaceType } from '../types';
 
 	export let space: SpaceType;
-
-	let spaceNode;
-
-	onMount(() => {
-		if (space.effect === 'zoomOut' && spaceNode) {
-			spaceNode.scrollIntoView({
-				behavior: 'smooth',
-				block: 'center',
-				inline: 'center'
-			});
-		}
-	});
 </script>
 
-<td
-	width={spaceWidth}
-	height={spaceWidth}
-	class="space"
-	class:highlight={space.background === 'highlight'}
-	class:zoomOut={space.effect === 'zoomOut'}
-	class:eatable={space.content.eatable}
-	class:enemy={space.content.enemy}
-	title={space.content.label || null}
-	bind:this={spaceNode}
->
-	{space.content.icon}
-</td>
+{#if space.content.icon === ''}
+	<td width={spaceWidth} height={spaceWidth} class="space" />
+{:else}
+	<td
+		width={spaceWidth}
+		height={spaceWidth}
+		class="space"
+		class:highlight={space.background === 'highlight'}
+		class:zoomOut={space.effect === 'zoomOut'}
+		class:eatable={space.content.eatable}
+		class:enemy={space.content.enemy}
+		title={space.content.label || null}
+	>
+		{space.content.icon}
+	</td>
+{/if}
 
 <style>
 	@keyframes zoomOut {

@@ -51,9 +51,22 @@
 		}, 100);
 	};
 
-	onMount(() => {
-		spaceCreator();
-		positionCreator();
+	onMount(async () => {
+		console.log('start');
+		await spaceCreator();
+		console.log('Done created spaces');
+		await positionCreator();
+		console.log('Done positioned spaces');
+
+		const userSpaceNode = document.querySelector('.highlight');
+
+		if (userSpaceNode) {
+			userSpaceNode.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center',
+				inline: 'center'
+			});
+		}
 	});
 </script>
 
