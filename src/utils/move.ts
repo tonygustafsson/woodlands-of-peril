@@ -9,14 +9,19 @@ export const move = (direction: Direction): void => {
 	const $spaces = get(spaces);
 	let newPosition = $position;
 
-	if (direction === 'up') {
-		newPosition = $position - spacesPerRow;
-	} else if (direction === 'down') {
-		newPosition = $position + spacesPerRow;
-	} else if (direction === 'left') {
-		newPosition = $position - 1;
-	} else if (direction === 'right') {
-		newPosition = $position + 1;
+	switch (direction) {
+		case 'up':
+			newPosition = $position - spacesPerRow;
+			break;
+		case 'down':
+			newPosition = $position + spacesPerRow;
+			break;
+		case 'left':
+			newPosition = $position - 1;
+			break;
+		case 'right':
+			newPosition = $position + 1;
+			break;
 	}
 
 	if (newPosition !== $position && !$spaces[newPosition].icon.solid) {
