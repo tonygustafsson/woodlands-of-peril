@@ -20,7 +20,7 @@ export const move = (direction: Direction): boolean | undefined => {
 			newPosition = $position % spacesPerRow === 0 ? $position : $position - 1;
 			break;
 		case 'right':
-			newPosition = $position % spacesPerRow === spacesPerRow ? $position : $position + 1;
+			newPosition = $position % spacesPerRow === spacesPerRow - 1 ? $position : $position + 1;
 			break;
 	}
 
@@ -54,6 +54,15 @@ export const move = (direction: Direction): boolean | undefined => {
 	spaces.setSpace(newPosition, newNewSpace);
 
 	position.set(newPosition);
+
+	const userDomNode = document.querySelector('.highlight');
+	if (userDomNode) {
+		userDomNode.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center',
+			inline: 'center'
+		});
+	}
 
 	return true;
 };
