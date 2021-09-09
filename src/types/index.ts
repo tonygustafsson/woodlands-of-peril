@@ -12,3 +12,8 @@ export type Stuff = {
 };
 
 export type Direction = 'left' | 'right' | 'up' | 'down';
+
+export type Inventory = {
+	label: string;
+	quantity: number;
+};

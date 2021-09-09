@@ -1,4 +1,5 @@
 import { position } from '../stores/position';
+import { inventory } from '../stores/inventory';
 import { get } from 'svelte/store';
 import { spaces } from '../stores/spaces';
 import { emptyIcon, userIcon, spacesPerRow } from '../constants';
@@ -35,6 +36,24 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	if ($spaces[newPosition].icon.solid) {
 		return; // Cannot move through solid materials
+	}
+
+	if (!$spaces[newPosition].icon.solid && $spaces[newPosition].icon.content !== '') {
+		// Eat it!
+		inventory.update((inventory) => {
+			const oldValue = inventory.find((item) => item.label === $spaces[newPosition].icon.label);
+
+			if (oldValue) {
+				oldValue.quantity++;
+			} else {
+				inventory.push({
+					label: $spaces[newPosition].icon.label,
+					quantity: 1
+				});
+			}
+
+			return inventory;
+		});
 	}
 
 	const newOldSpace: SpaceType = {

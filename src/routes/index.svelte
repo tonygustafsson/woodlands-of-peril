@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import Board from '$lib/Board.svelte';
+	import Inventory from '$lib/Inventory.svelte';
 	import '../app.css';
 </script>
 
@@ -12,8 +13,7 @@
 </svelte:head>
 
 <section>
-	<h1>Game</h1>
-
+	<Inventory />
 	<Board />
 </section>
 
