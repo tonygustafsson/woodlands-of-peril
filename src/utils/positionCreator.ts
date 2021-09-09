@@ -1,15 +1,15 @@
 import { get } from 'svelte/store';
 import type { Space as SpaceType } from '../types';
 import { spaces } from '../stores/spaces';
-import { position } from '../stores/position';
+import { user } from '../stores/user';
 import { userContent } from '../constants';
 import { randomInArray } from '../utils/array';
 
 export const positionCreator: () => void = () => {
-	let $position = get(position);
+	const $user = get(user);
 	const $spaces = get(spaces);
 
-	while ($position === 0) {
+	while ($user.position === 0) {
 		const randomSpace = randomInArray($spaces);
 
 		if (randomSpace.content.icon !== '') {
@@ -23,8 +23,7 @@ export const positionCreator: () => void = () => {
 			effect: 'zoomOut'
 		};
 
-		position.set(randomSpace.id);
+		user.setPosition(randomSpace.id);
 		spaces.setSpace(randomSpace.id, newSpace);
-		$position = get(position);
 	}
 };

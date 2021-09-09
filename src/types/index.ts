@@ -19,3 +19,8 @@ export type Inventory = {
 	label: string;
 	quantity: number;
 };
+
+export type User = {
+	position: number;
+	alive: boolean;
+};

@@ -1,32 +1,37 @@
-import { position } from '../stores/position';
+import { user } from '../stores/user';
 import { inventory } from '../stores/inventory';
 import { get } from 'svelte/store';
 import { spaces } from '../stores/spaces';
-import { emptyContent, userContent, spacesPerRow } from '../constants';
+import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
 import type { Direction, Space as SpaceType } from '../types';
 
 export const move = (direction: Direction): boolean | undefined => {
-	const $position = get(position);
+	const $user = get(user);
 	const $spaces = get(spaces);
-	let newPosition = $position;
+	let newPosition = $user.position;
 
 	switch (direction) {
 		case 'up':
-			newPosition = $position - spacesPerRow;
+			newPosition = $user.position - spacesPerRow;
 			break;
 		case 'down':
-			newPosition = $position + spacesPerRow;
+			newPosition = $user.position + spacesPerRow;
 			break;
 		case 'left':
-			newPosition = $position % spacesPerRow === 0 ? $position : $position - 1;
+			newPosition = $user.position % spacesPerRow === 0 ? $user.position : $user.position - 1;
 			break;
 		case 'right':
-			newPosition = $position % spacesPerRow === spacesPerRow - 1 ? $position : $position + 1;
+			newPosition =
+				$user.position % spacesPerRow === spacesPerRow - 1 ? $user.position : $user.position + 1;
 			break;
 	}
 
-	if (newPosition === $position) {
+	if (newPosition === $user.position) {
 		return; // Same position as before
+	}
+
+	if (!$user.alive) {
+		return; // You cannot move when you are dead
 	}
 
 	if (!$spaces[newPosition]) {
@@ -36,10 +41,6 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	if ($spaces[newPosition].content.solid) {
 		return; // Cannot move through solid materials
-	}
-
-	if ($spaces[newPosition].content.enemy) {
-		return; // Cannot move through enemies materials
 	}
 
 	if ($spaces[newPosition].content.eatable) {
@@ -61,22 +62,29 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	const newOldSpace: SpaceType = {
-		...$spaces[$position],
+		...$spaces[$user.position],
 		content: emptyContent,
 		background: 'default',
 		effect: null
 	};
-	spaces.setSpace($position, newOldSpace);
+	spaces.setSpace($user.position, newOldSpace);
+
+	const newUserContent = $spaces[newPosition].content.enemy ? deadContent : userContent;
+
+	if ($spaces[newPosition].content.enemy) {
+		user.setDead();
+	}
 
 	const newNewSpace: SpaceType = {
 		...$spaces[newPosition],
-		content: userContent,
+		content: newUserContent,
 		background: 'highlight',
 		effect: null
 	};
+
 	spaces.setSpace(newPosition, newNewSpace);
 
-	position.set(newPosition);
+	user.setPosition(newPosition);
 
 	const userDomNode = document.querySelector('.highlight');
 	if (userDomNode) {
