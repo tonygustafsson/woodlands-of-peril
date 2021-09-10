@@ -1,5 +1,12 @@
 import type { SpaceContent } from '../types';
 
+export const numberOfSpaces = 6000;
+export const spaceWidth = 36;
+export const spacesPerRow = 100;
+
+export const cameraSpacesWidth = 23;
+export const cameraSpacesHeight = 23;
+
 export const emptyContent: SpaceContent = {
 	icon: '',
 	label: '',
@@ -56,7 +63,3 @@ export const enemies: SpaceContent[] = [
 	{ icon: '🦇', label: 'Bat', solid: false, eatable: false, enemy: true },
 	{ icon: '🐊', label: 'Crocodile', solid: false, eatable: false, enemy: true }
 ];
-
-export const numberOfSpaces = 6000;
-export const spaceWidth = 36;
-export const spacesPerRow = 100;

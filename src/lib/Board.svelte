@@ -3,7 +3,7 @@
 	import { spaceCreator } from '../utils/spaceCreator';
 	import { positionCreator } from '../utils/positionCreator';
 	import { spaces } from '../stores/spaces';
-	import { numberOfSpaces, spaceWidth, spacesPerRow } from '../constants';
+	import { numberOfSpaces, spaceWidth, cameraSpacesWidth, cameraSpacesHeight } from '../constants';
 	import { move } from '../utils/move';
 	import type { Space as SpaceType } from '../types';
 	import { user } from '../stores/user';
@@ -12,8 +12,8 @@
 	const keyDownTimer = null;
 	let canvas;
 
-	$: canvasWidth = spaceWidth * 23;
-	$: canvasHeight = spaceWidth * 23;
+	$: canvasWidth = spaceWidth * cameraSpacesWidth;
+	$: canvasHeight = spaceWidth * cameraSpacesHeight;
 
 	const handleKeydown = (e) => {
 		if (keyDownTimer) {
@@ -53,6 +53,9 @@
 	const loop = () => {
 		if (!canvas) return;
 
+		const userY = canvas.height / 2 - spaceWidth / 2;
+		const userX = canvas.width / 2 - spaceWidth / 2;
+
 		const ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -63,8 +66,14 @@
 			const rowsFromUser = spacePos.row - $user.row;
 			const columnsFromUser = spacePos.column - $user.column;
 
-			const userY = canvas.height / 2 - spaceWidth / 2;
-			const userX = canvas.width / 2 - spaceWidth / 2;
+			if (
+				Math.abs(rowsFromUser) > cameraSpacesWidth / 2 ||
+				Math.abs(columnsFromUser) > cameraSpacesHeight / 2
+			) {
+				console.log(Math.abs(rowsFromUser), Math.abs(columnsFromUser));
+				// No need to paint spaces that are not in the camera view
+				continue;
+			}
 
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
@@ -105,7 +114,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <canvas
-	style="margin-left: 300px; margin-top: 100px"
+	style="margin-left: 300px; margin-top: 100px; outline: 1px #333 solid;"
 	width={canvasWidth}
 	height={canvasHeight}
 	bind:this={canvas}
