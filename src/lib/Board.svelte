@@ -7,7 +7,6 @@
 	import { user } from '../stores/user';
 	import { paint } from '../utils/paint';
 
-	const keyDownTimer = null;
 	let canvas;
 
 	$: canvasWidth = 0;
@@ -19,7 +18,7 @@
 		paint(canvas, cameraSpacesWidth, cameraSpacesHeight);
 	});
 
-	onMount(async () => {
+	onMount(() => {
 		spaceCreator();
 		positionCreator();
 
