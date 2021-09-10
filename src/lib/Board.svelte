@@ -6,15 +6,11 @@
 	import { numberOfSpaces, spaceWidth, spacesPerRow } from '../constants';
 	import Space from './Space.svelte';
 	import { move } from '../utils/move';
-
-	const cssVariableStyle = `
-        --space-width: ${spaceWidth}px;
-        --spaces-per-row: ${spacesPerRow};
-        --font-size: ${Math.floor(spaceWidth * 0.6)}px;
-		--space-border: #0f0f0f;
-    `;
+	import type { Space as SpaceType } from '../types';
+	import { user } from '../stores/user';
 
 	const keyDownTimer = null;
+	let canvas;
 
 	const handleKeydown = (e) => {
 		if (keyDownTimer) {
@@ -51,6 +47,35 @@
 		}, 100);
 	};
 
+	const loop = () => {
+		if (!canvas) return;
+
+		const ctx = canvas.getContext('2d');
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		for (let x = 0; x < numberOfSpaces; x++) {
+			const space: SpaceType = $spaces[x];
+			const spaceY = Math.floor(x / spacesPerRow + 1);
+			const spaceX = x - (spaceY - 1) * spacesPerRow + 1;
+
+			const top = (spaceY - 1) * spaceWidth;
+			const left = (spaceX - 1) * spaceWidth;
+
+			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
+			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#0f0f0f';
+
+			ctx.beginPath();
+			ctx.rect(left, top, spaceWidth, spaceWidth);
+			ctx.fill();
+			ctx.stroke();
+			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
+		}
+	};
+
+	user.subscribe((value) => {
+		loop();
+	});
+
 	onMount(async () => {
 		console.log('start');
 		await spaceCreator();
@@ -58,35 +83,21 @@
 		await positionCreator();
 		console.log('Done positioned spaces');
 
-		const userSpaceNode = document.querySelector('.highlight');
+		const ctx = canvas.getContext('2d');
+		ctx.lineWidth = 1;
+		ctx.font = '20px verdana';
+		let frame = requestAnimationFrame(loop);
 
-		if (userSpaceNode) {
-			userSpaceNode.scrollIntoView({
-				behavior: 'smooth',
-				block: 'center',
-				inline: 'center'
-			});
-		}
+		return () => {
+			cancelAnimationFrame(frame);
+		};
 	});
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<table class="board" style={cssVariableStyle}>
-	{#if $spaces.length > 0}
-		{#each Array(numberOfSpaces / spacesPerRow) as _, rowId}
-			<tr width={spaceWidth * spacesPerRow} height={spaceWidth}>
-				{#each Array(spacesPerRow) as _, spaceId}
-					<Space space={$spaces[rowId * spacesPerRow + spaceId]} />
-				{/each}
-			</tr>
-		{/each}
-	{/if}
-</table>
-
-<style>
-	.board {
-		table-layout: fixed;
-		width: calc(var(--space-width) * var(--spaces-per-row));
-	}
-</style>
+<canvas
+	width={spaceWidth * spacesPerRow}
+	height={spaceWidth * (numberOfSpaces / spacesPerRow)}
+	bind:this={canvas}
+/>
