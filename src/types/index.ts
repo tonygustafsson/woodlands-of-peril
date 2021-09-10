@@ -22,5 +22,7 @@ export type Inventory = {
 
 export type User = {
 	position: number;
+	row: number;
+	column: number;
 	alive: boolean;
 };

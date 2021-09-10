@@ -4,13 +4,16 @@
 	import { positionCreator } from '../utils/positionCreator';
 	import { spaces } from '../stores/spaces';
 	import { numberOfSpaces, spaceWidth, spacesPerRow } from '../constants';
-	import Space from './Space.svelte';
 	import { move } from '../utils/move';
 	import type { Space as SpaceType } from '../types';
 	import { user } from '../stores/user';
+	import { getBoardPosition } from '../utils/board';
 
 	const keyDownTimer = null;
 	let canvas;
+
+	$: canvasWidth = spaceWidth * 20;
+	$: canvasHeight = spaceWidth * 20;
 
 	const handleKeydown = (e) => {
 		if (keyDownTimer) {
@@ -55,14 +58,13 @@
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const space: SpaceType = $spaces[x];
-			const spaceY = Math.floor(x / spacesPerRow + 1);
-			const spaceX = x - (spaceY - 1) * spacesPerRow + 1;
+			const boardPosition = getBoardPosition(x);
 
-			const top = (spaceY - 1) * spaceWidth;
-			const left = (spaceX - 1) * spaceWidth;
+			const top = (boardPosition.row - 1) * spaceWidth;
+			const left = (boardPosition.column - 1) * spaceWidth;
 
 			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
-			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#0f0f0f';
+			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
 
 			ctx.beginPath();
 			ctx.rect(left, top, spaceWidth, spaceWidth);
@@ -96,8 +98,4 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<canvas
-	width={spaceWidth * spacesPerRow}
-	height={spaceWidth * (numberOfSpaces / spacesPerRow)}
-	bind:this={canvas}
-/>
+<canvas style="margin-left: 300px" width={canvasWidth} height={canvasHeight} bind:this={canvas} />
