@@ -59,8 +59,13 @@
 		const userX = canvas.width / 2 - spaceWidth / 2;
 
 		const ctx = canvas.getContext('2d');
+
+		// Clear it
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		// Canvas settings
 		ctx.font = '20px verdana';
+		ctx.lineWidth = 1;
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const space: SpaceType = $spaces[x];
@@ -83,11 +88,13 @@
 			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
 			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
 
+			// Draw rectangle
 			ctx.beginPath();
 			ctx.rect(left, top, spaceWidth, spaceWidth);
 			ctx.fill();
 			ctx.stroke();
 
+			// Add icon
 			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 		}
 	};
@@ -97,20 +104,14 @@
 	});
 
 	onMount(async () => {
-		console.log('start');
 		await spaceCreator();
-		console.log('Done created spaces');
 		await positionCreator();
-		console.log('Done positioned spaces');
 
 		canvasWidth = document.body.clientWidth;
 		canvasHeight = document.body.clientHeight;
 		cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
 		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
-		const ctx = canvas.getContext('2d');
-		ctx.lineWidth = 1;
-		ctx.font = '20px verdana';
 		let frame = requestAnimationFrame(loop);
 
 		return () => {
