@@ -12,8 +12,8 @@
 	const keyDownTimer = null;
 	let canvas;
 
-	$: canvasWidth = spaceWidth * 20;
-	$: canvasHeight = spaceWidth * 20;
+	$: canvasWidth = spaceWidth * 23;
+	$: canvasHeight = spaceWidth * 23;
 
 	const handleKeydown = (e) => {
 		if (keyDownTimer) {
@@ -58,10 +58,16 @@
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const space: SpaceType = $spaces[x];
-			const boardPosition = getBoardPosition(x);
+			const spacePos = getBoardPosition(x);
 
-			const top = (boardPosition.row - 1) * spaceWidth;
-			const left = (boardPosition.column - 1) * spaceWidth;
+			const rowsFromUser = spacePos.row - $user.row;
+			const columnsFromUser = spacePos.column - $user.column;
+
+			const userY = canvas.height / 2 - spaceWidth / 2;
+			const userX = canvas.width / 2 - spaceWidth / 2;
+
+			const top = userY + rowsFromUser * spaceWidth;
+			const left = userX + columnsFromUser * spaceWidth;
 
 			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
 			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
@@ -98,4 +104,9 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<canvas style="margin-left: 300px" width={canvasWidth} height={canvasHeight} bind:this={canvas} />
+<canvas
+	style="margin-left: 300px; margin-top: 100px"
+	width={canvasWidth}
+	height={canvasHeight}
+	bind:this={canvas}
+/>
