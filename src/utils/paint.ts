@@ -12,49 +12,55 @@ export const paint = (
 ): (() => void) => {
 	if (!canvas) return;
 
-	const $user = get(user);
-	const $spaces = get(spaces);
+	const loop = () => {
+		window.requestAnimationFrame(loop);
 
-	const userY = canvas.height / 2 - spaceWidth / 2;
-	const userX = canvas.width / 2 - spaceWidth / 2;
+		const $user = get(user);
+		const $spaces = get(spaces);
 
-	const ctx = canvas.getContext('2d');
+		const userY = canvas.height / 2 - spaceWidth / 2;
+		const userX = canvas.width / 2 - spaceWidth / 2;
 
-	// Clear it
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+		const ctx = canvas.getContext('2d');
 
-	// Canvas settings
-	ctx.font = '20px verdana';
-	ctx.lineWidth = 1;
+		// Clear it
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	for (let x = 0; x < numberOfSpaces; x++) {
-		const spacePos = getBoardPosition(x);
+		// Canvas settings
+		ctx.font = '20px verdana';
+		ctx.lineWidth = 1;
 
-		const rowsFromUser = spacePos.row - $user.row;
-		const columnsFromUser = spacePos.column - $user.column;
+		for (let x = 0; x < numberOfSpaces; x++) {
+			const spacePos = getBoardPosition(x);
 
-		if (
-			Math.abs(rowsFromUser) > cameraSpacesHeight / 2 ||
-			Math.abs(columnsFromUser) > cameraSpacesWidth / 2
-		) {
-			// No need to paint spaces that are not in the camera view
-			continue;
+			const rowsFromUser = spacePos.row - $user.row;
+			const columnsFromUser = spacePos.column - $user.column;
+
+			if (
+				Math.abs(rowsFromUser) > cameraSpacesHeight / 2 ||
+				Math.abs(columnsFromUser) > cameraSpacesWidth / 2
+			) {
+				// No need to paint spaces that are not in the camera view
+				continue;
+			}
+
+			const top = userY + rowsFromUser * spaceWidth;
+			const left = userX + columnsFromUser * spaceWidth;
+			const space: SpaceType = $spaces[x];
+
+			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
+			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
+
+			// Draw rectangle
+			ctx.beginPath();
+			ctx.rect(left, top, spaceWidth, spaceWidth);
+			ctx.fill();
+			ctx.stroke();
+
+			// Add icon
+			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 		}
+	};
 
-		const top = userY + rowsFromUser * spaceWidth;
-		const left = userX + columnsFromUser * spaceWidth;
-		const space: SpaceType = $spaces[x];
-
-		ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
-		ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
-
-		// Draw rectangle
-		ctx.beginPath();
-		ctx.rect(left, top, spaceWidth, spaceWidth);
-		ctx.fill();
-		ctx.stroke();
-
-		// Add icon
-		ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
-	}
+	window.requestAnimationFrame(loop);
 };
