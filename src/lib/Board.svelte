@@ -3,7 +3,7 @@
 	import { spaceCreator } from '../utils/spaceCreator';
 	import { positionCreator } from '../utils/positionCreator';
 	import { spaces } from '../stores/spaces';
-	import { numberOfSpaces, spaceWidth, cameraSpacesWidth, cameraSpacesHeight } from '../constants';
+	import { numberOfSpaces, spaceWidth } from '../constants';
 	import { move } from '../utils/move';
 	import type { Space as SpaceType } from '../types';
 	import { user } from '../stores/user';
@@ -12,8 +12,10 @@
 	const keyDownTimer = null;
 	let canvas;
 
-	$: canvasWidth = spaceWidth * cameraSpacesWidth;
-	$: canvasHeight = spaceWidth * cameraSpacesHeight;
+	$: canvasWidth = 0;
+	$: canvasHeight = 0;
+	$: cameraSpacesWidth = 0;
+	$: cameraSpacesHeight = 0;
 
 	const handleKeydown = (e) => {
 		if (keyDownTimer) {
@@ -58,6 +60,7 @@
 
 		const ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.font = '20px verdana';
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const space: SpaceType = $spaces[x];
@@ -67,10 +70,9 @@
 			const columnsFromUser = spacePos.column - $user.column;
 
 			if (
-				Math.abs(rowsFromUser) > cameraSpacesWidth / 2 ||
-				Math.abs(columnsFromUser) > cameraSpacesHeight / 2
+				Math.abs(rowsFromUser) > cameraSpacesHeight / 2 ||
+				Math.abs(columnsFromUser) > cameraSpacesWidth / 2
 			) {
-				console.log(Math.abs(rowsFromUser), Math.abs(columnsFromUser));
 				// No need to paint spaces that are not in the camera view
 				continue;
 			}
@@ -85,11 +87,12 @@
 			ctx.rect(left, top, spaceWidth, spaceWidth);
 			ctx.fill();
 			ctx.stroke();
+
 			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 		}
 	};
 
-	user.subscribe((value) => {
+	user.subscribe(() => {
 		loop();
 	});
 
@@ -99,6 +102,11 @@
 		console.log('Done created spaces');
 		await positionCreator();
 		console.log('Done positioned spaces');
+
+		canvasWidth = document.body.clientWidth;
+		canvasHeight = document.body.clientHeight;
+		cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
+		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
 		const ctx = canvas.getContext('2d');
 		ctx.lineWidth = 1;
@@ -113,9 +121,4 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<canvas
-	style="margin-left: 300px; margin-top: 100px; outline: 1px #333 solid;"
-	width={canvasWidth}
-	height={canvasHeight}
-	bind:this={canvas}
-/>
+<canvas width={canvasWidth} height={canvasHeight} bind:this={canvas} />

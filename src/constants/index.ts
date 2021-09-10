@@ -1,11 +1,8 @@
 import type { SpaceContent } from '../types';
 
-export const numberOfSpaces = 6000;
+export const numberOfSpaces = 10000;
 export const spaceWidth = 36;
 export const spacesPerRow = 100;
-
-export const cameraSpacesWidth = 23;
-export const cameraSpacesHeight = 23;
 
 export const emptyContent: SpaceContent = {
 	icon: '',
