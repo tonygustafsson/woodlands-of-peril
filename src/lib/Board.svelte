@@ -4,14 +4,20 @@
 	import { positionCreator } from '../utils/positionCreator';
 	import { spaceWidth } from '../constants';
 	import { handleKeydown } from '../utils/move';
-	import { paint } from '../utils/paint';
+	import { paintBoard, paintBeings } from '../utils/paint';
+	import { user } from '../stores/user';
 
-	let canvas;
+	let canvasBoard;
+	let canvasBeings;
 
 	$: canvasWidth = 0;
 	$: canvasHeight = 0;
 	$: cameraSpacesWidth = 0;
 	$: cameraSpacesHeight = 0;
+
+	user.subscribe((_) => {
+		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+	});
 
 	onMount(() => {
 		spaceCreator();
@@ -28,22 +34,32 @@
 		cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
 		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
-		paint(canvas, cameraSpacesWidth, cameraSpacesHeight);
+		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+		paintBeings(canvasBeings, cameraSpacesWidth, cameraSpacesHeight);
 	});
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<canvas width={canvasWidth} height={canvasHeight} bind:this={canvas} />
+<div class="container" style={`width: ${canvasWidth}px`}>
+	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBoard} />
+	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBeings} />
+</div>
 
 <style>
-	canvas {
+	.container {
+		position: relative;
 		display: block;
 		margin: 40px auto;
 	}
+	canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
 
 	@media (max-width: 600px) {
-		canvas {
+		.container {
 			margin: 0 auto;
 		}
 	}

@@ -1,14 +1,17 @@
 import { numberOfSpaces, spaceWidth } from '../constants';
 import type { Space as SpaceType } from '../types';
-import { getBoardPosition } from '../utils/board';
+import { getBoardPosition } from './board';
 import { spaces } from '../stores/spaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 
-export const paint = (
+const paint = (
 	canvas: HTMLCanvasElement,
 	cameraSpacesWidth: number,
-	cameraSpacesHeight: number
+	cameraSpacesHeight: number,
+	continiousLoop: boolean,
+	showBoard: boolean,
+	showBeings: boolean
 ): (() => void) => {
 	if (!canvas) return;
 
@@ -17,7 +20,9 @@ export const paint = (
 	const lineWidth = 1;
 
 	const loop = () => {
-		window.requestAnimationFrame(loop);
+		if (continiousLoop) {
+			window.requestAnimationFrame(loop);
+		}
 
 		const $user = get(user);
 		const $spaces = get(spaces);
@@ -48,9 +53,20 @@ export const paint = (
 				continue;
 			}
 
+			const space: SpaceType = $spaces[x];
+
+			if (showBoard && (space.content.enemy || space.content.eatable)) {
+				// Only paint board
+				continue;
+			}
+
+			if (showBeings && !space.content.enemy && !space.content.eatable) {
+				// Only paint beings
+				continue;
+			}
+
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
-			const space: SpaceType = $spaces[x];
 
 			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
 			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
@@ -64,9 +80,35 @@ export const paint = (
 			// Add icon
 			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 		}
-
-		//fontSize = Math.random() > 0.5 ? ++fontSize : --fontSize;
 	};
 
 	window.requestAnimationFrame(loop);
+};
+
+export const paintBoard = (
+	canvas: HTMLCanvasElement,
+	cameraSpacesWidth: number,
+	cameraSpacesHeight: number
+): (() => void) => {
+	if (!canvas) return;
+
+	const continiousLoop = false;
+	const showBoard = true;
+	const showBeings = false;
+
+	paint(canvas, cameraSpacesWidth, cameraSpacesHeight, continiousLoop, showBoard, showBeings);
+};
+
+export const paintBeings = (
+	canvas: HTMLCanvasElement,
+	cameraSpacesWidth: number,
+	cameraSpacesHeight: number
+): (() => void) => {
+	if (!canvas) return;
+
+	const continiousLoop = true;
+	const showBoard = false;
+	const showBeings = true;
+
+	paint(canvas, cameraSpacesWidth, cameraSpacesHeight, continiousLoop, showBoard, showBeings);
 };
