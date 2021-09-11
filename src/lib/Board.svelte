@@ -4,7 +4,7 @@
 	import { positionCreator } from '../utils/positionCreator';
 	import { spaceWidth } from '../constants';
 	import { handleKeydown } from '../utils/move';
-	import { paintBoard, paintBeings } from '../utils/paint';
+	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
 	import { user } from '../stores/user';
 
 	let canvasBoard;
@@ -14,10 +14,6 @@
 	$: canvasHeight = 0;
 	$: cameraSpacesWidth = 0;
 	$: cameraSpacesHeight = 0;
-
-	user.subscribe((_) => {
-		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
-	});
 
 	onMount(() => {
 		spaceCreator();
@@ -35,7 +31,11 @@
 		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
 		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
-		paintBeings(canvasBeings, cameraSpacesWidth, cameraSpacesHeight);
+		paintAnimatedSpaces(canvasBeings, cameraSpacesWidth, cameraSpacesHeight);
+
+		user.subscribe((_) => {
+			paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+		});
 	});
 </script>
 

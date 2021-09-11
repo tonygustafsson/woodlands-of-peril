@@ -5,16 +5,14 @@ import { spaces } from '../stores/spaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 
-const paint = (
+const startPainting = (
 	canvas: HTMLCanvasElement,
 	cameraSpacesWidth: number,
 	cameraSpacesHeight: number,
 	continiousLoop: boolean,
 	showBoard: boolean,
 	showBeings: boolean
-): (() => void) => {
-	if (!canvas) return;
-
+): void => {
 	const fontSize = 20;
 	const font = 'verdana';
 	const lineWidth = 1;
@@ -26,9 +24,6 @@ const paint = (
 
 		const $user = get(user);
 		const $spaces = get(spaces);
-
-		const userY = canvas.height / 2 - spaceWidth / 2;
-		const userX = canvas.width / 2 - spaceWidth / 2;
 
 		const ctx = canvas.getContext('2d');
 
@@ -65,6 +60,8 @@ const paint = (
 				continue;
 			}
 
+			const userY = Math.floor(canvas.height / 2 - spaceWidth / 2);
+			const userX = Math.floor(canvas.width / 2 - spaceWidth / 2);
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
 
@@ -89,26 +86,36 @@ export const paintBoard = (
 	canvas: HTMLCanvasElement,
 	cameraSpacesWidth: number,
 	cameraSpacesHeight: number
-): (() => void) => {
-	if (!canvas) return;
-
+): void => {
 	const continiousLoop = false;
 	const showBoard = true;
 	const showBeings = false;
 
-	paint(canvas, cameraSpacesWidth, cameraSpacesHeight, continiousLoop, showBoard, showBeings);
+	startPainting(
+		canvas,
+		cameraSpacesWidth,
+		cameraSpacesHeight,
+		continiousLoop,
+		showBoard,
+		showBeings
+	);
 };
 
-export const paintBeings = (
+export const paintAnimatedSpaces = (
 	canvas: HTMLCanvasElement,
 	cameraSpacesWidth: number,
 	cameraSpacesHeight: number
-): (() => void) => {
-	if (!canvas) return;
-
+): void => {
 	const continiousLoop = true;
 	const showBoard = false;
 	const showBeings = true;
 
-	paint(canvas, cameraSpacesWidth, cameraSpacesHeight, continiousLoop, showBoard, showBeings);
+	startPainting(
+		canvas,
+		cameraSpacesWidth,
+		cameraSpacesHeight,
+		continiousLoop,
+		showBoard,
+		showBeings
+	);
 };
