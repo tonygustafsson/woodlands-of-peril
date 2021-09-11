@@ -12,6 +12,10 @@ export const paint = (
 ): (() => void) => {
 	if (!canvas) return;
 
+	const fontSize = 20;
+	const font = 'verdana';
+	const lineWidth = 1;
+
 	const loop = () => {
 		window.requestAnimationFrame(loop);
 
@@ -27,8 +31,8 @@ export const paint = (
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// Canvas settings
-		ctx.font = '20px verdana';
-		ctx.lineWidth = 1;
+		ctx.font = `${fontSize}px ${font}`;
+		ctx.lineWidth = lineWidth;
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const spacePos = getBoardPosition(x);
@@ -60,6 +64,8 @@ export const paint = (
 			// Add icon
 			ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 		}
+
+		//fontSize = Math.random() > 0.5 ? ++fontSize : --fontSize;
 	};
 
 	window.requestAnimationFrame(loop);
