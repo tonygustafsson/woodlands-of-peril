@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { spaceWidth } from '../constants';
 	import { handleKeydown } from '../utils/move';
 	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
 	import { user } from '../stores/user';
@@ -10,8 +9,6 @@
 
 	$: canvasWidth = 0;
 	$: canvasHeight = 0;
-	$: cameraSpacesWidth = 0;
-	$: cameraSpacesHeight = 0;
 
 	onMount(() => {
 		canvasWidth =
@@ -22,14 +19,12 @@
 			document.body.clientWidth < 600
 				? document.body.clientHeight
 				: Math.floor(document.body.clientHeight * 0.7);
-		cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
-		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
-		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
-		paintAnimatedSpaces(canvasBeings, cameraSpacesWidth, cameraSpacesHeight);
+		paintBoard(canvasBoard);
+		paintAnimatedSpaces(canvasBeings);
 
 		user.subscribe((_) => {
-			paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+			paintBoard(canvasBoard);
 		});
 	});
 </script>

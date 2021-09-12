@@ -7,8 +7,6 @@ import { coinSprite, monsterSprite } from '../stores/sprites';
 
 const startPainting = (
 	canvas: HTMLCanvasElement,
-	cameraSpacesWidth: number,
-	cameraSpacesHeight: number,
 	continiousLoop: boolean,
 	showBoard: boolean,
 	showBeings: boolean
@@ -102,40 +100,18 @@ const startPainting = (
 	window.requestAnimationFrame(loop);
 };
 
-export const paintBoard = (
-	canvas: HTMLCanvasElement,
-	cameraSpacesWidth: number,
-	cameraSpacesHeight: number
-): void => {
+export const paintBoard = (canvas: HTMLCanvasElement): void => {
 	const continiousLoop = false;
 	const showBoard = true;
 	const showBeings = false;
 
-	startPainting(
-		canvas,
-		cameraSpacesWidth,
-		cameraSpacesHeight,
-		continiousLoop,
-		showBoard,
-		showBeings
-	);
+	startPainting(canvas, continiousLoop, showBoard, showBeings);
 };
 
-export const paintAnimatedSpaces = (
-	canvas: HTMLCanvasElement,
-	cameraSpacesWidth: number,
-	cameraSpacesHeight: number
-): void => {
+export const paintAnimatedSpaces = (canvas: HTMLCanvasElement): void => {
 	const continiousLoop = true;
 	const showBoard = false;
 	const showBeings = true;
 
-	startPainting(
-		canvas,
-		cameraSpacesWidth,
-		cameraSpacesHeight,
-		continiousLoop,
-		showBoard,
-		showBeings
-	);
+	startPainting(canvas, continiousLoop, showBoard, showBeings);
 };
