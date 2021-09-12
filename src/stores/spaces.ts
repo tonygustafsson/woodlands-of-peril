@@ -1,7 +1,9 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import { emptyContent, surroundings, eatables, enemies, numberOfSpaces } from '../constants';
 import { randomInArray } from '../utils/array';
 import type { SpaceContent, Space as SpaceType } from '../types';
+import { userContent } from '../constants';
+import { user } from './user';
 
 const createSpaces: () => SpaceType[] = () => {
 	const spaces = [];
@@ -24,6 +26,27 @@ const createSpaces: () => SpaceType[] = () => {
 		};
 
 		spaces.push(newSpace);
+	}
+
+	// Add user
+	const $user = get(user);
+
+	while ($user.position === 0) {
+		const randomSpace = randomInArray(spaces);
+
+		if (randomSpace.content.icon !== '') {
+			continue;
+		}
+
+		const newSpace: SpaceType = {
+			id: randomSpace.id,
+			content: userContent,
+			background: 'highlight',
+			effect: 'zoomOut'
+		};
+
+		user.setPosition(randomSpace.id);
+		spaces[randomSpace.id] = newSpace;
 	}
 
 	return spaces;

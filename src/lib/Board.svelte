@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { positionCreator } from '../utils/positionCreator';
 	import { spaceWidth } from '../constants';
 	import { handleKeydown } from '../utils/move';
 	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
@@ -15,8 +14,6 @@
 	$: cameraSpacesHeight = 0;
 
 	onMount(() => {
-		positionCreator();
-
 		canvasWidth =
 			document.body.clientWidth < 600
 				? document.body.clientWidth
