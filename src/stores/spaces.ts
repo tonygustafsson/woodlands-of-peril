@@ -1,7 +1,35 @@
 import { writable } from 'svelte/store';
-import type { Space as SpaceType } from '../types';
+import { emptyContent, surroundings, eatables, enemies, numberOfSpaces } from '../constants';
+import { randomInArray } from '../utils/array';
+import type { SpaceContent, Space as SpaceType } from '../types';
 
-const initValue: SpaceType[] = [];
+const createSpaces: () => SpaceType[] = () => {
+	const spaces = [];
+
+	for (let x = 0; x < numberOfSpaces; x++) {
+		let newContent: SpaceContent = emptyContent;
+
+		if (Math.random() > 0.7) {
+			newContent = randomInArray(surroundings);
+		} else if (Math.random() > 0.97) {
+			newContent = randomInArray(eatables);
+		} else if (Math.random() > 0.96) {
+			newContent = randomInArray(enemies);
+		}
+
+		const newSpace: SpaceType = {
+			id: x,
+			content: newContent,
+			background: 'default'
+		};
+
+		spaces.push(newSpace);
+	}
+
+	return spaces;
+};
+
+const initValue: SpaceType[] = createSpaces();
 
 const spacesStore = () => {
 	const { subscribe, set, update } = writable(initValue);
