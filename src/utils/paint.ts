@@ -4,8 +4,7 @@ import { getBoardPosition } from './board';
 import { spaces } from '../stores/spaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
-import coinSprite from '../stores/objects/coin';
-import monsterSprite from '../stores/objects/monster';
+import { coinSprite, monsterSprite } from '../stores/sprites';
 
 const startPainting = (
 	canvas: HTMLCanvasElement,
