@@ -26,3 +26,10 @@ export type User = {
 	column: number;
 	alive: boolean;
 };
+
+export type Sprite = {
+	image: HTMLImageElement;
+	currentSprite: number;
+	spriteWidth: number;
+	spriteHeight: number;
+};
