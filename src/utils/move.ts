@@ -86,15 +86,6 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	user.setPosition(newPosition);
 
-	const userDomNode = document.querySelector('.highlight');
-	if (userDomNode) {
-		userDomNode.scrollIntoView({
-			behavior: 'smooth',
-			block: 'center',
-			inline: 'center'
-		});
-	}
-
 	return true;
 };
 

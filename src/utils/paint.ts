@@ -1,7 +1,6 @@
-import { numberOfSpaces, spaceWidth } from '../constants';
-import type { Space as SpaceType } from '../types';
+import { spaceWidth } from '../constants';
 import { getBoardPosition } from './board';
-import { spaces } from '../stores/spaces';
+import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import { coinSprite, monsterSprite } from '../stores/sprites';
@@ -24,7 +23,7 @@ const startPainting = (
 		}
 
 		const $user = get(user);
-		const $spaces = get(spaces);
+		const $visibleSpaces = get(visibleSpaces);
 
 		const ctx = canvas.getContext('2d');
 
@@ -35,30 +34,20 @@ const startPainting = (
 		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
 
-		for (let x = 0; x < numberOfSpaces; x++) {
-			const spacePos = getBoardPosition(x);
+		$visibleSpaces.forEach((space, index) => {
+			const spacePos = getBoardPosition(index);
 
 			const rowsFromUser = spacePos.row - $user.row;
 			const columnsFromUser = spacePos.column - $user.column;
 
-			if (
-				Math.abs(rowsFromUser) > cameraSpacesHeight / 2 ||
-				Math.abs(columnsFromUser) > cameraSpacesWidth / 2
-			) {
-				// No need to paint spaces that are not in the camera view
-				continue;
-			}
-
-			const space: SpaceType = $spaces[x];
-
 			if (showBoard && (space.content.enemy || space.content.eatable)) {
 				// Only paint board
-				continue;
+				return;
 			}
 
 			if (showBeings && !space.content.enemy && !space.content.eatable) {
 				// Only paint beings
-				continue;
+				return;
 			}
 
 			const userY = Math.floor(canvas.height / 2 - spaceWidth / 2);
@@ -107,7 +96,7 @@ const startPainting = (
 			if (space.content.icon) {
 				ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 			}
-		}
+		});
 	};
 
 	window.requestAnimationFrame(loop);
