@@ -4,7 +4,7 @@ import type { Sprite } from '../../types';
 const spriteImg = typeof Image === 'function' ? new Image() : null;
 
 if (typeof Image === 'function') {
-	spriteImg.src = './sprites/coin.png';
+	spriteImg.src = './sprites/monster.png';
 }
 
 const noOfSprites = 6;

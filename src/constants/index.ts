@@ -43,13 +43,13 @@ export const eatables: SpaceContent[] = [
 	{ icon: '🍍', label: 'Pinaple', solid: false, eatable: true, enemy: false },
 	{ icon: '🍎', label: 'Apple', solid: false, eatable: true, enemy: false },
 	{ icon: '🍓', label: 'Strawberry', solid: false, eatable: true, enemy: false },
-	{ icon: '🥝', label: 'Kiwi', solid: false, eatable: true, enemy: false },
 	{ icon: '🍄', label: 'Mushroom', solid: false, eatable: true, enemy: false },
 	{ icon: '🥐', label: 'Croissant', solid: false, eatable: true, enemy: false },
 	{ icon: '🧀', label: 'Cheese', solid: false, eatable: true, enemy: false },
 	{ icon: '🍰', label: 'Cake', solid: false, eatable: true, enemy: false }
 ];
 export const enemies: SpaceContent[] = [
+	{ spriteId: 'monster', label: 'Monster', solid: false, eatable: false, enemy: true },
 	{ icon: '🐙', label: 'Squid', solid: false, eatable: false, enemy: true },
 	{ icon: '🦂', label: 'Scorpion', solid: false, eatable: false, enemy: true },
 	{ icon: '🕷', label: 'Spider', solid: false, eatable: false, enemy: true },

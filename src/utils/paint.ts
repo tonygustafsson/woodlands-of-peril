@@ -4,7 +4,8 @@ import { getBoardPosition } from './board';
 import { spaces } from '../stores/spaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
-import { coin } from '../stores/objects/coin';
+import coinSprite from '../stores/objects/coin';
+import monsterSprite from '../stores/objects/monster';
 
 const startPainting = (
 	canvas: HTMLCanvasElement,
@@ -34,12 +35,6 @@ const startPainting = (
 		// Canvas settings
 		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
-
-		let $coin;
-
-		if (showBeings) {
-			$coin = get(coin);
-		}
 
 		for (let x = 0; x < numberOfSpaces; x++) {
 			const spacePos = getBoardPosition(x);
@@ -85,20 +80,28 @@ const startPainting = (
 			if (space.content.spriteId) {
 				const dx = left + 6;
 				const dy = top + 6;
+				let sprite;
 
-				if (space.content.spriteId === 'coin') {
-					ctx.drawImage(
-						$coin.image,
-						$coin.sx,
-						$coin.sy,
-						$coin.sw,
-						$coin.sh,
-						dx,
-						dy,
-						$coin.dw,
-						$coin.dh
-					);
+				switch (space.content.spriteId) {
+					case 'coin':
+						sprite = get(coinSprite);
+						break;
+					case 'monster':
+						sprite = get(monsterSprite);
+						break;
 				}
+
+				ctx.drawImage(
+					sprite.image,
+					sprite.sx,
+					sprite.sy,
+					sprite.sw,
+					sprite.sh,
+					dx,
+					dy,
+					sprite.dw,
+					sprite.dh
+				);
 			}
 
 			// Add icon
