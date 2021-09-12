@@ -81,23 +81,29 @@ const startPainting = (
 			ctx.fill();
 			ctx.stroke();
 
+			// Add sprite
+			if (space.content.spriteId) {
+				const dx = left + 6;
+				const dy = top + 6;
+
+				if (space.content.spriteId === 'coin') {
+					ctx.drawImage(
+						$coin.image,
+						$coin.sx,
+						$coin.sy,
+						$coin.sw,
+						$coin.sh,
+						dx,
+						dy,
+						$coin.dw,
+						$coin.dh
+					);
+				}
+			}
+
 			// Add icon
 			if (space.content.icon) {
-				if (($coin && space.content.label === 'Squid') || space.content.label === 'Gorilla') {
-					//console.log($coin);
-
-					const sx = $coin.currentSprite * 32;
-					const sy = 0;
-					const sw = 32;
-					const sh = 32;
-					const dx = Math.floor(left + 6);
-					const dy = top + 6;
-					const dw = 24;
-					const dh = 24;
-					ctx.drawImage($coin.image, sx, sy, sw, sh, dx, dy, dw, dh);
-				} else {
-					ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
-				}
+				ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 			}
 		}
 	};

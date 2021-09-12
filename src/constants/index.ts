@@ -34,6 +34,7 @@ export const surroundings: SpaceContent[] = [
 	{ icon: '🌾', label: 'Sheif of rice', solid: true, eatable: false, enemy: false }
 ];
 export const eatables: SpaceContent[] = [
+	{ spriteId: 'coin', label: 'Money', solid: false, eatable: true, enemy: false },
 	{ icon: '🍒', label: 'Cherry', solid: false, eatable: true, enemy: false },
 	{ icon: '🍖', label: 'Meat bone', solid: false, eatable: true, enemy: false },
 	{ icon: '🍇', label: 'Grapes', solid: false, eatable: true, enemy: false },
@@ -43,7 +44,6 @@ export const eatables: SpaceContent[] = [
 	{ icon: '🍎', label: 'Apple', solid: false, eatable: true, enemy: false },
 	{ icon: '🍓', label: 'Strawberry', solid: false, eatable: true, enemy: false },
 	{ icon: '🥝', label: 'Kiwi', solid: false, eatable: true, enemy: false },
-	{ icon: '🥦', label: 'Broccoli', solid: false, eatable: true, enemy: false },
 	{ icon: '🍄', label: 'Mushroom', solid: false, eatable: true, enemy: false },
 	{ icon: '🥐', label: 'Croissant', solid: false, eatable: true, enemy: false },
 	{ icon: '🧀', label: 'Cheese', solid: false, eatable: true, enemy: false },

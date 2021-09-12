@@ -7,18 +7,35 @@ if (typeof Image === 'function') {
 	spriteImg.src = './sprites/coin.png';
 }
 
-let currentSprite = 0;
 const noOfSprites = 6;
 const frameSpeed = 100;
+const spriteWidth = 32;
+const spriteHeight = 32;
+
+let currentSprite = 0;
 
 const initValue: Sprite = {
 	image: spriteImg,
-	currentSprite: currentSprite,
-	spriteWidth: 32,
-	spriteHeight: 32
+	sx: 0,
+	sy: 0,
+	sw: spriteWidth,
+	sh: spriteHeight,
+	dx: 0,
+	dy: 0,
+	dw: 24,
+	dh: 24,
 };
 
-export const coin = writable(initValue);
+const coinStore = () => {
+	const { subscribe, update } = writable(initValue);
+
+	return {
+		subscribe,
+		update
+	};
+};
+
+export const coin = coinStore();
 
 setInterval(() => {
 	currentSprite++;
@@ -27,8 +44,8 @@ setInterval(() => {
 		currentSprite = 0;
 	}
 
-	coin.set({
-		...initValue,
-		currentSprite
-	});
+	coin.update(sprite => {
+		sprite.sx = currentSprite * spriteWidth
+		return sprite;
+	})
 }, frameSpeed);
