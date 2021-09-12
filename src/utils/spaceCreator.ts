@@ -3,7 +3,7 @@ import { spaces } from '../stores/spaces';
 import { emptyContent, surroundings, eatables, enemies, numberOfSpaces } from '../constants';
 import { randomInArray } from '../utils/array';
 
-export const spaceCreator: () => void = async () => {
+export const spaceCreator: () => void = () => {
 	const newSpaces = [];
 
 	for (let x = 0; x < numberOfSpaces; x++) {
@@ -26,5 +26,5 @@ export const spaceCreator: () => void = async () => {
 		newSpaces.push(newSpace);
 	}
 
-	await spaces.set(newSpaces);
+	spaces.set(newSpaces);
 };

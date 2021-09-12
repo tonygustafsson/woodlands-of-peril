@@ -1,16 +1,12 @@
 <script lang="ts">
 	import { inventory } from '../stores/inventory';
 	import { user } from '../stores/user';
-	import { spacesPerRow } from '../constants';
-
-	$: positionY = Math.floor($user.position / spacesPerRow + 1);
-	$: positionX = $user.position - (positionY - 1) * spacesPerRow + 1;
 </script>
 
 <div class="inventory">
 	<h3>Position</h3>
 	<div class="item">
-		{positionY} x {positionX}
+		{$user.row} x {$user.column}
 	</div>
 
 	{#if $inventory.length > 0}

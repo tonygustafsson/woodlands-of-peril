@@ -2,91 +2,65 @@
 	import { onMount } from 'svelte';
 	import { spaceCreator } from '../utils/spaceCreator';
 	import { positionCreator } from '../utils/positionCreator';
-	import { spaces } from '../stores/spaces';
-	import { numberOfSpaces, spaceWidth, spacesPerRow } from '../constants';
-	import Space from './Space.svelte';
-	import { move } from '../utils/move';
+	import { spaceWidth } from '../constants';
+	import { handleKeydown } from '../utils/move';
+	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
+	import { user } from '../stores/user';
 
-	const cssVariableStyle = `
-        --space-width: ${spaceWidth}px;
-        --spaces-per-row: ${spacesPerRow};
-        --font-size: ${Math.floor(spaceWidth * 0.6)}px;
-		--space-border: #0f0f0f;
-    `;
+	let canvasBoard;
+	let canvasBeings;
 
-	const keyDownTimer = null;
+	$: canvasWidth = 0;
+	$: canvasHeight = 0;
+	$: cameraSpacesWidth = 0;
+	$: cameraSpacesHeight = 0;
 
-	const handleKeydown = (e) => {
-		if (keyDownTimer) {
-			return clearTimeout(keyDownTimer);
-		}
+	onMount(() => {
+		spaceCreator();
+		positionCreator();
 
-		setTimeout(() => {
-			switch (e.keyCode) {
-				case 87:
-					// W UP
-					if (!move('up')) {
-						clearTimeout(keyDownTimer);
-					}
-					break;
-				case 83:
-					// S Down
-					if (!move('down')) {
-						clearTimeout(keyDownTimer);
-					}
-					break;
-				case 68:
-					// D Right
-					if (!move('right')) {
-						clearTimeout(keyDownTimer);
-					}
-					break;
-				case 65:
-					// A Left
-					if (!move('left')) {
-						clearTimeout(keyDownTimer);
-					}
-					break;
-			}
-		}, 100);
-	};
+		canvasWidth =
+			document.body.clientWidth < 600
+				? document.body.clientWidth
+				: Math.floor(document.body.clientWidth * 0.7);
+		canvasHeight =
+			document.body.clientWidth < 600
+				? document.body.clientHeight
+				: Math.floor(document.body.clientHeight * 0.7);
+		cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
+		cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
-	onMount(async () => {
-		console.log('start');
-		await spaceCreator();
-		console.log('Done created spaces');
-		await positionCreator();
-		console.log('Done positioned spaces');
+		paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+		paintAnimatedSpaces(canvasBeings, cameraSpacesWidth, cameraSpacesHeight);
 
-		const userSpaceNode = document.querySelector('.highlight');
-
-		if (userSpaceNode) {
-			userSpaceNode.scrollIntoView({
-				behavior: 'smooth',
-				block: 'center',
-				inline: 'center'
-			});
-		}
+		user.subscribe((_) => {
+			paintBoard(canvasBoard, cameraSpacesWidth, cameraSpacesHeight);
+		});
 	});
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<table class="board" style={cssVariableStyle}>
-	{#if $spaces.length > 0}
-		{#each Array(numberOfSpaces / spacesPerRow) as _, rowId}
-			<tr width={spaceWidth * spacesPerRow} height={spaceWidth}>
-				{#each Array(spacesPerRow) as _, spaceId}
-					<Space space={$spaces[rowId * spacesPerRow + spaceId]} />
-				{/each}
-			</tr>
-		{/each}
-	{/if}
-</table>
+<div class="container" style={`width: ${canvasWidth}px`}>
+	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBoard} />
+	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBeings} />
+</div>
 
 <style>
-	.board {
-		table-layout: fixed;
-		width: calc(var(--space-width) * var(--spaces-per-row));
+	.container {
+		position: relative;
+		display: block;
+		margin: 40px auto;
+	}
+	canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	@media (max-width: 600px) {
+		.container {
+			margin: 0 auto;
+		}
 	}
 </style>

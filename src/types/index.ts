@@ -5,8 +5,11 @@ export type Space = {
 	effect?: 'zoomOut';
 };
 
+export type SpriteIds = 'coin' | 'monster';
+
 export type SpaceContent = {
-	icon: string;
+	icon?: string;
+	spriteId?: SpriteIds;
 	label: string;
 	solid: boolean;
 	eatable: boolean;
@@ -22,5 +25,19 @@ export type Inventory = {
 
 export type User = {
 	position: number;
+	row: number;
+	column: number;
 	alive: boolean;
+};
+
+export type Sprite = {
+	image: HTMLImageElement;
+	sx: number;
+	sy: number;
+	sw: number;
+	sh: number;
+	dx: number;
+	dy: number;
+	dw: number;
+	dh: number;
 };

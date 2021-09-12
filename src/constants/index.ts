@@ -1,5 +1,9 @@
 import type { SpaceContent } from '../types';
 
+export const numberOfSpaces = 10000;
+export const spaceWidth = 36;
+export const spacesPerRow = 100;
+
 export const emptyContent: SpaceContent = {
 	icon: '',
 	label: '',
@@ -30,6 +34,7 @@ export const surroundings: SpaceContent[] = [
 	{ icon: '🌾', label: 'Sheif of rice', solid: true, eatable: false, enemy: false }
 ];
 export const eatables: SpaceContent[] = [
+	{ spriteId: 'coin', label: 'Money', solid: false, eatable: true, enemy: false },
 	{ icon: '🍒', label: 'Cherry', solid: false, eatable: true, enemy: false },
 	{ icon: '🍖', label: 'Meat bone', solid: false, eatable: true, enemy: false },
 	{ icon: '🍇', label: 'Grapes', solid: false, eatable: true, enemy: false },
@@ -38,14 +43,13 @@ export const eatables: SpaceContent[] = [
 	{ icon: '🍍', label: 'Pinaple', solid: false, eatable: true, enemy: false },
 	{ icon: '🍎', label: 'Apple', solid: false, eatable: true, enemy: false },
 	{ icon: '🍓', label: 'Strawberry', solid: false, eatable: true, enemy: false },
-	{ icon: '🥝', label: 'Kiwi', solid: false, eatable: true, enemy: false },
-	{ icon: '🥦', label: 'Broccoli', solid: false, eatable: true, enemy: false },
 	{ icon: '🍄', label: 'Mushroom', solid: false, eatable: true, enemy: false },
 	{ icon: '🥐', label: 'Croissant', solid: false, eatable: true, enemy: false },
 	{ icon: '🧀', label: 'Cheese', solid: false, eatable: true, enemy: false },
 	{ icon: '🍰', label: 'Cake', solid: false, eatable: true, enemy: false }
 ];
 export const enemies: SpaceContent[] = [
+	{ spriteId: 'monster', label: 'Monster', solid: false, eatable: false, enemy: true },
 	{ icon: '🐙', label: 'Squid', solid: false, eatable: false, enemy: true },
 	{ icon: '🦂', label: 'Scorpion', solid: false, eatable: false, enemy: true },
 	{ icon: '🕷', label: 'Spider', solid: false, eatable: false, enemy: true },
@@ -56,7 +60,3 @@ export const enemies: SpaceContent[] = [
 	{ icon: '🦇', label: 'Bat', solid: false, eatable: false, enemy: true },
 	{ icon: '🐊', label: 'Crocodile', solid: false, eatable: false, enemy: true }
 ];
-
-export const numberOfSpaces = 6000;
-export const spaceWidth = 36;
-export const spacesPerRow = 100;

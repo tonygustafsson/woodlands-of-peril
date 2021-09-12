@@ -97,3 +97,40 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	return true;
 };
+
+let keyDownTimer;
+
+export const handleKeydown = (e) => {
+	if (keyDownTimer) {
+		return clearTimeout(keyDownTimer);
+	}
+
+	setTimeout(() => {
+		switch (e.keyCode) {
+			case 87:
+				// W UP
+				if (!move('up')) {
+					clearTimeout(keyDownTimer);
+				}
+				break;
+			case 83:
+				// S Down
+				if (!move('down')) {
+					clearTimeout(keyDownTimer);
+				}
+				break;
+			case 68:
+				// D Right
+				if (!move('right')) {
+					clearTimeout(keyDownTimer);
+				}
+				break;
+			case 65:
+				// A Left
+				if (!move('left')) {
+					clearTimeout(keyDownTimer);
+				}
+				break;
+		}
+	}, 100);
+};
