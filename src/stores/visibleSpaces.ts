@@ -30,7 +30,6 @@ const visibleSpacesStore = () => {
 		subscribe,
 		setVisibleBlocks: () => {
 			const visibleSpaces = [];
-			let noOfBlocks = 0;
 
 			for (let x = 0; x < numberOfSpaces; x++) {
 				const spacePos = getBoardPosition(x);
@@ -45,11 +44,10 @@ const visibleSpacesStore = () => {
 					continue;
 				}
 
-				noOfBlocks++;
 				visibleSpaces[x] = $spaces[x];
 			}
 
-			console.log('Visible blocks', noOfBlocks);
+			console.log('Visible blocks', Object.keys(visibleSpaces).length);
 			set(visibleSpaces);
 		}
 	};
