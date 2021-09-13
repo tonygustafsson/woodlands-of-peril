@@ -3,15 +3,17 @@
 	import { user } from '../stores/user';
 	import { visibleSpaces } from '../stores/visibleSpaces';
 	import { canvas } from '../stores/canvas';
+	import { spacesPerRow, numberOfSpaces } from '../constants';
 </script>
 
 <div class="inventory">
 	<h3>Position</h3>
 	<div class="item">
 		User: {$user.row} x {$user.column}<br />
-		Board size: {$canvas.cameraSpacesWidth}x{$canvas.cameraSpacesHeight} ({$canvas.cameraSpacesWidth *
+		View size: {$canvas.cameraSpacesWidth}x{$canvas.cameraSpacesHeight} ({$canvas.cameraSpacesWidth *
 			$canvas.cameraSpacesHeight})<br />
-		Visible spaces: {Object.keys($visibleSpaces).length}
+		Visible spaces: {Object.keys($visibleSpaces).length}<br />
+		Board size: {spacesPerRow}x{Math.floor(numberOfSpaces / spacesPerRow)} ({numberOfSpaces})<br />
 	</div>
 
 	{#if $inventory.length > 0}

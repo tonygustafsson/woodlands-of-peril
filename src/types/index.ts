@@ -1,5 +1,7 @@
 export type Space = {
 	id: number;
+	row: number;
+	column: number;
 	content: SpaceContent;
 	background?: 'default' | 'highlight';
 	effect?: 'zoomOut';

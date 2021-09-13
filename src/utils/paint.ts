@@ -45,11 +45,9 @@ const startPainting = (
 		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
 
-		$visibleSpaces.forEach((space: SpaceType, index: number) => {
-			const spacePos = getBoardPosition(index);
-
-			const rowsFromUser = spacePos.row - $user.row;
-			const columnsFromUser = spacePos.column - $user.column;
+		$visibleSpaces.forEach((space: SpaceType) => {
+			const rowsFromUser = space.row - $user.row;
+			const columnsFromUser = space.column - $user.column;
 
 			if (showBoard && (space.content.enemy || space.content.eatable)) {
 				// Only paint board

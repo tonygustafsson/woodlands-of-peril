@@ -4,12 +4,14 @@ import { randomInArray } from '../utils/array';
 import type { SpaceContent, Space as SpaceType } from '../types';
 import { userContent } from '../constants';
 import { user } from './user';
+import { getBoardPosition } from '../utils/board';
 
 const createSpaces: () => SpaceType[] = () => {
 	const spaces = [];
 
 	for (let x = 0; x < numberOfSpaces; x++) {
 		let newContent: SpaceContent = emptyContent;
+		const boardPosition = getBoardPosition(x);
 
 		if (Math.random() > 0.7) {
 			newContent = randomInArray(surroundings);
@@ -21,6 +23,8 @@ const createSpaces: () => SpaceType[] = () => {
 
 		const newSpace: SpaceType = {
 			id: x,
+			row: boardPosition.row,
+			column: boardPosition.column,
 			content: newContent,
 			background: 'default'
 		};
@@ -38,8 +42,12 @@ const createSpaces: () => SpaceType[] = () => {
 			continue;
 		}
 
+		const boardPosition = getBoardPosition(randomSpace.id);
+
 		const newSpace: SpaceType = {
 			id: randomSpace.id,
+			row: boardPosition.row,
+			column: boardPosition.column,
 			content: userContent,
 			background: 'highlight',
 			effect: 'zoomOut'
