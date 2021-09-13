@@ -2,12 +2,15 @@
 	import { inventory } from '../stores/inventory';
 	import { user } from '../stores/user';
 	import { visibleSpaces } from '../stores/visibleSpaces';
+	import { canvas } from '../stores/canvas';
 </script>
 
 <div class="inventory">
 	<h3>Position</h3>
 	<div class="item">
 		User: {$user.row} x {$user.column}<br />
+		Board size: {$canvas.cameraSpacesWidth}x{$canvas.cameraSpacesHeight} ({$canvas.cameraSpacesWidth *
+			$canvas.cameraSpacesHeight})<br />
 		Visible spaces: {Object.keys($visibleSpaces).length}
 	</div>
 

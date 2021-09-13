@@ -1,9 +1,22 @@
 import { spaceWidth } from '../constants';
+import type { Space as SpaceType } from '../types';
 import { getBoardPosition } from './board';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import { coinSprite, monsterSprite } from '../stores/sprites';
+
+const getSpaceBackgroundColor = (space: SpaceType): string => {
+	if (space.background === 'highlight') {
+		return '#333';
+	}
+
+	if (space.content.solid) {
+		return '#200000';
+	}
+
+	return '#000';
+};
 
 const startPainting = (
 	canvas: HTMLCanvasElement,
@@ -32,7 +45,7 @@ const startPainting = (
 		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
 
-		$visibleSpaces.forEach((space, index) => {
+		$visibleSpaces.forEach((space: SpaceType, index: number) => {
 			const spacePos = getBoardPosition(index);
 
 			const rowsFromUser = spacePos.row - $user.row;
@@ -53,7 +66,7 @@ const startPainting = (
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
 
-			ctx.fillStyle = space.background === 'highlight' ? '#333' : '#000';
+			ctx.fillStyle = getSpaceBackgroundColor(space);
 			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
 
 			// Draw rectangle
