@@ -1,35 +1,21 @@
 import { get, writable } from 'svelte/store';
-import { user } from './user';
+import { canvas } from './canvas';
 import { spaces } from './spaces';
-import { numberOfSpaces, spaceWidth } from '../constants';
+import { numberOfSpaces } from '../constants';
 import { getBoardPosition } from '../utils/board';
 
 const $spaces = get(spaces);
 
-const canvasWidth =
-	document.body.clientWidth < 600
-		? document.body.clientWidth
-		: Math.floor(document.body.clientWidth * 0.7);
-const canvasHeight =
-	document.body.clientWidth < 600
-		? document.body.clientHeight
-		: Math.floor(document.body.clientHeight * 0.7);
-
-const cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
-const cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
-
 const initValue = [];
-
-let userRow = 0;
-let userColumn = 0;
 
 const visibleSpacesStore = () => {
 	const { subscribe, set } = writable(initValue);
 
 	return {
 		subscribe,
-		setVisibleBlocks: () => {
+		locateAndSave: (userRow, userColumn) => {
 			const visibleSpaces = [];
+			const $canvas = get(canvas);
 
 			for (let x = 0; x < numberOfSpaces; x++) {
 				const spacePos = getBoardPosition(x);
@@ -38,8 +24,8 @@ const visibleSpacesStore = () => {
 				const columnsFromUser = spacePos.column - userColumn;
 
 				if (
-					Math.abs(rowsFromUser) > cameraSpacesHeight / 2 &&
-					Math.abs(columnsFromUser) > cameraSpacesWidth / 2
+					Math.abs(rowsFromUser) > $canvas.cameraSpacesHeight / 2 &&
+					Math.abs(columnsFromUser) > $canvas.cameraSpacesWidth / 2
 				) {
 					continue;
 				}
@@ -47,16 +33,9 @@ const visibleSpacesStore = () => {
 				visibleSpaces[x] = $spaces[x];
 			}
 
-			console.log('Visible blocks', Object.keys(visibleSpaces).length);
 			set(visibleSpaces);
 		}
 	};
 };
 
 export const visibleSpaces = visibleSpacesStore();
-
-user.subscribe(($user) => {
-	userRow = $user.row;
-	userColumn = $user.column;
-	visibleSpaces.setVisibleBlocks();
-});

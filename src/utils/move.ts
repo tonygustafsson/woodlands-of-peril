@@ -35,7 +35,6 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	if (!$spaces[newPosition]) {
-		console.log('Space does not exist', $spaces[newPosition]);
 		return; // Space does not exist
 	}
 

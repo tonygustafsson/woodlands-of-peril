@@ -1,29 +1,41 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { handleKeydown } from '../utils/move';
+	import { spaceWidth } from '../constants';
 	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
 	import { user } from '../stores/user';
+	import { canvas } from '../stores/canvas';
+	import { visibleSpaces } from '../stores/visibleSpaces';
 
 	let canvasBoard;
 	let canvasBeings;
 
-	$: canvasWidth = 0;
-	$: canvasHeight = 0;
-
 	onMount(() => {
-		canvasWidth =
+		const canvasWidth =
 			document.body.clientWidth < 600
 				? document.body.clientWidth
 				: Math.floor(document.body.clientWidth * 0.7);
-		canvasHeight =
+		const canvasHeight =
 			document.body.clientWidth < 600
 				? document.body.clientHeight
 				: Math.floor(document.body.clientHeight * 0.7);
 
-		paintBoard(canvasBoard);
+		const cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
+		const cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
+
+		canvas.set({
+			width: canvasWidth,
+			height: canvasHeight,
+			cameraSpacesWidth,
+			cameraSpacesHeight
+		});
+
+		// Create animation loop
 		paintAnimatedSpaces(canvasBeings);
 
-		user.subscribe((_) => {
+		user.subscribe(() => {
+			visibleSpaces.locateAndSave($user.row, $user.column);
+
 			paintBoard(canvasBoard);
 		});
 	});
@@ -31,9 +43,9 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="container" style={`width: ${canvasWidth}px`}>
-	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBoard} />
-	<canvas width={canvasWidth} height={canvasHeight} bind:this={canvasBeings} />
+<div class="container" style={`width: ${$canvas.width}px`}>
+	<canvas width={$canvas.width} height={$canvas.height} bind:this={canvasBoard} />
+	<canvas width={$canvas.width} height={$canvas.height} bind:this={canvasBeings} />
 </div>
 
 <style>
