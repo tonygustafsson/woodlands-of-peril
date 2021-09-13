@@ -1,6 +1,5 @@
 import { spaceWidth } from '../constants';
 import type { Space as SpaceType } from '../types';
-import { getBoardPosition } from './board';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
