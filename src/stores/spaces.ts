@@ -1,5 +1,5 @@
 import { writable, get } from 'svelte/store';
-import { emptyContent, surroundings, eatables, enemies, numberOfSpaces } from '../constants';
+import { emptyContent, surroundings, collectables, enemies, numberOfSpaces } from '../constants';
 import { randomInArray } from '../utils/array';
 import type { SpaceContent, Space as SpaceType } from '../types';
 import { userContent } from '../constants';
@@ -16,7 +16,7 @@ const createSpaces: () => SpaceType[] = () => {
 		if (Math.random() > 0.7) {
 			newContent = randomInArray(surroundings);
 		} else if (Math.random() > 0.97) {
-			newContent = randomInArray(eatables);
+			newContent = randomInArray(collectables);
 		} else if (Math.random() > 0.96) {
 			newContent = randomInArray(enemies);
 		}
@@ -25,8 +25,7 @@ const createSpaces: () => SpaceType[] = () => {
 			id: x,
 			row: boardPosition.row,
 			column: boardPosition.column,
-			content: newContent,
-			background: 'default'
+			content: newContent
 		};
 
 		spaces.push(newSpace);
@@ -48,9 +47,7 @@ const createSpaces: () => SpaceType[] = () => {
 			id: randomSpace.id,
 			row: boardPosition.row,
 			column: boardPosition.column,
-			content: userContent,
-			background: 'highlight',
-			effect: 'zoomOut'
+			content: userContent
 		};
 
 		user.setPosition(randomSpace.id);

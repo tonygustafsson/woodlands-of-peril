@@ -6,15 +6,27 @@ import { get } from 'svelte/store';
 import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
-	if (space.background === 'highlight') {
+	if (space.content.label === 'User') {
 		return '#333';
 	}
 
-	if (space.content.solid) {
+	if (space.content.enemy) {
 		return '#200000';
 	}
 
+	if (space.content.solid) {
+		return '#001500s';
+	}
+
 	return '#000';
+};
+
+const getSpaceStrokeColor = (space: SpaceType): string => {
+	if (space.content.label === 'User') {
+		return '#888';
+	}
+
+	return '#333';
 };
 
 const startPainting = (
@@ -48,13 +60,13 @@ const startPainting = (
 			const rowsFromUser = space.row - $user.row;
 			const columnsFromUser = space.column - $user.column;
 
-			if (showBoard && (space.content.enemy || space.content.eatable)) {
+			if (showBoard && (space.content.enemy || space.content.collectable)) {
 				// Only paint board
 				return;
 			}
 
-			if (showBeings && !space.content.enemy && !space.content.eatable) {
-				// Only paint beings
+			if (showBeings && !space.content.enemy && !space.content.collectable) {
+				// Only paint animated spaces
 				return;
 			}
 
@@ -64,7 +76,7 @@ const startPainting = (
 			const left = userX + columnsFromUser * spaceWidth;
 
 			ctx.fillStyle = getSpaceBackgroundColor(space);
-			ctx.strokeStyle = space.background === 'highlight' ? '#888' : '#333';
+			ctx.strokeStyle = getSpaceStrokeColor(space);
 
 			// Draw rectangle
 			ctx.beginPath();

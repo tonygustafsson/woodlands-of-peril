@@ -3,8 +3,6 @@ export type Space = {
 	row: number;
 	column: number;
 	content: SpaceContent;
-	background?: 'default' | 'highlight';
-	effect?: 'zoomOut';
 };
 
 export type SpriteIds = 'coin' | 'monster' | 'wizard';
@@ -14,7 +12,7 @@ export type SpaceContent = {
 	spriteId?: SpriteIds;
 	label: string;
 	solid: boolean;
-	eatable: boolean;
+	collectable: boolean;
 	enemy: boolean;
 };
 

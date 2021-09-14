@@ -42,7 +42,7 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Cannot move through solid materials
 	}
 
-	if ($spaces[newPosition].content.eatable) {
+	if ($spaces[newPosition].content.collectable) {
 		// Eat it!
 		inventory.update((inventory) => {
 			const oldValue = inventory.find((item) => item.label === $spaces[newPosition].content.label);
@@ -62,9 +62,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	const newOldSpace: SpaceType = {
 		...$spaces[$user.position],
-		content: emptyContent,
-		background: 'default',
-		effect: null
+		content: emptyContent
 	};
 	spaces.setSpace($user.position, newOldSpace);
 
@@ -76,9 +74,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	const newNewSpace: SpaceType = {
 		...$spaces[newPosition],
-		content: newUserContent,
-		background: 'highlight',
-		effect: null
+		content: newUserContent
 	};
 
 	spaces.setSpace(newPosition, newNewSpace);
