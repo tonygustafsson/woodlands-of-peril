@@ -3,7 +3,7 @@ import type { Space as SpaceType } from '../types';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
-import { coinSprite, monsterSprite } from '../stores/sprites';
+import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
 	if (space.background === 'highlight') {
@@ -84,6 +84,9 @@ const startPainting = (
 						break;
 					case 'monster':
 						sprite = get(monsterSprite);
+						break;
+					case 'wizard':
+						sprite = get(wizardSprite);
 						break;
 				}
 

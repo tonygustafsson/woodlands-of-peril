@@ -50,7 +50,7 @@ export const eatables: SpaceContent[] = [
 ];
 export const enemies: SpaceContent[] = [
 	{ spriteId: 'monster', label: 'Monster', solid: false, eatable: false, enemy: true },
-	{ icon: '🐙', label: 'Squid', solid: false, eatable: false, enemy: true },
+	{ spriteId: 'wizard', label: 'Wizard', solid: false, eatable: false, enemy: true },
 	{ icon: '🦂', label: 'Scorpion', solid: false, eatable: false, enemy: true },
 	{ icon: '🕷', label: 'Spider', solid: false, eatable: false, enemy: true },
 	{ icon: '😈', label: 'Devil', solid: false, eatable: false, enemy: true },

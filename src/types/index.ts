@@ -7,7 +7,7 @@ export type Space = {
 	effect?: 'zoomOut';
 };
 
-export type SpriteIds = 'coin' | 'monster';
+export type SpriteIds = 'coin' | 'monster' | 'wizard';
 
 export type SpaceContent = {
 	icon?: string;
