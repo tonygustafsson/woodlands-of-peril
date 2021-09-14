@@ -6,10 +6,12 @@ export type Space = {
 };
 
 export type SpriteIds = 'coin' | 'monster' | 'wizard';
+export type TileIds = 'grass' | 'rock' | 'water' | 'tree1' | 'tree2' | 'flower1';
 
 export type SpaceContent = {
 	icon?: string;
 	spriteId?: SpriteIds;
+	tileId?: TileIds;
 	label: string;
 	solid: boolean;
 	collectable: boolean;

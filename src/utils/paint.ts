@@ -4,8 +4,14 @@ import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
+import { fetchTiles } from '../utils/tiles';
+import type { TileImage } from '../utils/tiles';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
+	if (space.content.spriteId) {
+		return '';
+	}
+
 	if (space.content.label === 'User') {
 		return '#333';
 	}
@@ -33,7 +39,8 @@ const startPainting = (
 	canvas: HTMLCanvasElement,
 	continiousLoop: boolean,
 	showBoard: boolean,
-	showBeings: boolean
+	showBeings: boolean,
+	tiles?: TileImage[]
 ): void => {
 	const fontSize = 20;
 	const font = 'verdana';
@@ -60,7 +67,7 @@ const startPainting = (
 			const rowsFromUser = space.row - $user.row;
 			const columnsFromUser = space.column - $user.column;
 
-			if (showBoard && (space.content.enemy || space.content.collectable)) {
+			if (showBoard && !space.content.solid) {
 				// Only paint board
 				return;
 			}
@@ -115,6 +122,15 @@ const startPainting = (
 				);
 			}
 
+			// Add tile
+			if (space.content.tileId && tiles) {
+				const tileImage: TileImage = tiles.find((tile) => tile.id === space.content.tileId);
+
+				if (tileImage) {
+					ctx.drawImage(tileImage.image, left, top);
+				}
+			}
+
 			// Add icon
 			if (space.content.icon) {
 				ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
@@ -125,12 +141,13 @@ const startPainting = (
 	window.requestAnimationFrame(loop);
 };
 
-export const paintBoard = (canvas: HTMLCanvasElement): void => {
+export const paintBoard = async (canvas: HTMLCanvasElement): Promise<void> => {
 	const continiousLoop = false;
 	const showBoard = true;
 	const showBeings = false;
+	const tiles = await fetchTiles();
 
-	startPainting(canvas, continiousLoop, showBoard, showBeings);
+	startPainting(canvas, continiousLoop, showBoard, showBeings, tiles);
 };
 
 export const paintAnimatedSpaces = (canvas: HTMLCanvasElement): void => {

@@ -14,24 +14,24 @@ export const emptyContent: SpaceContent = {
 export const userContent: SpaceContent = {
 	icon: '😺',
 	label: 'User',
-	solid: false,
+	solid: true,
 	collectable: false,
 	enemy: false
 };
 export const deadContent: SpaceContent = {
 	icon: '🪦',
 	label: 'User',
-	solid: false,
+	solid: true,
 	collectable: false,
 	enemy: false
 };
 export const surroundings: SpaceContent[] = [
-	{ icon: '🌲', label: 'Pine tree', solid: true, collectable: false, enemy: false },
-	{ icon: '🌴', label: 'Palm tree', solid: true, collectable: false, enemy: false },
-	{ icon: '🌵', label: 'Cactus', solid: true, collectable: false, enemy: false },
-	{ icon: '🪨', label: 'Stone', solid: true, collectable: false, enemy: false },
-	{ icon: '🌻', label: 'Sunflower', solid: true, collectable: false, enemy: false },
-	{ icon: '🌾', label: 'Sheif of rice', solid: true, collectable: false, enemy: false }
+	{ tileId: 'grass', label: 'Grass', solid: true, collectable: false, enemy: false },
+	{ tileId: 'rock', label: 'Rock', solid: true, collectable: false, enemy: false },
+	{ tileId: 'water', label: 'Water', solid: true, collectable: false, enemy: false },
+	{ tileId: 'tree1', label: 'Tree 1', solid: true, collectable: false, enemy: false },
+	{ tileId: 'tree2', label: 'Tree 2', solid: true, collectable: false, enemy: false },
+	{ tileId: 'flower1', label: 'Flower 1', solid: true, collectable: false, enemy: false }
 ];
 export const collectables: SpaceContent[] = [
 	{ spriteId: 'coin', label: 'Money', solid: false, collectable: true, enemy: false },
