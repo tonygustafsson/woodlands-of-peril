@@ -15,7 +15,7 @@ const getSpaceBackgroundColor = (space: SpaceType): string => {
 	}
 
 	if (space.content.solid) {
-		return '#001500s';
+		return '#001500';
 	}
 
 	return '#000';

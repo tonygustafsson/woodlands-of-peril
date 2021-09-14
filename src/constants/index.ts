@@ -14,14 +14,14 @@ export const emptyContent: SpaceContent = {
 export const userContent: SpaceContent = {
 	icon: '😺',
 	label: 'User',
-	solid: true,
+	solid: false,
 	collectable: false,
 	enemy: false
 };
 export const deadContent: SpaceContent = {
 	icon: '🪦',
 	label: 'User',
-	solid: true,
+	solid: false,
 	collectable: false,
 	enemy: false
 };
