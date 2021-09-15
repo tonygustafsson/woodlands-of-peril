@@ -4,7 +4,7 @@ import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
-import type { TileImage } from '../stores/assets';
+import type { AssetImage } from '../stores/assets';
 import assets from '../stores/assets';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
@@ -50,8 +50,8 @@ const startPainting = (
 			window.requestAnimationFrame(loop);
 		}
 
-		const $user = get(user);
 		const $assets = get(assets);
+		const $user = get(user);
 		const $visibleSpaces = get(visibleSpaces);
 
 		const ctx = canvas.getContext('2d');
@@ -124,7 +124,7 @@ const startPainting = (
 
 			// Add tile
 			if (space.content.tileId) {
-				const tileImage: TileImage = $assets.assets.find(
+				const tileImage: AssetImage = $assets.tiles.find(
 					(tile) => tile.id === space.content.tileId
 				);
 

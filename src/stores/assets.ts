@@ -1,30 +1,43 @@
 import { writable } from 'svelte/store';
 
 const tileSources: string[] = ['grass', 'rock', 'water', 'tree1', 'tree2', 'flower1'];
+const spriteSources: string[] = ['coin', 'monster', 'wizard'];
 
-export type TileImage = {
+export type AssetImage = {
 	id: string;
 	image: HTMLImageElement;
 };
 
 type Assets = {
-	assets: TileImage[];
+	tiles: AssetImage[];
+	sprites: AssetImage[];
 	done: boolean;
 };
 
 const initValue: Assets = {
-	assets: [],
+	tiles: [],
+	sprites: [],
 	done: false
 };
 
-const fetchTile = (tileSource): Promise<TileImage> =>
+const fetchTile = (tileSource): Promise<AssetImage> =>
 	new Promise((resolve) => {
 		const img = new Image();
 		img.onload = () => resolve({ id: tileSource, image: img });
 		img.onerror = () => resolve({ id: tileSource, image: img });
 
 		img.src = `./tiles/${tileSource}.png`;
-		console.log('Loaded ' + img.src);
+		console.log('Loaded tile ' + img.src);
+	});
+
+const fetchSprite = (tileSource): Promise<AssetImage> =>
+	new Promise((resolve) => {
+		const img = new Image();
+		img.onload = () => resolve({ id: tileSource, image: img });
+		img.onerror = () => resolve({ id: tileSource, image: img });
+
+		img.src = `./sprites/${tileSource}.png`;
+		console.log('Loaded sprite ' + img.src);
 	});
 
 const assetsStore = () => {
@@ -33,10 +46,12 @@ const assetsStore = () => {
 	return {
 		subscribe,
 		fetch: async () => {
-			const newTiles = await Promise.all(tileSources.map(fetchTile));
+			const tiles = await Promise.all(tileSources.map(fetchTile));
+			const sprites = await Promise.all(spriteSources.map(fetchSprite));
 
 			set({
-				assets: newTiles,
+				tiles,
+				sprites,
 				done: true
 			});
 		}
