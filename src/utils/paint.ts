@@ -8,10 +8,6 @@ import type { AssetImage } from '../stores/assets';
 import assets from '../stores/assets';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
-	if (space.content.spriteId) {
-		return '';
-	}
-
 	if (space.content.label === 'User') {
 		return '#333';
 	}
