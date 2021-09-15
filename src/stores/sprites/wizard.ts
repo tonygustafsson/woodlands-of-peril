@@ -1,11 +1,8 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import type { Sprite } from '../../types';
 import assets from '../assets';
 
-const $assets = get(assets);
-const spriteAsset = $assets.sprites.find((sprite) => sprite.id === 'wizard');
-const spriteImage = spriteAsset ? spriteAsset.image : null;
-
+const spriteId = 'wizard';
 const noOfSprites = 4;
 const frameSpeed = 100;
 const spriteWidth = 32;
@@ -14,7 +11,7 @@ const spriteHeight = 48;
 let currentSprite = 0;
 
 const initValue: Sprite = {
-	image: spriteImage,
+	image: null,
 	sx: 0,
 	sy: 0,
 	sw: spriteWidth,
@@ -37,8 +34,8 @@ const spriteStore = () => {
 const sprite = spriteStore();
 
 assets.subscribe(($assets) => {
-	if ($assets.done && !spriteAsset) {
-		const spriteAsset = $assets.sprites.find((sprite) => sprite.id === 'wizard');
+	if ($assets.done) {
+		const spriteAsset = $assets.sprites.find((sprite) => sprite.id === spriteId);
 		const spriteImage = spriteAsset ? spriteAsset.image : null;
 
 		sprite.update((sprite) => {
