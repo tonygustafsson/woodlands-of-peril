@@ -3,7 +3,7 @@ import type { Space as SpaceType } from '../types';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
-import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
+import sprites from '../stores/sprites';
 import type { AssetImage } from '../stores/assets';
 import assets from '../stores/assets';
 
@@ -51,6 +51,7 @@ const startPainting = (
 		}
 
 		const $assets = get(assets);
+		const $sprites = get(sprites);
 		const $user = get(user);
 		const $visibleSpaces = get(visibleSpaces);
 
@@ -95,19 +96,7 @@ const startPainting = (
 			if (space.content.spriteId) {
 				const dx = left + 6;
 				const dy = top + 6;
-				let sprite;
-
-				switch (space.content.spriteId) {
-					case 'coin':
-						sprite = get(coinSprite);
-						break;
-					case 'monster':
-						sprite = get(monsterSprite);
-						break;
-					case 'wizard':
-						sprite = get(wizardSprite);
-						break;
-				}
+				const sprite = $sprites[space.content.spriteId];
 
 				ctx.drawImage(
 					sprite.image,

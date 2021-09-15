@@ -42,4 +42,5 @@ export type Sprite = {
 	dy: number;
 	dw: number;
 	dh: number;
+	currentFrame: number;
 };
