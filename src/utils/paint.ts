@@ -4,8 +4,8 @@ import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import { coinSprite, monsterSprite, wizardSprite } from '../stores/sprites';
-import { fetchTiles } from '../utils/tiles';
-import type { TileImage } from '../utils/tiles';
+import type { TileImage } from '../stores/assets';
+import assets from '../stores/assets';
 
 const getSpaceBackgroundColor = (space: SpaceType): string => {
 	if (space.content.spriteId) {
@@ -39,8 +39,7 @@ const startPainting = (
 	canvas: HTMLCanvasElement,
 	continiousLoop: boolean,
 	showBoard: boolean,
-	showBeings: boolean,
-	tiles?: TileImage[]
+	showBeings: boolean
 ): void => {
 	const fontSize = 20;
 	const font = 'verdana';
@@ -52,6 +51,7 @@ const startPainting = (
 		}
 
 		const $user = get(user);
+		const $assets = get(assets);
 		const $visibleSpaces = get(visibleSpaces);
 
 		const ctx = canvas.getContext('2d');
@@ -123,8 +123,10 @@ const startPainting = (
 			}
 
 			// Add tile
-			if (space.content.tileId && tiles) {
-				const tileImage: TileImage = tiles.find((tile) => tile.id === space.content.tileId);
+			if (space.content.tileId) {
+				const tileImage: TileImage = $assets.assets.find(
+					(tile) => tile.id === space.content.tileId
+				);
 
 				if (tileImage) {
 					ctx.drawImage(tileImage.image, left, top);
@@ -145,9 +147,8 @@ export const paintBoard = async (canvas: HTMLCanvasElement): Promise<void> => {
 	const continiousLoop = false;
 	const showBoard = true;
 	const showBeings = false;
-	const tiles = await fetchTiles();
 
-	startPainting(canvas, continiousLoop, showBoard, showBeings, tiles);
+	startPainting(canvas, continiousLoop, showBoard, showBeings);
 };
 
 export const paintAnimatedSpaces = (canvas: HTMLCanvasElement): void => {

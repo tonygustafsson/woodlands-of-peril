@@ -3,9 +3,15 @@
 </script>
 
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Board from '$lib/Board.svelte';
 	import Inventory from '$lib/Inventory.svelte';
+	import assets from '../stores/assets';
 	import '../app.css';
+
+	onMount(() => {
+		assets.fetch();
+	});
 </script>
 
 <svelte:head>
@@ -13,8 +19,12 @@
 </svelte:head>
 
 <section>
-	<Inventory />
-	<Board />
+	{#if $assets.done}
+		<Inventory />
+		<Board />
+	{:else}
+		<p>Loading resources.</p>
+	{/if}
 </section>
 
 <style>
