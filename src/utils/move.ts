@@ -86,7 +86,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 let keyDownTimer;
 
-export const handleKeydown = (e) => {
+export const handleKeydown = (e: KeyboardEvent): void => {
 	if (keyDownTimer) {
 		return clearTimeout(keyDownTimer);
 	}

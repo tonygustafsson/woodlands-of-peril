@@ -4,7 +4,7 @@
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
 	import { user } from '../stores/user';
-	import { canvas } from '../stores/canvas';
+	import { canvas as canvasStore } from '../stores/canvas';
 	import { visibleSpaces } from '../stores/visibleSpaces';
 
 	let canvasBoard;
@@ -23,7 +23,7 @@
 		const cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
 		const cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
 
-		canvas.set({
+		canvasStore.set({
 			width: canvasWidth,
 			height: canvasHeight,
 			cameraSpacesWidth,
@@ -43,9 +43,9 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="container" style={`width: ${$canvas.width}px`}>
-	<canvas width={$canvas.width} height={$canvas.height} bind:this={canvasBoard} />
-	<canvas width={$canvas.width} height={$canvas.height} bind:this={canvasBeings} />
+<div class="container" style={`width: ${$canvasStore.width}px`}>
+	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBoard} />
+	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBeings} />
 </div>
 
 <style>
