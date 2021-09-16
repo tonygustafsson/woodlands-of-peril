@@ -18,6 +18,11 @@ export type SpaceContent = {
 	enemy: boolean;
 };
 
+export type BoardPosition = {
+	row: number;
+	column: number;
+};
+
 export type Direction = 'left' | 'right' | 'up' | 'down';
 
 export type Inventory = {
@@ -30,6 +35,17 @@ export type User = {
 	row: number;
 	column: number;
 	alive: boolean;
+};
+
+export type AssetImage = {
+	id: string;
+	image: HTMLImageElement;
+};
+
+export type Assets = {
+	tiles: AssetImage[];
+	sprites: AssetImage[];
+	done: boolean;
 };
 
 export type Sprite = {

@@ -1,18 +1,8 @@
 import { writable } from 'svelte/store';
+import type { AssetImage, Assets } from '../types';
 
 const tileSources: string[] = ['grass', 'rock', 'water', 'tree1', 'tree2', 'flower1'];
 const spriteSources: string[] = ['coin', 'monster', 'wizard'];
-
-export type AssetImage = {
-	id: string;
-	image: HTMLImageElement;
-};
-
-type Assets = {
-	tiles: AssetImage[];
-	sprites: AssetImage[];
-	done: boolean;
-};
 
 const initValue: Assets = {
 	tiles: [],

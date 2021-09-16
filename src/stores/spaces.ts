@@ -8,13 +8,13 @@ import {
 	spacesPerRow
 } from '../constants';
 import { randomInArray } from '../utils/array';
-import type { SpaceContent, Space as SpaceType } from '../types';
+import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
 import { user } from './user';
 import { getBoardPosition } from '../utils/board';
 
-const createSpaces: () => SpaceType[] = () => {
-	const spaces: SpaceType[] = [];
+const createSpaces: () => Space[] = () => {
+	const spaces: Space[] = [];
 
 	for (let x = 0; x < numberOfSpaces; x++) {
 		let newContent: SpaceContent = emptyContent;
@@ -66,7 +66,7 @@ const createSpaces: () => SpaceType[] = () => {
 
 		const boardPosition = getBoardPosition(x);
 
-		const newSpace: SpaceType = {
+		const newSpace: Space = {
 			id: x,
 			row: boardPosition.row,
 			column: boardPosition.column,
@@ -88,7 +88,7 @@ const createSpaces: () => SpaceType[] = () => {
 
 		const boardPosition = getBoardPosition(randomSpace.id);
 
-		const newSpace: SpaceType = {
+		const newSpace: Space = {
 			id: randomSpace.id,
 			row: boardPosition.row,
 			column: boardPosition.column,
@@ -102,7 +102,7 @@ const createSpaces: () => SpaceType[] = () => {
 	return spaces;
 };
 
-const initValue: SpaceType[] = createSpaces();
+const initValue: Space[] = createSpaces();
 
 const spacesStore = () => {
 	const { subscribe, set, update } = writable(initValue);
@@ -110,7 +110,7 @@ const spacesStore = () => {
 	return {
 		subscribe,
 		set,
-		setSpace: (id: number, newSpace: SpaceType) => {
+		setSpace: (id: number, newSpace: Space) => {
 			update((spaces) => {
 				spaces[id] = newSpace;
 				return spaces;

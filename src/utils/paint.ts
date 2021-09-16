@@ -1,13 +1,12 @@
 import { spaceWidth } from '../constants';
-import type { Space as SpaceType } from '../types';
+import type { Space } from '../types';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import sprites from '../stores/sprites';
-import type { AssetImage } from '../stores/assets';
 import assets from '../stores/assets';
 
-const getSpaceBackgroundColor = (space: SpaceType): string => {
+const getSpaceBackgroundColor = (space: Space): string => {
 	if (space.content.label === 'User') {
 		return '#333';
 	}
@@ -23,7 +22,7 @@ const getSpaceBackgroundColor = (space: SpaceType): string => {
 	return '#000';
 };
 
-const getSpaceStrokeColor = (space: SpaceType): string => {
+const getSpaceStrokeColor = (space: Space): string => {
 	if (space.content.label === 'User') {
 		return '#888';
 	}
@@ -60,7 +59,7 @@ const startPainting = (
 		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
 
-		$visibleSpaces.forEach((space: SpaceType) => {
+		$visibleSpaces.forEach((space: Space) => {
 			const rowsFromUser = space.row - $user.row;
 			const columnsFromUser = space.column - $user.column;
 
@@ -109,9 +108,7 @@ const startPainting = (
 
 			// Add tile
 			if (space.content.tileId) {
-				const tileImage: AssetImage = $assets.tiles.find(
-					(tile) => tile.id === space.content.tileId
-				);
+				const tileImage = $assets.tiles.find((tile) => tile.id === space.content.tileId);
 
 				if (tileImage) {
 					ctx.drawImage(tileImage.image, left, top);

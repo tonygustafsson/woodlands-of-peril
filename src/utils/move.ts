@@ -3,7 +3,7 @@ import { inventory } from '../stores/inventory';
 import { get } from 'svelte/store';
 import { spaces } from '../stores/spaces';
 import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
-import type { Direction, Space as SpaceType } from '../types';
+import type { Direction, Space } from '../types';
 
 export const move = (direction: Direction): boolean | undefined => {
 	const $user = get(user);
@@ -60,7 +60,7 @@ export const move = (direction: Direction): boolean | undefined => {
 		});
 	}
 
-	const newOldSpace: SpaceType = {
+	const newOldSpace: Space = {
 		...$spaces[$user.position],
 		content: emptyContent
 	};
@@ -72,7 +72,7 @@ export const move = (direction: Direction): boolean | undefined => {
 		user.setDead();
 	}
 
-	const newNewSpace: SpaceType = {
+	const newNewSpace: Space = {
 		...$spaces[newPosition],
 		content: newUserContent
 	};

@@ -1,9 +1,5 @@
 import { spacesPerRow } from '../constants';
-
-type BoardPosition = {
-	row: number;
-	column: number;
-};
+import type { BoardPosition } from '../types';
 
 export const getBoardPosition = (position: number, fromRow = 0, fromColumn = 0): BoardPosition => {
 	const row = Math.floor(position / spacesPerRow + 1) - fromRow;
