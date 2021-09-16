@@ -63,12 +63,12 @@ const startPainting = (
 			const rowsFromUser = space.row - $user.row;
 			const columnsFromUser = space.column - $user.column;
 
-			if (showBoard && !space.content.solid) {
-				// Only paint board
+			if (showBoard && space.content.spriteId) {
+				// Only paint none animated spaces
 				return;
 			}
 
-			if (showBeings && !space.content.enemy && !space.content.collectable) {
+			if (showBeings && !space.content.spriteId) {
 				// Only paint animated spaces
 				return;
 			}
@@ -111,13 +111,8 @@ const startPainting = (
 				const tileImage = $assets.tiles.find((tile) => tile.id === space.content.tileId);
 
 				if (tileImage) {
-					ctx.drawImage(tileImage.image, left, top);
+					ctx.drawImage(tileImage.image, left + 1, top + 1);
 				}
-			}
-
-			// Add icon
-			if (space.content.icon) {
-				ctx.fillText(space.content.icon, left + 6, top + spaceWidth - 11);
 			}
 		});
 	};

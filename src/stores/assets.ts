@@ -1,7 +1,17 @@
 import { writable } from 'svelte/store';
 import type { AssetImage, Assets } from '../types';
 
-const tileSources: string[] = ['grass', 'rock', 'water', 'tree1', 'tree2', 'flower1'];
+const tileSources: string[] = [
+	'grass',
+	'rock',
+	'water',
+	'tree1',
+	'tree2',
+	'flower1',
+	'apple',
+	'skull',
+	'user'
+];
 const spriteSources: string[] = ['coin', 'monster', 'wizard'];
 
 const initValue: Assets = {

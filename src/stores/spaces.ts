@@ -82,7 +82,7 @@ const createSpaces: () => Space[] = () => {
 	while ($user.position === 0) {
 		const randomSpace = randomInArray(spaces);
 
-		if (randomSpace.content.icon !== '') {
+		if (randomSpace.content.spriteId || randomSpace.content.tileId) {
 			continue;
 		}
 
