@@ -31,12 +31,14 @@
 		});
 
 		// Create animation loop
-		paintAnimatedSpaces(canvasBeings);
+		const ctx = canvasBeings.getContext('2d');
+		paintAnimatedSpaces(ctx, canvasWidth, canvasHeight);
 
 		user.subscribe(() => {
 			visibleSpaces.locateAndSave($user.row, $user.column);
 
-			paintBoard(canvasBoard);
+			const ctx = canvasBoard.getContext('2d');
+			paintBoard(ctx, canvasWidth, canvasHeight);
 		});
 	});
 </script>
@@ -44,7 +46,16 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="container" style={`width: ${$canvasStore.width}px`}>
-	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBoard} />
+	<canvas
+		style={`
+			background-image: url('/background.jpg');
+			background-position-x: -${$user.column * spaceWidth}px;
+			background-position-y: -${$user.row * spaceWidth}px
+		`}
+		width={$canvasStore.width}
+		height={$canvasStore.height}
+		bind:this={canvasBoard}
+	/>
 	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBeings} />
 </div>
 

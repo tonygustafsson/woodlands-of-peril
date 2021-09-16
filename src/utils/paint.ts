@@ -12,14 +12,14 @@ const getSpaceBackgroundColor = (space: Space): string => {
 	}
 
 	if (space.content.enemy) {
-		return '#200000';
+		return 'rgba(255, 0, 0, 0.1)';
 	}
 
 	if (space.content.solid) {
-		return '#001500';
+		return 'rgba(0, 255, 0, 0.075)';
 	}
 
-	return '#000';
+	return 'transparent';
 };
 
 const getSpaceStrokeColor = (space: Space): string => {
@@ -31,13 +31,13 @@ const getSpaceStrokeColor = (space: Space): string => {
 };
 
 const startPainting = (
-	canvas: HTMLCanvasElement,
+	ctx: CanvasRenderingContext2D,
+	width: number,
+	height: number,
 	continiousLoop: boolean,
 	showBoard: boolean,
 	showBeings: boolean
 ): void => {
-	const fontSize = 20;
-	const font = 'verdana';
 	const lineWidth = 1;
 
 	const loop = () => {
@@ -50,13 +50,10 @@ const startPainting = (
 		const $user = get(user);
 		const $visibleSpaces = get(visibleSpaces);
 
-		const ctx = canvas.getContext('2d');
-
 		// Clear it
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, width, height);
 
 		// Canvas settings
-		ctx.font = `${fontSize}px ${font}`;
 		ctx.lineWidth = lineWidth;
 
 		$visibleSpaces.forEach((space: Space) => {
@@ -73,19 +70,21 @@ const startPainting = (
 				return;
 			}
 
-			const userY = Math.floor(canvas.height / 2 - spaceWidth / 2);
-			const userX = Math.floor(canvas.width / 2 - spaceWidth / 2);
+			const userY = Math.floor(height / 2 - spaceWidth / 2);
+			const userX = Math.floor(width / 2 - spaceWidth / 2);
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
 
 			ctx.fillStyle = getSpaceBackgroundColor(space);
 			ctx.strokeStyle = getSpaceStrokeColor(space);
 
-			// Draw rectangle
-			ctx.beginPath();
-			ctx.rect(left, top, spaceWidth, spaceWidth);
-			ctx.fill();
-			ctx.stroke();
+			if (space.content.spriteId || space.content.tileId) {
+				// Draw rectangle
+				ctx.beginPath();
+				ctx.rect(left, top, spaceWidth, spaceWidth);
+				ctx.fill();
+				ctx.stroke();
+			}
 
 			// Add sprite
 			if (space.content.spriteId) {
@@ -120,18 +119,26 @@ const startPainting = (
 	window.requestAnimationFrame(loop);
 };
 
-export const paintBoard = async (canvas: HTMLCanvasElement): Promise<void> => {
+export const paintBoard = async (
+	ctx: CanvasRenderingContext2D,
+	width: number,
+	height: number
+): Promise<void> => {
 	const continiousLoop = false;
 	const showBoard = true;
 	const showBeings = false;
 
-	startPainting(canvas, continiousLoop, showBoard, showBeings);
+	startPainting(ctx, width, height, continiousLoop, showBoard, showBeings);
 };
 
-export const paintAnimatedSpaces = (canvas: HTMLCanvasElement): void => {
+export const paintAnimatedSpaces = (
+	ctx: CanvasRenderingContext2D,
+	width: number,
+	height: number
+): void => {
 	const continiousLoop = true;
 	const showBoard = false;
 	const showBeings = true;
 
-	startPainting(canvas, continiousLoop, showBoard, showBeings);
+	startPainting(ctx, width, height, continiousLoop, showBoard, showBeings);
 };
