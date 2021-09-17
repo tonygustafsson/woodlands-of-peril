@@ -10,11 +10,9 @@ const tileSources: string[] = [
 	'flower1',
 	'apple',
 	'skull',
-	'user-left',
-	'user-right',
 	'heart'
 ];
-const spriteSources: string[] = ['coin', 'monster', 'wizard'];
+const spriteSources: string[] = ['coin', 'monster', 'wizard', 'user'];
 
 const initValue: Assets = {
 	tiles: [],

@@ -11,12 +11,11 @@ export const emptyContent: SpaceContent = {
 	enemy: false
 };
 export const userContent: SpaceContent = {
-	tileId: 'user',
+	spriteId: 'user',
 	label: 'User',
 	solid: true,
 	collectable: false,
-	enemy: false,
-	tiles: { left: 'user-left', right: 'user-right' }
+	enemy: false
 };
 export const deadContent: SpaceContent = {
 	tileId: 'skull',

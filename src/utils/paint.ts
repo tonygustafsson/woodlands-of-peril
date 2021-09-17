@@ -88,9 +88,9 @@ const startPainting = (
 
 			// Add sprite
 			if (space.content.spriteId) {
-				const dx = left + 6;
-				const dy = top + 6;
 				const sprite = $sprites[space.content.spriteId];
+				const dx = left + sprite.leftMargin;
+				const dy = top + sprite.topMargin;
 
 				ctx.drawImage(
 					sprite.image,

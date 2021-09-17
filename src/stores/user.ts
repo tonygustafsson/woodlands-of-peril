@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { User } from '../types';
+import type { Direction, User } from '../types';
 import { getBoardPosition } from '../utils/board';
 
 const initValue: User = {
@@ -15,7 +15,7 @@ const userStore = () => {
 
 	return {
 		subscribe,
-		setPosition: (position: number, direction: 'left' | 'right' = 'left') => {
+		setPosition: (position: number, direction: Direction = 'left') => {
 			const boardPosition = getBoardPosition(position);
 
 			update((user) => {

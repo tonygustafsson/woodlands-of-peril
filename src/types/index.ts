@@ -12,7 +12,6 @@ export type SpaceContent = {
 	solid: boolean;
 	collectable: boolean;
 	enemy: boolean;
-	tiles?: Record<string, string>;
 };
 
 export type BoardPosition = {
@@ -31,7 +30,7 @@ export type User = {
 	position: number;
 	row: number;
 	column: number;
-	direction: 'left' | 'right';
+	direction: Direction;
 	alive: boolean;
 };
 
@@ -56,5 +55,7 @@ export type Sprite = {
 	dy: number;
 	dw: number;
 	dh: number;
+	topMargin: number;
+	leftMargin: number;
 	currentFrame: number;
 };
