@@ -10,7 +10,9 @@ const tileSources: string[] = [
 	'flower1',
 	'apple',
 	'skull',
-	'user'
+	'user-left',
+	'user-right',
+	'heart'
 ];
 const spriteSources: string[] = ['coin', 'monster', 'wizard'];
 

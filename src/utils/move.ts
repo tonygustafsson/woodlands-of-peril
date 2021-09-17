@@ -79,7 +79,9 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	spaces.setSpace(newPosition, newNewSpace);
 
-	user.setPosition(newPosition);
+	const newUserDirection =
+		direction === 'left' || direction === 'right' ? direction : $user.direction;
+	user.setPosition(newPosition, newUserDirection);
 
 	return true;
 };

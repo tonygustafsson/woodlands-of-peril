@@ -15,7 +15,8 @@ export const userContent: SpaceContent = {
 	label: 'User',
 	solid: true,
 	collectable: false,
-	enemy: false
+	enemy: false,
+	tiles: { left: 'user-left', right: 'user-right' }
 };
 export const deadContent: SpaceContent = {
 	tileId: 'skull',
@@ -34,7 +35,8 @@ export const surroundings: SpaceContent[] = [
 ];
 export const collectables: SpaceContent[] = [
 	{ spriteId: 'coin', label: 'Money', solid: false, collectable: true, enemy: false },
-	{ tileId: 'apple', label: 'Apple', solid: false, collectable: true, enemy: false }
+	{ tileId: 'apple', label: 'Apple', solid: false, collectable: true, enemy: false },
+	{ tileId: 'heart', label: 'Heart', solid: false, collectable: true, enemy: false }
 ];
 export const enemies: SpaceContent[] = [
 	{ spriteId: 'monster', label: 'Monster', solid: false, collectable: false, enemy: true },
