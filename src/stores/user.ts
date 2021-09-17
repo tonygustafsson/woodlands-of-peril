@@ -6,7 +6,8 @@ const initValue: User = {
 	position: 0,
 	row: 0,
 	column: 0,
-	direction: 'left',
+	direction: 'down',
+	moving: false,
 	alive: true
 };
 
@@ -15,7 +16,7 @@ const userStore = () => {
 
 	return {
 		subscribe,
-		setPosition: (position: number, direction: Direction = 'left') => {
+		setPosition: (position: number, direction: Direction = 'down') => {
 			const boardPosition = getBoardPosition(position);
 
 			update((user) => {
@@ -23,6 +24,12 @@ const userStore = () => {
 				user.row = boardPosition.row;
 				user.column = boardPosition.column;
 				user.direction = direction;
+				return user;
+			});
+		},
+		setMoving: (moving: boolean) => {
+			update((user) => {
+				user.moving = moving;
 				return user;
 			});
 		},

@@ -35,10 +35,12 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	if (!$spaces[newPosition]) {
+		user.setPosition($user.position, direction);
 		return; // Space does not exist
 	}
 
 	if ($spaces[newPosition].content.solid) {
+		user.setPosition($user.position, direction);
 		return; // Cannot move through solid materials
 	}
 
@@ -83,39 +85,29 @@ export const move = (direction: Direction): boolean | undefined => {
 	return true;
 };
 
-let keyDownTimer;
-
-export const handleKeydown = (e: KeyboardEvent): void => {
-	if (keyDownTimer) {
-		return clearTimeout(keyDownTimer);
+export const handleKeyup = (e: KeyboardEvent): void => {
+	if (!['w', 's', 'd', 'a'].includes(e.key.toLowerCase())) {
+		return;
 	}
 
-	setTimeout(() => {
-		switch (e.keyCode) {
-			case 87:
-				// W UP
-				if (!move('up')) {
-					clearTimeout(keyDownTimer);
-				}
-				break;
-			case 83:
-				// S Down
-				if (!move('down')) {
-					clearTimeout(keyDownTimer);
-				}
-				break;
-			case 68:
-				// D Right
-				if (!move('right')) {
-					clearTimeout(keyDownTimer);
-				}
-				break;
-			case 65:
-				// A Left
-				if (!move('left')) {
-					clearTimeout(keyDownTimer);
-				}
-				break;
-		}
-	}, 100);
+	user.setMoving(false);
+};
+
+export const handleKeydown = (e: KeyboardEvent): void => {
+	switch (e.key.toLowerCase()) {
+		case 'w':
+			move('up');
+			break;
+		case 's':
+			move('down');
+			break;
+		case 'd':
+			move('right');
+			break;
+		case 'a':
+			move('left');
+			break;
+	}
+
+	user.setMoving(true);
 };

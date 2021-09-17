@@ -101,9 +101,13 @@ setInterval(() => {
 			nextFrame = 0;
 		}
 
-		$sprites[spriteId].sx = nextFrame * spriteSettings[spriteId].width;
+		if (spriteId !== 'user' || $user.moving) {
+			// Only move users frames while user moves
+			$sprites[spriteId].sx = nextFrame * spriteSettings[spriteId].width;
+		}
 
 		if (spriteId === 'user') {
+			// TODO: Make general
 			$sprites[spriteId].sy = spriteSettings[spriteId].positions[$user.direction].sy;
 		}
 

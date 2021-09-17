@@ -31,6 +31,7 @@ export type User = {
 	row: number;
 	column: number;
 	direction: Direction;
+	moving: boolean;
 	alive: boolean;
 };
 

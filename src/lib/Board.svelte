@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { handleKeydown } from '../utils/move';
+	import { handleKeydown, handleKeyup } from '../utils/move';
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
 	import { user } from '../stores/user';
@@ -43,7 +43,7 @@
 	});
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window on:keyup={handleKeyup} on:keydown={handleKeydown} />
 
 <div class="container" style={`width: ${$canvasStore.width}px`}>
 	<canvas
