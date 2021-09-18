@@ -17,12 +17,39 @@ const spriteSettings = {
 		noOfFrames: 4,
 		width: 32,
 		height: 48,
-		destinationWidth: 32,
-		destinationHeight: 32,
+		destinationWidth: 24,
+		destinationHeight: 34,
 		topMargin: 2,
+		leftMargin: 6
+	},
+	heart: {
+		noOfFrames: 24,
+		width: 32,
+		height: 48,
+		destinationWidth: 24,
+		destinationHeight: 34,
+		topMargin: 8,
+		leftMargin: 6
+	},
+	apple: {
+		noOfFrames: 5,
+		width: 40,
+		height: 26,
+		destinationWidth: 32,
+		destinationHeight: 28,
+		topMargin: 4,
 		leftMargin: 2
 	},
-	monster: {
+	bull: {
+		noOfFrames: 5,
+		width: 32,
+		height: 32,
+		destinationWidth: 30,
+		destinationHeight: 30,
+		topMargin: 2,
+		leftMargin: 4
+	},
+	rhino: {
 		noOfFrames: 6,
 		width: 32,
 		height: 32,
@@ -30,6 +57,33 @@ const spriteSettings = {
 		destinationHeight: 32,
 		topMargin: 2,
 		leftMargin: 2
+	},
+	spider: {
+		noOfFrames: 10,
+		width: 32,
+		height: 32,
+		destinationWidth: 32,
+		destinationHeight: 32,
+		topMargin: 2,
+		leftMargin: 2
+	},
+	bat: {
+		noOfFrames: 14,
+		width: 32,
+		height: 32,
+		destinationWidth: 32,
+		destinationHeight: 32,
+		topMargin: 2,
+		leftMargin: 2
+	},
+	bird: {
+		noOfFrames: 18,
+		width: 32,
+		height: 32,
+		destinationWidth: 36,
+		destinationHeight: 36,
+		topMargin: 0,
+		leftMargin: -2
 	},
 	user: {
 		noOfFrames: 4,

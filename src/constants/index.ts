@@ -34,10 +34,14 @@ export const surroundings: SpaceContent[] = [
 ];
 export const collectables: SpaceContent[] = [
 	{ spriteId: 'coin', label: 'Money', solid: false, collectable: true, enemy: false },
-	{ tileId: 'apple', label: 'Apple', solid: false, collectable: true, enemy: false },
-	{ tileId: 'heart', label: 'Heart', solid: false, collectable: true, enemy: false }
+	{ spriteId: 'apple', label: 'Apple', solid: false, collectable: true, enemy: false },
+	{ spriteId: 'heart', label: 'Heart', solid: false, collectable: true, enemy: false }
 ];
 export const enemies: SpaceContent[] = [
-	{ spriteId: 'monster', label: 'Monster', solid: false, collectable: false, enemy: true },
-	{ spriteId: 'wizard', label: 'Wizard', solid: false, collectable: false, enemy: true }
+	{ spriteId: 'bull', label: 'Bull', solid: false, collectable: false, enemy: true },
+	{ spriteId: 'bird', label: 'Bird', solid: false, collectable: false, enemy: true },
+	{ spriteId: 'wizard', label: 'Wizard', solid: false, collectable: false, enemy: true },
+	{ spriteId: 'bat', label: 'Bat', solid: false, collectable: false, enemy: true },
+	{ spriteId: 'rhino', label: 'Rhino', solid: false, collectable: false, enemy: true },
+	{ spriteId: 'spider', label: 'Spider', solid: false, collectable: false, enemy: true }
 ];

@@ -107,17 +107,7 @@ const startPainting = (
 
 			// Add tile
 			if (space.content.tileId) {
-				let tileImage;
-
-				if (Object.hasOwnProperty.call(space.content.tiles || [], $user.direction)) {
-					// Special tile depending on the direction of user
-					tileImage = $assets.tiles.find(
-						(tile) => tile.id === space.content.tiles[$user.direction]
-					);
-				} else {
-					// Ordinary tile
-					tileImage = $assets.tiles.find((tile) => tile.id === space.content.tileId);
-				}
+				const tileImage = $assets.tiles.find((tile) => tile.id === space.content.tileId);
 
 				if (tileImage) {
 					ctx.drawImage(tileImage.image, left + 1, top + 1);

@@ -12,7 +12,18 @@ const tileSources: string[] = [
 	'skull',
 	'heart'
 ];
-const spriteSources: string[] = ['coin', 'monster', 'wizard', 'user'];
+const spriteSources: string[] = [
+	'coin',
+	'wizard',
+	'user',
+	'bull',
+	'bird',
+	'bat',
+	'rhino',
+	'spider',
+	'heart',
+	'apple'
+];
 
 const initValue: Assets = {
 	tiles: [],
