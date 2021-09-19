@@ -5,7 +5,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Board from '$lib/Board.svelte';
-	import Inventory from '$lib/Inventory.svelte';
+	import InfoPanel from '$lib/InfoPanel.svelte';
 	import assets from '../stores/assets';
 	import '../app.css';
 
@@ -20,7 +20,7 @@
 
 <section>
 	{#if $assets.done}
-		<Inventory />
+		<InfoPanel />
 		<Board />
 	{:else}
 		<p>Loading resources.</p>

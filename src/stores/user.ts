@@ -40,6 +40,11 @@ const userStore = () => {
 		increaseInventory: (item: string) => {
 			update((user) => {
 				user.inventory[item]++;
+
+				if (item === 'energy' && user.inventory[item] > 5) {
+					user.inventory[item] = 5;
+				}
+
 				return user;
 			});
 		},
