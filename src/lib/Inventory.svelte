@@ -1,28 +1,23 @@
 <script lang="ts">
 	import { inventory } from '../stores/inventory';
 	import { user } from '../stores/user';
-	import { visibleSpaces } from '../stores/visibleSpaces';
-	import { canvas } from '../stores/canvas';
-	import { spacesPerRow, numberOfSpaces } from '../constants';
+
+	$: money = $inventory.find((x) => x.label === 'Money');
+	$: pizzas = $inventory.find((x) => x.label === 'Pizza');
+	$: hearts = $inventory.find((x) => x.label === 'Heart');
+	$: energy = ((pizzas && pizzas.quantity) || 0) + ((hearts && hearts.quantity) || 0);
 </script>
 
 <div class="inventory">
 	<h3>Position</h3>
 	<div class="item">
-		User: {$user.row} x {$user.column}<br />
-		View size: {$canvas.cameraSpacesWidth}x{$canvas.cameraSpacesHeight} ({$canvas.cameraSpacesWidth *
-			$canvas.cameraSpacesHeight})<br />
-		Visible spaces: {Object.keys($visibleSpaces).length}<br />
-		Board size: {spacesPerRow}x{Math.floor(numberOfSpaces / spacesPerRow)} ({numberOfSpaces})<br />
+		{$user.row} x {$user.column}<br />
 	</div>
 
-	{#if $inventory.length > 0}
-		<h3>Inventory</h3>
+	<h3>Inventory</h3>
 
-		{#each $inventory as item}
-			<div class="item">{item.label}: {item.quantity}</div>
-		{/each}
-	{/if}
+	<div class="item">Money: {money?.quantity || 0}</div>
+	<div class="item">Energy: {energy || 0}</div>
 </div>
 
 <style>
