@@ -8,7 +8,11 @@ const initValue: User = {
 	column: 0,
 	direction: 'down',
 	moving: false,
-	alive: true
+	alive: true,
+	inventory: {
+		money: 0,
+		energy: 0
+	}
 };
 
 const userStore = () => {
@@ -30,6 +34,18 @@ const userStore = () => {
 		setMoving: (moving: boolean) => {
 			update((user) => {
 				user.moving = moving;
+				return user;
+			});
+		},
+		increaseInventory: (item: string) => {
+			update((user) => {
+				user.inventory[item]++;
+				return user;
+			});
+		},
+		decreaseInventory: (item: string) => {
+			update((user) => {
+				user.inventory[item]--;
 				return user;
 			});
 		},

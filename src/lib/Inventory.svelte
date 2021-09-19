@@ -1,11 +1,5 @@
 <script lang="ts">
-	import { inventory } from '../stores/inventory';
 	import { user } from '../stores/user';
-
-	$: money = $inventory.find((x) => x.label === 'Money');
-	$: pizzas = $inventory.find((x) => x.label === 'Pizza');
-	$: hearts = $inventory.find((x) => x.label === 'Heart');
-	$: energy = ((pizzas && pizzas.quantity) || 0) + ((hearts && hearts.quantity) || 0);
 </script>
 
 <div class="inventory">
@@ -16,8 +10,8 @@
 
 	<h3>Inventory</h3>
 
-	<div class="item">Money: {money?.quantity || 0}</div>
-	<div class="item">Energy: {energy || 0}</div>
+	<div class="item">Money: {$user.inventory.money}</div>
+	<div class="item">Energy: {$user.inventory.energy}</div>
 </div>
 
 <style>

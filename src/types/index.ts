@@ -9,9 +9,10 @@ export type SpaceContent = {
 	spriteId?: string;
 	tileId?: string;
 	label: string;
-	solid: boolean;
-	collectable: boolean;
-	enemy: boolean;
+	solid?: boolean;
+	enemy?: boolean;
+	giveEnergy?: boolean;
+	giveMoney?: boolean;
 };
 
 export type BoardPosition = {
@@ -22,8 +23,8 @@ export type BoardPosition = {
 export type Direction = 'left' | 'right' | 'up' | 'down';
 
 export type Inventory = {
-	label: string;
-	quantity: number;
+	money: number;
+	energy: number;
 };
 
 export type User = {
@@ -33,6 +34,7 @@ export type User = {
 	direction: Direction;
 	moving: boolean;
 	alive: boolean;
+	inventory: Inventory;
 };
 
 export type AssetImage = {

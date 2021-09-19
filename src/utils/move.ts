@@ -1,5 +1,4 @@
 import { user } from '../stores/user';
-import { inventory } from '../stores/inventory';
 import { get } from 'svelte/store';
 import { spaces } from '../stores/spaces';
 import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
@@ -44,22 +43,12 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Cannot move through solid materials
 	}
 
-	if ($spaces[newPosition].content.collectable) {
-		// Eat it!
-		inventory.update((inventory) => {
-			const oldValue = inventory.find((item) => item.label === $spaces[newPosition].content.label);
+	if ($spaces[newPosition].content.giveMoney) {
+		user.increaseInventory('money');
+	}
 
-			if (oldValue) {
-				oldValue.quantity++;
-			} else {
-				inventory.push({
-					label: $spaces[newPosition].content.label,
-					quantity: 1
-				});
-			}
-
-			return inventory;
-		});
+	if ($spaces[newPosition].content.giveEnergy) {
+		user.increaseInventory('energy');
 	}
 
 	const newOldSpace: Space = {
