@@ -11,7 +11,11 @@
 	<h3>Inventory</h3>
 
 	<div class="item">Money: {$user.inventory.money}</div>
-	<div class="item">Energy: {$user.inventory.energy}</div>
+	{#if $user.inventory.energy > 0}
+		<div class="item">Energy: {$user.inventory.energy}</div>
+	{:else}
+		<div class="item">DEAD</div>
+	{/if}
 </div>
 
 <style>

@@ -11,7 +11,7 @@ const initValue: User = {
 	alive: true,
 	inventory: {
 		money: 0,
-		energy: 0
+		energy: 3
 	}
 };
 
@@ -43,15 +43,11 @@ const userStore = () => {
 				return user;
 			});
 		},
-		decreaseInventory: (item: string) => {
+		hurt: () => {
 			update((user) => {
-				user.inventory[item]--;
-				return user;
-			});
-		},
-		setDead: () => {
-			update((user) => {
-				user.alive = false;
+				const newEnergy = user.inventory.energy - 1;
+				user.inventory.energy = newEnergy;
+				user.alive = newEnergy > 0;
 				return user;
 			});
 		}

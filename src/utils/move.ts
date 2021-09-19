@@ -43,6 +43,14 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Cannot move through solid materials
 	}
 
+	if ($spaces[newPosition].content.enemy) {
+		user.hurt();
+
+		if ($user.inventory.energy > 0) {
+			return; // Cannot walk through enemies
+		}
+	}
+
 	if ($spaces[newPosition].content.giveMoney) {
 		user.increaseInventory('money');
 	}
@@ -58,10 +66,6 @@ export const move = (direction: Direction): boolean | undefined => {
 	spaces.setSpace($user.position, newOldSpace);
 
 	const newUserContent = $spaces[newPosition].content.enemy ? deadContent : userContent;
-
-	if ($spaces[newPosition].content.enemy) {
-		user.setDead();
-	}
 
 	const newNewSpace: Space = {
 		...$spaces[newPosition],
