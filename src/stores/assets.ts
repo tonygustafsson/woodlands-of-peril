@@ -9,7 +9,6 @@ const tileSources: string[] = [
 	'tree2',
 	'flower1',
 	'apple',
-	'skull',
 	'heart'
 ];
 const spriteSources: string[] = [
@@ -22,7 +21,8 @@ const spriteSources: string[] = [
 	'rhino',
 	'spider',
 	'heart',
-	'apple'
+	'pizza',
+	'skull'
 ];
 
 const initValue: Assets = {

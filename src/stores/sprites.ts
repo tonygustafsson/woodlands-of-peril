@@ -31,14 +31,23 @@ const spriteSettings = {
 		topMargin: 8,
 		leftMargin: 6
 	},
-	apple: {
-		noOfFrames: 5,
-		width: 40,
-		height: 26,
-		destinationWidth: 32,
-		destinationHeight: 28,
+	pizza: {
+		noOfFrames: 30,
+		width: 32,
+		height: 32,
+		destinationWidth: 26,
+		destinationHeight: 26,
 		topMargin: 4,
-		leftMargin: 2
+		leftMargin: 4
+	},
+	skull: {
+		noOfFrames: 24,
+		width: 32,
+		height: 23,
+		destinationWidth: 32,
+		destinationHeight: 32,
+		topMargin: 2,
+		leftMargin: 6
 	},
 	bull: {
 		noOfFrames: 5,
