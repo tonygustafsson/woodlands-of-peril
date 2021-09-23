@@ -3,6 +3,8 @@
 </script>
 
 <div class="inventory">
+<h3>Inventory</h3>
+
 	<div class="item">
 		{#each Array($user.inventory.energy) as _}
 			🤎
@@ -12,16 +14,14 @@
 		{/each}
 	</div>
 
-	<h3>Inventory</h3>
+	<div class="item">{$user.inventory.money} 🪙</div>
 
-	{#if $user.inventory.energy <= 0}
-		<div class="item"><strong>DEAD</strong></div>
+	{#if !$user.alive}
+		<div class="item"><strong>💀 DEAD</strong></div>
 	{/if}
-	<div class="item">Money: {$user.inventory.money}</div>
 
-	<h3>Position</h3>
 	<div class="item">
-		{$user.row} x {$user.column}<br />
+		🧭 {$user.row} x {$user.column}<br />
 	</div>
 </div>
 
@@ -39,9 +39,10 @@
 
 	h3 {
 		margin-bottom: 0;
+		margin-top: 0;
 	}
 
 	.item {
-		margin: 0.25em 0;
+		margin: 1em 0;
 	}
 </style>
