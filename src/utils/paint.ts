@@ -1,12 +1,16 @@
 import { spaceWidth } from '../constants';
-import type { Space } from '../types';
+import type { Space, User } from '../types';
 import { visibleSpaces } from '../stores/visibleSpaces';
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
 import sprites from '../stores/sprites';
 import assets from '../stores/assets';
 
-const getSpaceBackgroundColor = (space: Space): string => {
+const getSpaceBackgroundColor = (space: Space, $user: User): string => {
+	if (space.content.label === 'User' && $user.isHurting) {
+		return '#ff0000';
+	}
+
 	if (space.content.label === 'User') {
 		return '#333';
 	}
@@ -75,7 +79,7 @@ const startPainting = (
 			const top = userY + rowsFromUser * spaceWidth;
 			const left = userX + columnsFromUser * spaceWidth;
 
-			ctx.fillStyle = getSpaceBackgroundColor(space);
+			ctx.fillStyle = getSpaceBackgroundColor(space, $user);
 			ctx.strokeStyle = getSpaceStrokeColor(space);
 
 			if (space.content.spriteId || space.content.tileId) {

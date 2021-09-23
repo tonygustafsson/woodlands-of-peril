@@ -34,6 +34,7 @@ export type User = {
 	direction: Direction;
 	moving: boolean;
 	alive: boolean;
+	isHurting: boolean;
 	inventory: Inventory;
 };
 

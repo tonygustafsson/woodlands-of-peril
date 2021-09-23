@@ -9,6 +9,7 @@ const initValue: User = {
 	direction: 'down',
 	moving: false,
 	alive: true,
+	isHurting: false,
 	inventory: {
 		money: 0,
 		energy: 3
@@ -52,9 +53,17 @@ const userStore = () => {
 			update((user) => {
 				const newEnergy = user.inventory.energy - 1;
 				user.inventory.energy = newEnergy;
+				user.isHurting = true;
 				user.alive = newEnergy > 0;
 				return user;
 			});
+
+			setTimeout(() => {
+				update((user) => {
+					user.isHurting = false;
+					return user;
+				});
+			}, 250);
 		}
 	};
 };
