@@ -12,13 +12,13 @@
 
 	onMount(() => {
 		const canvasWidth =
-			document.body.clientWidth < 600
+			document.body.clientWidth <= 1300
 				? document.body.clientWidth
-				: Math.floor(document.body.clientWidth * 0.7);
+				: Math.floor(document.body.clientWidth * 0.8);
 		const canvasHeight =
-			document.body.clientWidth < 600
+			document.body.clientWidth <= 1300
 				? document.body.clientHeight
-				: Math.floor(document.body.clientHeight * 0.7);
+				: Math.floor(document.body.clientHeight * 0.8);
 
 		const cameraSpacesWidth = Math.floor(canvasWidth / spaceWidth);
 		const cameraSpacesHeight = Math.floor(canvasHeight / spaceWidth);
@@ -71,7 +71,7 @@
 		left: 0;
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 1300px) {
 		.container {
 			margin: 0 auto;
 		}

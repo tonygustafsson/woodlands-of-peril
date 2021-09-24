@@ -6,59 +6,99 @@
 	import Coin from '$lib/icons/Coin.svelte';
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
+	import Chest from '$lib/icons/Chest.svelte';
+	import { screen } from '../stores/screen';
+	import { slide } from 'svelte/transition';
+
+	$: mobileMenuActive = false;
+
+	const toggleMobileMenu = () => {
+		mobileMenuActive = !mobileMenuActive;
+	};
 </script>
 
-<div class="inventory">
-	<h3>Inventory</h3>
+{#if $screen.size === 'sm'}
+	<div class="mobile-menu" on:click={toggleMobileMenu}>
+		<div class="mobile-menu-item">
+			<Chest mr /> Inventory
+		</div>
 
-	<div class="item">
-		{#each Array($user.inventory.energy) as _}
-			<Heart />
-		{/each}
-		{#each Array(5 - $user.inventory.energy) as _}
-			<Heart filled={false} />
-		{/each}
+		<div class="mobile-menu-item">
+			{#each Array($user.inventory.energy) as _}
+				<Heart />
+			{/each}
+			{#each Array(5 - $user.inventory.energy) as _}
+				<Heart filled={false} />
+			{/each}
+		</div>
 	</div>
+{/if}
 
-	{#if !$user.alive}
-		<div class="item"><Skull mr /> <strong>DEAD</strong></div>
-	{/if}
+{#if $screen.size !== 'sm' || mobileMenuActive}
+	<div class="inventory" transition:slide={{ duration: 200 }}>
+		{#if $screen.size !== 'sm'}
+			<div class="item">
+				{#each Array($user.inventory.energy) as _}
+					<Heart />
+				{/each}
+				{#each Array(5 - $user.inventory.energy) as _}
+					<Heart filled={false} />
+				{/each}
+			</div>
+		{/if}
 
-	<div class="item"><Coin mr /> {$user.inventory.money}</div>
+		{#if !$user.alive}
+			<div class="item"><Skull mr /> <strong>DEAD</strong></div>
+		{/if}
 
-	<div class="item">
-		<Compass mr />
-		{$user.row} x {$user.column}
+		<div class="item"><Coin mr /> {$user.inventory.money}</div>
+
+		<div class="item">
+			<Compass mr />
+			{$user.row} x {$user.column}
+		</div>
+
+		<div class="item">
+			<MiniMap />
+		</div>
+
+		<AudioPanel />
 	</div>
-
-	<div class="item">
-		<MiniMap />
-	</div>
-
-	<AudioPanel />
-</div>
+{/if}
 
 <style>
-	.inventory {
-		position: fixed;
-		top: 40px;
-		left: 10px;
-		width: 200px;
-		padding: 0.5em;
-		background-color: rgba(0, 0, 0, 0.8);
-		border-radius: 8px;
-		z-index: 100;
+	.mobile-menu {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin: 8px;
 	}
 
-	h3 {
-		margin-bottom: 0;
-		margin-top: 0;
+	.mobile-menu-item {
+		display: flex;
+		align-items: center;
+	}
+
+	.inventory {
+		width: 200px;
+		padding: 0.5em;
+		border-radius: 8px;
+		z-index: 3;
+	}
+
+	@media screen and (max-width: 1300px) {
+		.inventory {
+			position: fixed;
+			width: 100%;
+			top: 40px;
+			background-color: rgba(0, 0, 0, 0.8);
+		}
 	}
 
 	.item {
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
-		margin: 1em 0;
+		margin: 0 0 1em 0;
 	}
 </style>
