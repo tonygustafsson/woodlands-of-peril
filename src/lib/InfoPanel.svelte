@@ -4,6 +4,10 @@
 	import { spacesPerRow, numberOfSpaces, spaceWidth } from '../constants';
 	import { styleToString } from '../utils/styleToString';
 	import AudioPanel from './AudioPanel.svelte';
+	import Heart from '$lib/icons/Heart.svelte';
+	import Coin from '$lib/icons/Coin.svelte';
+	import Compass from '$lib/icons/Compass.svelte';
+	import Skull from '$lib/icons/Skull.svelte';
 
 	$: viewWidthInPx = $canvas.cameraSpacesWidth * spaceWidth;
 	$: boardWidthInPx = spaceWidth * spacesPerRow;
@@ -30,21 +34,22 @@
 
 	<div class="item">
 		{#each Array($user.inventory.energy) as _}
-			🤎
+			<Heart />
 		{/each}
 		{#each Array(5 - $user.inventory.energy) as _}
-			🖤
+			<Heart filled={false} />
 		{/each}
 	</div>
 
 	{#if !$user.alive}
-		<div class="item"><strong>💀 DEAD</strong></div>
+		<div class="item"><Skull mr /> <strong>DEAD</strong></div>
 	{/if}
 
-	<div class="item">{$user.inventory.money} 🪙</div>
+	<div class="item"><Coin mr /> {$user.inventory.money}</div>
 
 	<div class="item">
-		🧭 {$user.row} x {$user.column}
+		<Compass mr />
+		{$user.row} x {$user.column}
 	</div>
 
 	<div class="item">
@@ -74,6 +79,9 @@
 	}
 
 	.item {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
 		margin: 1em 0;
 	}
 

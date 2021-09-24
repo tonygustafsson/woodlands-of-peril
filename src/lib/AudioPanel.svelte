@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { audio } from '../stores/audio';
+	import Play from '$lib/icons/Play.svelte';
+	import Pause from '$lib/icons/Pause.svelte';
 
 	const musicAudio = new Audio();
 	const soundEffectAudio = new Audio();
@@ -38,9 +40,9 @@
 	<div class="item">
 		<a class="link" href="audio" on:click|preventDefault={toggleMusic}>
 			{#if $audio.musicPlaying}
-				⏸
+				<Pause />
 			{:else}
-				▶
+				<Play />
 			{/if}
 		</a>
 	</div>
