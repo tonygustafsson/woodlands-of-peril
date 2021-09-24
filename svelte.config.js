@@ -11,8 +11,8 @@ const config = {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 		adapter: adapter({
-			pages: 'static',
-			assets: 'static',
+			pages: 'build',
+			assets: 'build',
 			fallback: 'index.html'
 		})
 	}
