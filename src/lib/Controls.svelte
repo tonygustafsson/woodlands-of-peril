@@ -69,22 +69,22 @@
 	}
 
 	.up {
-		top: 0;
-		left: calc(50% - 20px);
+		bottom: 100px;
+		right: 60px;
 	}
 
 	.right {
-		top: calc(50% - 100px);
-		right: 0;
+		bottom: 52px;
+		right: 4px;
 	}
 
 	.left {
-		top: calc(50% - 100px);
-		left: 0;
+		bottom: 52px;
+		right: 114px;
 	}
 
 	.down {
-		bottom: 0;
-		left: calc(50% - 20px);
+		bottom: 4px;
+		right: 60px;
 	}
 </style>
