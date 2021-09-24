@@ -2,12 +2,15 @@ import { writable } from 'svelte/store';
 import type { AssetImage, Assets } from '../types';
 
 const tileSources: string[] = [
-	'grass',
-	'rock',
-	'water',
+	'stone1',
+	'stone2',
+	'water1',
+	'water2',
 	'tree1',
 	'tree2',
-	'flower1',
+	'tree3',
+	'tree4',
+	'bush1',
 	'apple',
 	'heart'
 ];

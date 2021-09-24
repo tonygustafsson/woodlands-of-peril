@@ -18,12 +18,15 @@ export const deadContent: SpaceContent = {
 	solid: true
 };
 export const surroundings: SpaceContent[] = [
-	{ tileId: 'grass', label: 'Grass', solid: true },
-	{ tileId: 'rock', label: 'Rock', solid: true },
-	{ tileId: 'water', label: 'Water', solid: true },
+	{ tileId: 'stone1', label: 'Stone 1', solid: true },
+	{ tileId: 'stone2', label: 'Stone 2', solid: true },
+	{ tileId: 'water1', label: 'Water 1', solid: true },
+	{ tileId: 'water2', label: 'Water 2', solid: true },
 	{ tileId: 'tree1', label: 'Tree 1', solid: true },
 	{ tileId: 'tree2', label: 'Tree 2', solid: true },
-	{ tileId: 'flower1', label: 'Flower 1', solid: true }
+	{ tileId: 'tree3', label: 'Tree 3', solid: true },
+	{ tileId: 'tree4', label: 'Tree 4', solid: true },
+	{ tileId: 'bush1', label: 'Bush 1', solid: true }
 ];
 export const collectables: SpaceContent[] = [
 	{ spriteId: 'coin', label: 'Money', giveMoney: true },
