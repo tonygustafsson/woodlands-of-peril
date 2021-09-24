@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { audio } from '../stores/audio';
-	import Play from '$lib/icons/Play.svelte';
-	import Pause from '$lib/icons/Pause.svelte';
+	import Switch from '$lib/form/Switch.svelte';
 
 	const musicAudio = new Audio();
 	const soundEffectAudio = new Audio();
@@ -10,12 +9,16 @@
 		audio.resetSoundEffect();
 	});
 
+	const toggleSoundEffects = () => {
+		audio.toggleSoundEffects();
+	};
+
 	const toggleMusic = () => {
 		audio.toggleMusic();
 	};
 
 	audio.subscribe((audioStore) => {
-		if (audioStore.musicPlaying && musicAudio.paused) {
+		if (audioStore.enableMusic && musicAudio.paused) {
 			if (!musicAudio.src) {
 				musicAudio.src = `/music/${$audio.musicTrack}.mp3`;
 			}
@@ -23,11 +26,11 @@
 			musicAudio.play();
 		}
 
-		if (!audioStore.musicPlaying && !musicAudio.paused) {
+		if (!audioStore.enableMusic && !musicAudio.paused) {
 			musicAudio.pause();
 		}
 
-		if (audioStore.soundEffect) {
+		if (audioStore.enableSoundEffects && audioStore.soundEffect) {
 			soundEffectAudio.src = `/sound-effects/${audioStore.soundEffect}.mp3`;
 			soundEffectAudio.play();
 		}
@@ -35,16 +38,16 @@
 </script>
 
 <div class="audio">
-	<h3>Sound</h3>
+	<h3>Music</h3>
 
 	<div class="item">
-		<a class="link" href="audio" on:click|preventDefault={toggleMusic}>
-			{#if $audio.musicPlaying}
-				<Pause />
-			{:else}
-				<Play />
-			{/if}
-		</a>
+		<Switch id="music" checked={$audio.enableMusic} on:change={toggleMusic} />
+	</div>
+
+	<h3>Sound effects</h3>
+
+	<div class="item">
+		<Switch id="sound-effects" checked={$audio.enableSoundEffects} on:change={toggleSoundEffects} />
 	</div>
 </div>
 
@@ -56,10 +59,5 @@
 
 	.item {
 		margin: 1em 0;
-	}
-
-	.link {
-		color: #fff;
-		text-decoration: none;
 	}
 </style>

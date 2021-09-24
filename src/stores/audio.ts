@@ -2,14 +2,16 @@ import { writable } from 'svelte/store';
 
 type AudioStore = {
 	musicTrack: string;
-	musicPlaying: boolean;
+	enableMusic: boolean;
 	soundEffect: string;
+	enableSoundEffects: boolean;
 };
 
 const initValue: AudioStore = {
 	musicTrack: 'music1',
-	musicPlaying: false,
-	soundEffect: ''
+	enableMusic: false,
+	soundEffect: '',
+	enableSoundEffects: true
 };
 
 const audioStore = () => {
@@ -19,7 +21,13 @@ const audioStore = () => {
 		subscribe,
 		toggleMusic: () => {
 			update((audio) => {
-				audio.musicPlaying = !audio.musicPlaying;
+				audio.enableMusic = !audio.enableMusic;
+				return audio;
+			});
+		},
+		toggleSoundEffects: () => {
+			update((audio) => {
+				audio.enableSoundEffects = !audio.enableSoundEffects;
 				return audio;
 			});
 		},
@@ -28,6 +36,13 @@ const audioStore = () => {
 				audio.soundEffect = effect;
 				return audio;
 			});
+
+			setTimeout(() => {
+				update((audio) => {
+					audio.soundEffect = '';
+					return audio;
+				});
+			}, 500);
 		},
 		resetSoundEffect: () => {
 			update((audio) => {
