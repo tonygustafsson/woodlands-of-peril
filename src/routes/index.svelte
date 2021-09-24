@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import Board from '$lib/Board.svelte';
 	import InfoPanel from '$lib/InfoPanel.svelte';
+	import Controls from '$lib/Controls.svelte';
 	import assets from '../stores/assets';
 	import { screen } from '../stores/screen';
 	import '../app.css';
@@ -28,6 +29,7 @@
 
 <section>
 	{#if $assets.done}
+		<Controls />
 		<InfoPanel />
 		<Board />
 	{:else}
