@@ -1,5 +1,6 @@
 import { user } from '../stores/user';
 import { get } from 'svelte/store';
+import { audio } from '../stores/audio';
 import { spaces } from '../stores/spaces';
 import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
 import type { Direction, Space } from '../types';
@@ -46,16 +47,24 @@ export const move = (direction: Direction): boolean | undefined => {
 	if ($spaces[newPosition].content.enemy) {
 		user.hurt();
 
+		const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
+		audio.playSoundEffect(soundEffect);
+
 		if ($user.inventory.energy > 0) {
 			return; // Cannot walk through enemies
+		} else {
+			// Let pass so dead icon could be placed where enemy where at
+			audio.playSoundEffect('death');
 		}
 	}
 
 	if ($spaces[newPosition].content.giveMoney) {
+		audio.playSoundEffect('money');
 		user.increaseInventory('money');
 	}
 
 	if ($spaces[newPosition].content.giveEnergy) {
+		audio.playSoundEffect('energy');
 		user.increaseInventory('energy');
 	}
 
