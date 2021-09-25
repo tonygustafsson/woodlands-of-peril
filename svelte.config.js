@@ -1,5 +1,6 @@
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-static';
+import { resolve } from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -14,7 +15,15 @@ const config = {
 			pages: 'static',
 			assets: 'static',
 			fallback: 'index.html'
-		})
+		}),
+		vite: {
+			resolve: {
+				alias: {
+					$stores: resolve('./src/stores'),
+					$utils: resolve('./src/utils')
+				}
+			}
+		}
 	}
 };
 

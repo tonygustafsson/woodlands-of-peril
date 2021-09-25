@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { user } from '../stores/user';
-	import { canvas } from '../stores/canvas';
+	import { user } from '$stores/user';
+	import { canvas } from '$stores/canvas';
 	import { spacesPerRow, numberOfSpaces, spaceWidth } from '../constants';
-	import { styleToString } from '../utils/styleToString';
+	import { styleToString } from '$utils/styleToString';
 
 	$: viewWidthInPx = $canvas.cameraSpacesWidth * spaceWidth;
 	$: boardWidthInPx = spaceWidth * spacesPerRow;

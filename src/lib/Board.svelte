@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { handleKeydown, handleKeyup } from '../utils/move';
+	import { handleKeydown, handleKeyup } from '$utils/move';
 	import { spaceWidth } from '../constants';
-	import { paintBoard, paintAnimatedSpaces } from '../utils/paint';
-	import { user } from '../stores/user';
-	import { canvas as canvasStore } from '../stores/canvas';
-	import { visibleSpaces } from '../stores/visibleSpaces';
+	import { paintBoard, paintAnimatedSpaces } from '$utils/paint';
+	import { user } from '$stores/user';
+	import { canvas as canvasStore } from '$stores/canvas';
+	import { visibleSpaces } from '$stores/visibleSpaces';
 
 	let canvasBoard;
 	let canvasBeings;

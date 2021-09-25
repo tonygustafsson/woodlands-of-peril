@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Arrow from '$lib/icons/Arrow.svelte';
-	import { move } from '../utils/move';
+	import { move } from '$utils/move';
 	import type { Direction } from '../types';
 
 	$: isPressed = false;

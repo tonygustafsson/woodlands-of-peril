@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import type { Direction, User } from '../types';
-import { getBoardPosition } from '../utils/board';
+import { getBoardPosition } from '$utils/board';
 
 const initValue: User = {
 	position: 0,

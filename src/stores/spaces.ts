@@ -7,11 +7,11 @@ import {
 	numberOfSpaces,
 	spacesPerRow
 } from '../constants';
-import { randomInArray } from '../utils/array';
+import { randomInArray } from '$utils/array';
 import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
 import { user } from './user';
-import { getBoardPosition } from '../utils/board';
+import { getBoardPosition } from '$utils/board';
 
 const createSpaces: () => Space[] = () => {
 	const spaces: Space[] = [];

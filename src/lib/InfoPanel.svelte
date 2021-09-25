@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user } from '../stores/user';
+	import { user } from '$stores/user';
 	import AudioPanel from './AudioPanel.svelte';
 	import AudioPlayer from './AudioPlayer.svelte';
 	import MiniMap from './MiniMap.svelte';
@@ -8,7 +8,7 @@
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
 	import Chest from '$lib/icons/Chest.svelte';
-	import { screen } from '../stores/screen';
+	import { screen } from '$stores/screen';
 	import { slide } from 'svelte/transition';
 
 	$: mobileMenuActive = false;
