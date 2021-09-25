@@ -5,6 +5,7 @@
 	import MiniMap from './MiniMap.svelte';
 	import Heart from '$lib/icons/Heart.svelte';
 	import Coin from '$lib/icons/Coin.svelte';
+	import Github from '$lib/icons/Github.svelte';
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
 	import Chest from '$lib/icons/Chest.svelte';
@@ -66,6 +67,14 @@
 		</div>
 
 		<AudioPanel />
+
+		<a
+			href="https://github.com/tonygustafsson/woodlands-of-peril"
+			target="_blank"
+			class="item item--extra-spacing"
+		>
+			<Github fill="#574159" mr /> Game info
+		</a>
 	</div>
 {/if}
 
@@ -103,5 +112,14 @@
 		justify-content: flex-start;
 		align-items: center;
 		margin: 0 0 1em 0;
+	}
+
+	.item--extra-spacing {
+		margin-top: 3em;
+	}
+
+	a {
+		color: #fff;
+		text-decoration: none;
 	}
 </style>
