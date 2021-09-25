@@ -147,10 +147,28 @@ export const paintSprites = (
 	startPainting(ctx, width, height, continiousLoop, showBoard, showBeings);
 };
 
-export const paintDialog = (ctx: CanvasRenderingContext2D, width: number, height: number): void => {
-	let currentDialogWidth = 0;
+type DialogContent = {
+	title: string;
+};
 
-	const loop = () => {
+export const paintDialog = (
+	ctx: CanvasRenderingContext2D,
+	width: number,
+	height: number,
+	content: DialogContent
+): void => {
+	const dialogWidth = 600;
+	const dialogHeight = 400;
+	const dialogLeft = Math.floor(width / 2 - dialogWidth / 2);
+	const dialogTop = Math.floor(height / 2 - dialogHeight / 2);
+
+	let currentDialogHeight = 0;
+
+	const animateDialogRollDown = () => {
+		while (currentDialogHeight > dialogHeight) {
+			return;
+		}
+
 		// Clear it
 		ctx.clearRect(0, 0, width, height);
 
@@ -159,23 +177,15 @@ export const paintDialog = (ctx: CanvasRenderingContext2D, width: number, height
 		ctx.lineWidth = 6;
 
 		// Create rectangle
-		const dialogWidth = 600;
-		const dialogHeight = 400;
-		const dialogLeft = Math.floor(width / 2 - dialogWidth / 2);
-		const dialogTop = Math.floor(height / 2 - dialogHeight / 2);
 
 		ctx.beginPath();
-		ctx.rect(dialogLeft, dialogTop, currentDialogWidth, dialogHeight);
+		ctx.rect(dialogLeft, dialogTop, dialogWidth, currentDialogHeight);
 		ctx.fill();
 		ctx.stroke();
 
-		console.log(currentDialogWidth, dialogWidth);
-
-		while (currentDialogWidth < dialogWidth) {
-			currentDialogWidth += 10;
-			window.requestAnimationFrame(loop);
-		}
+		currentDialogHeight += 20;
+		window.requestAnimationFrame(animateDialogRollDown);
 	};
 
-	window.requestAnimationFrame(loop);
+	window.requestAnimationFrame(animateDialogRollDown);
 };
