@@ -2,13 +2,23 @@
 	import { onMount } from 'svelte';
 	import { handleKeydown, handleKeyup } from '$utils/move';
 	import { spaceWidth } from '../constants';
-	import { paintBoard, paintAnimatedSpaces } from '$utils/paint';
+	import { paintBoard, paintSprites, paintDialog } from '$utils/paint';
 	import { user } from '$stores/user';
 	import { canvas as canvasStore } from '$stores/canvas';
 	import { visibleSpaces } from '$stores/visibleSpaces';
+	import { styleToString } from '$utils/styleToString';
 
 	let canvasBoard: HTMLCanvasElement;
-	let canvasBeings: HTMLCanvasElement;
+	let canvasSprites: HTMLCanvasElement;
+	let canvasDialog: HTMLCanvasElement;
+
+	$: containerStyle = {
+		width: `${$canvasStore.width}px`,
+		height: `${$canvasStore.height}px`,
+		backgroundImage: "url('/background.jpg')",
+		backgroundPositionX: `-${$user.column * spaceWidth}px`,
+		backgroundPositionY: `-${$user.row * spaceWidth}px`
+	};
 
 	onMount(() => {
 		const canvasWidth =
@@ -27,36 +37,32 @@
 			width: canvasWidth,
 			height: canvasHeight,
 			cameraSpacesWidth,
-			cameraSpacesHeight
+			cameraSpacesHeight,
+			boardContext: canvasBoard.getContext('2d'),
+			spriteContext: canvasSprites.getContext('2d'),
+			dialogContext: canvasDialog.getContext('2d')
 		});
 
 		// Create animation loop
-		const ctx = canvasBeings.getContext('2d');
-		paintAnimatedSpaces(ctx, canvasWidth, canvasHeight);
+		paintSprites($canvasStore.spriteContext, canvasWidth, canvasHeight);
+
+		// Paint dialog
+		//paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight);
 
 		user.subscribe(() => {
 			visibleSpaces.locateAndSave($user.row, $user.column);
 
-			const ctx = canvasBoard.getContext('2d');
-			paintBoard(ctx, canvasWidth, canvasHeight);
+			paintBoard($canvasStore.boardContext, canvasWidth, canvasHeight);
 		});
 	});
 </script>
 
 <svelte:window on:keyup={handleKeyup} on:keydown={handleKeydown} />
 
-<div class="container" style={`width: ${$canvasStore.width}px`}>
-	<canvas
-		style={`
-			background-image: url('/background.jpg');
-			background-position-x: -${$user.column * spaceWidth}px;
-			background-position-y: -${$user.row * spaceWidth}px
-		`}
-		width={$canvasStore.width}
-		height={$canvasStore.height}
-		bind:this={canvasBoard}
-	/>
-	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBeings} />
+<div class="container" style={styleToString(containerStyle)}>
+	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBoard} />
+	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasSprites} />
+	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasDialog} />
 </div>
 
 <style>
@@ -69,6 +75,18 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+
+	canvas:nth-child(1) {
+		z-index: 1;
+	}
+
+	canvas:nth-child(2) {
+		z-index: 2;
+	}
+
+	canvas:nth-child(3) {
+		z-index: 3;
 	}
 
 	@media (max-width: 1300px) {

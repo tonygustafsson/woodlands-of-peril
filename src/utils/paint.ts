@@ -135,7 +135,7 @@ export const paintBoard = async (
 	startPainting(ctx, width, height, continiousLoop, showBoard, showBeings);
 };
 
-export const paintAnimatedSpaces = (
+export const paintSprites = (
 	ctx: CanvasRenderingContext2D,
 	width: number,
 	height: number
@@ -145,4 +145,37 @@ export const paintAnimatedSpaces = (
 	const showBeings = true;
 
 	startPainting(ctx, width, height, continiousLoop, showBoard, showBeings);
+};
+
+export const paintDialog = (ctx: CanvasRenderingContext2D, width: number, height: number): void => {
+	let currentDialogWidth = 0;
+
+	const loop = () => {
+		// Clear it
+		ctx.clearRect(0, 0, width, height);
+
+		ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+		ctx.strokeStyle = '#170d0b';
+		ctx.lineWidth = 6;
+
+		// Create rectangle
+		const dialogWidth = 600;
+		const dialogHeight = 400;
+		const dialogLeft = Math.floor(width / 2 - dialogWidth / 2);
+		const dialogTop = Math.floor(height / 2 - dialogHeight / 2);
+
+		ctx.beginPath();
+		ctx.rect(dialogLeft, dialogTop, currentDialogWidth, dialogHeight);
+		ctx.fill();
+		ctx.stroke();
+
+		console.log(currentDialogWidth, dialogWidth);
+
+		while (currentDialogWidth < dialogWidth) {
+			currentDialogWidth += 10;
+			window.requestAnimationFrame(loop);
+		}
+	};
+
+	window.requestAnimationFrame(loop);
 };
