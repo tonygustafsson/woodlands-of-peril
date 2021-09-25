@@ -7,8 +7,8 @@
 	import { canvas as canvasStore } from '$stores/canvas';
 	import { visibleSpaces } from '$stores/visibleSpaces';
 
-	let canvasBoard;
-	let canvasBeings;
+	let canvasBoard: HTMLCanvasElement;
+	let canvasBeings: HTMLCanvasElement;
 
 	onMount(() => {
 		const canvasWidth =

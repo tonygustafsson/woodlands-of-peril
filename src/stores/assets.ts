@@ -35,7 +35,7 @@ const initValue: Assets = {
 	done: false
 };
 
-const fetchTile = (tileSource): Promise<AssetImage> =>
+const fetchTile = (tileSource: string): Promise<AssetImage> =>
 	new Promise((resolve) => {
 		const img = new Image();
 		img.onload = () => resolve({ id: tileSource, image: img });
@@ -45,7 +45,7 @@ const fetchTile = (tileSource): Promise<AssetImage> =>
 		console.log('Loaded tile ' + img.src);
 	});
 
-const fetchSprite = (tileSource): Promise<AssetImage> =>
+const fetchSprite = (tileSource: string): Promise<AssetImage> =>
 	new Promise((resolve) => {
 		const img = new Image();
 		img.onload = () => resolve({ id: tileSource, image: img });
@@ -55,7 +55,7 @@ const fetchSprite = (tileSource): Promise<AssetImage> =>
 		console.log('Loaded sprite ' + img.src);
 	});
 
-const fetchSoundEffect = (soundEffectSource): Promise<AssetAudio> =>
+const fetchSoundEffect = (soundEffectSource: string): Promise<AssetAudio> =>
 	new Promise((resolve) => {
 		const audio = new Audio();
 		audio.addEventListener('canplay', () => resolve({ id: soundEffectSource, audio }));

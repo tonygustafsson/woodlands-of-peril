@@ -16,7 +16,7 @@
 		screen.setScreenSize(document.body.clientWidth, document.body.clientHeight);
 	});
 
-	const onResize = (e) => {
+	const onResize = (e: any) => {
 		screen.setScreenSize(e.target.innerWidth, e.target.innerHeight);
 	};
 </script>

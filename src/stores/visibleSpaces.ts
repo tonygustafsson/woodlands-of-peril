@@ -11,7 +11,7 @@ const visibleSpacesStore = () => {
 
 	return {
 		subscribe,
-		locateAndSave: (userRow, userColumn) => {
+		locateAndSave: (userRow: number, userColumn: number) => {
 			const $canvas = get(canvas);
 
 			const rowMin = userRow - Math.floor($canvas.cameraSpacesHeight / 2);

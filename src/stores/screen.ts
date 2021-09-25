@@ -17,7 +17,7 @@ const screenStore = () => {
 
 	return {
 		subscribe,
-		setScreenSize: (innerWidth: number, innerHeight) => {
+		setScreenSize: (innerWidth: number, innerHeight: number) => {
 			update((screen) => {
 				screen.size = innerWidth <= 1300 ? 'sm' : 'lg';
 				screen.innerWidth = innerWidth;
