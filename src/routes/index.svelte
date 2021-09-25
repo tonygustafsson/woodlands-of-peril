@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Game</title>
+	<title>Woodlands of Peril</title>
 </svelte:head>
 
 <svelte:window on:resize={onResize} />

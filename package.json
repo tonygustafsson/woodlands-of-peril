@@ -1,6 +1,6 @@
 {
-	"name": "game",
-	"version": "0.0.1",
+	"name": "woodlands-of-peril",
+	"version": "0.0.5",
 	"scripts": {
 		"dev": "svelte-kit dev --port 8080",
 		"build": "svelte-kit build",
