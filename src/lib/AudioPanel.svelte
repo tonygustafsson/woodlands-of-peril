@@ -2,13 +2,6 @@
 	import { audio } from '../stores/audio';
 	import Switch from '$lib/form/Switch.svelte';
 
-	const musicAudio = new Audio();
-	const soundEffectAudio = new Audio();
-
-	soundEffectAudio.addEventListener('ended', () => {
-		audio.resetSoundEffect();
-	});
-
 	const toggleSoundEffects = () => {
 		audio.toggleSoundEffects();
 	};
@@ -16,25 +9,6 @@
 	const toggleMusic = () => {
 		audio.toggleMusic();
 	};
-
-	audio.subscribe((audioStore) => {
-		if (audioStore.enableMusic && musicAudio.paused) {
-			if (!musicAudio.src) {
-				musicAudio.src = `/music/${$audio.musicTrack}.mp3`;
-			}
-
-			musicAudio.play();
-		}
-
-		if (!audioStore.enableMusic && !musicAudio.paused) {
-			musicAudio.pause();
-		}
-
-		if (audioStore.enableSoundEffects && audioStore.soundEffect) {
-			soundEffectAudio.src = `/sound-effects/${audioStore.soundEffect}.mp3`;
-			soundEffectAudio.play();
-		}
-	});
 </script>
 
 <div class="audio">

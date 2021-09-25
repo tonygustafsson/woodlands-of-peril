@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { AssetImage, Assets } from '../types';
+import type { AssetImage, AssetAudio, Assets } from '../types';
 
 const tileSources: string[] = [
 	'stone1',
@@ -10,9 +10,7 @@ const tileSources: string[] = [
 	'tree2',
 	'tree3',
 	'tree4',
-	'bush1',
-	'apple',
-	'heart'
+	'bush1'
 ];
 const spriteSources: string[] = [
 	'coin',
@@ -28,9 +26,12 @@ const spriteSources: string[] = [
 	'skull'
 ];
 
+const soundEffectsSources: string[] = ['death', 'energy', 'hit1', 'hit2', 'money'];
+
 const initValue: Assets = {
 	tiles: [],
 	sprites: [],
+	soundEffects: [],
 	done: false
 };
 
@@ -54,6 +55,16 @@ const fetchSprite = (tileSource): Promise<AssetImage> =>
 		console.log('Loaded sprite ' + img.src);
 	});
 
+const fetchSoundEffect = (soundEffectSource): Promise<AssetAudio> =>
+	new Promise((resolve) => {
+		const audio = new Audio();
+		audio.addEventListener('canplay', () => resolve({ id: soundEffectSource, audio }));
+		audio.addEventListener('error', () => resolve({ id: soundEffectSource, audio }));
+
+		audio.src = `./sound-effects/${soundEffectSource}.mp3`;
+		console.log('Loaded sound effect ' + audio.src);
+	});
+
 const assetsStore = () => {
 	const { subscribe, set } = writable(initValue);
 
@@ -62,10 +73,12 @@ const assetsStore = () => {
 		fetch: async () => {
 			const tiles = await Promise.all(tileSources.map(fetchTile));
 			const sprites = await Promise.all(spriteSources.map(fetchSprite));
+			const soundEffects = await Promise.all(soundEffectsSources.map(fetchSoundEffect));
 
 			set({
 				tiles,
 				sprites,
+				soundEffects,
 				done: true
 			});
 		}

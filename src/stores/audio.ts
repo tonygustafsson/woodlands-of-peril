@@ -9,7 +9,7 @@ type AudioStore = {
 
 const initValue: AudioStore = {
 	musicTrack: 'music1',
-	enableMusic: false,
+	enableMusic: true,
 	soundEffect: '',
 	enableSoundEffects: true
 };

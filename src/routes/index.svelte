@@ -27,21 +27,32 @@
 
 <svelte:window on:resize={onResize} />
 
-<section>
-	{#if $assets.done}
+{#if $assets.done}
+	<section>
 		<Controls />
 		<InfoPanel />
 		<Board />
-	{:else}
-		<p>Loading resources.</p>
-	{/if}
-</section>
+	</section>
+{:else}
+	<div class="loading">
+		<p>Loading game resources ...</p>
+	</div>
+{/if}
 
 <style>
 	section {
 		display: flex;
 		margin: 0 auto;
 		flex-wrap: wrap;
+	}
+
+	.loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+		font-size: 24px;
+		text-align: center;
 	}
 
 	@media screen and (min-width: 1300px) {

@@ -43,9 +43,15 @@ export type AssetImage = {
 	image: HTMLImageElement;
 };
 
+export type AssetAudio = {
+	id: string;
+	audio: HTMLAudioElement;
+};
+
 export type Assets = {
 	tiles: AssetImage[];
 	sprites: AssetImage[];
+	soundEffects: AssetAudio[];
 	done: boolean;
 };
 

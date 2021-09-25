@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { user } from '../stores/user';
 	import AudioPanel from './AudioPanel.svelte';
+	import AudioPlayer from './AudioPlayer.svelte';
 	import MiniMap from './MiniMap.svelte';
 	import Heart from '$lib/icons/Heart.svelte';
 	import Coin from '$lib/icons/Coin.svelte';
@@ -16,6 +17,8 @@
 		mobileMenuActive = !mobileMenuActive;
 	};
 </script>
+
+<AudioPlayer />
 
 {#if $screen.size === 'sm'}
 	<div class="mobile-menu" on:click={toggleMobileMenu}>
