@@ -151,12 +151,12 @@ type DialogContent = {
 	title: string;
 };
 
-export const paintDialog = (
+export const paintDialog = async (
 	ctx: CanvasRenderingContext2D,
 	width: number,
 	height: number,
 	content: DialogContent
-): void => {
+): Promise<void> => {
 	const dialogWidth = 600;
 	const dialogHeight = 400;
 	const dialogLeft = Math.floor(width / 2 - dialogWidth / 2);
@@ -164,28 +164,46 @@ export const paintDialog = (
 
 	let currentDialogHeight = 0;
 
-	const animateDialogRollDown = () => {
-		while (currentDialogHeight > dialogHeight) {
-			return;
-		}
+	const animateDialogRollDown = () =>
+		new Promise((resolve, reject) => {
+			const loop = (timestamp: number, resolve: (value: unknown) => void) => {
+				while (currentDialogHeight > dialogHeight) {
+					return resolve('Done');
+				}
 
-		// Clear it
-		ctx.clearRect(0, 0, width, height);
+				// Clear it
+				ctx.clearRect(0, 0, width, height);
 
-		ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-		ctx.strokeStyle = '#170d0b';
-		ctx.lineWidth = 6;
+				ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+				ctx.strokeStyle = '#170d0b';
+				ctx.lineWidth = 6;
 
-		// Create rectangle
+				// Create rectangle
+				ctx.beginPath();
+				ctx.rect(dialogLeft, dialogTop, dialogWidth, currentDialogHeight);
+				ctx.fill();
+				ctx.stroke();
 
-		ctx.beginPath();
-		ctx.rect(dialogLeft, dialogTop, dialogWidth, currentDialogHeight);
-		ctx.fill();
-		ctx.stroke();
+				currentDialogHeight += 20;
+				window.requestAnimationFrame((timestamp) => loop(timestamp, resolve));
+			};
 
-		currentDialogHeight += 20;
-		window.requestAnimationFrame(animateDialogRollDown);
-	};
+			window.requestAnimationFrame((timestamp) => loop(timestamp, resolve));
+		});
 
-	window.requestAnimationFrame(animateDialogRollDown);
+	const animateDialogText = () =>
+		new Promise((resolve, reject) => {
+			const loop = (timestamp: number, resolve: (value: unknown) => void) => {
+				ctx.font = '30px Arial';
+				ctx.fillStyle = 'white';
+				ctx.fillText(content.title, dialogLeft + 20, dialogTop + 20);
+				resolve('Done');
+			};
+
+			window.requestAnimationFrame((timestamp) => loop(timestamp, resolve));
+		});
+
+	await animateDialogRollDown();
+	await animateDialogText();
+	console.log('Done with loop');
 };
