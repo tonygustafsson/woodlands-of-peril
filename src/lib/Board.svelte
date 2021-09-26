@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { handleKeydown, handleKeyup } from '$utils/move';
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintSprites, paintDialog } from '$utils/paint';
 	import { user } from '$stores/user';
@@ -50,7 +49,7 @@
 		paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight, {
 			title: 'Welcome to Woodlands of Peril',
 			text:
-				"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyborad (WASD) or by touching the controls in the right bottom corner on mobile.",
+				"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyboard (WASD) or by touching the controls in the right bottom corner on mobile.",
 			actions: [
 				{
 					cta: true,
@@ -69,8 +68,6 @@
 		});
 	});
 </script>
-
-<svelte:window on:keyup={handleKeyup} on:keydown={handleKeydown} />
 
 <div class="container" style={styleToString(containerStyle)}>
 	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBoard} />

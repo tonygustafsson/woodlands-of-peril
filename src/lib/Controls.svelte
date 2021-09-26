@@ -2,6 +2,7 @@
 	import Arrow from '$lib/icons/Arrow.svelte';
 	import { move } from '$utils/move';
 	import type { Direction } from '../types';
+	import { handleKeydown, handleKeyup } from '$utils/move';
 
 	$: isPressed = false;
 	$: direction = 'right' as Direction;
@@ -21,6 +22,8 @@
 		}
 	}, 100);
 </script>
+
+<svelte:window on:keyup={handleKeyup} on:keydown={handleKeydown} />
 
 <div
 	class="control up"
