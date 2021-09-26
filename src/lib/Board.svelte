@@ -47,7 +47,6 @@
 		paintSprites($canvasStore.spriteContext, canvasWidth, canvasHeight);
 
 		// Paint dialog
-		/*
 		paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight, {
 			title: 'Welcome to Woodlands of Peril',
 			text:
@@ -61,7 +60,7 @@
 					}
 				}
 			]
-		});*/
+		});
 
 		user.subscribe(() => {
 			visibleSpaces.locateAndSave($user.row, $user.column);

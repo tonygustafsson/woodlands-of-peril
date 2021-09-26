@@ -69,3 +69,13 @@ export type Sprite = {
 	leftMargin: number;
 	currentFrame: number;
 };
+
+export type DialogContent = {
+	title: string;
+	text: string;
+	actions: {
+		cta?: boolean;
+		label: string;
+		action: () => void;
+	}[];
+};
