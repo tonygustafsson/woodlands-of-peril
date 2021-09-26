@@ -95,7 +95,7 @@
 		width: 200px;
 		padding: 0.5em;
 		border-radius: 8px;
-		z-index: 3;
+		z-index: 4;
 	}
 
 	@media screen and (max-width: 1300px) {

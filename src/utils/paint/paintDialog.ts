@@ -1,20 +1,29 @@
 import type { DialogContent } from '../../types';
 import { screen } from '$stores/screen';
+import { canvas } from '$stores/canvas';
 import { get } from 'svelte/store';
 import { fillTextWordWrap } from './';
+import { dialog } from '$stores/dialogs';
 
-const paintDialog = async (
-	ctx: CanvasRenderingContext2D,
-	width: number,
-	height: number,
-	content: DialogContent
-): Promise<void> => {
+const clearDialog = () => {
+	const $canvas = get(canvas);
+	const ctx = $canvas.dialogContext;
+
+	if (ctx) {
+		ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+	}
+};
+
+const paintDialog = async (content: DialogContent): Promise<void> => {
 	const $screen = get(screen);
+	const $canvas = get(canvas);
+
+	const ctx = $canvas.dialogContext;
 
 	const dialogWidth = $screen.size === 'sm' ? 360 : 600;
 	const dialogHeight = 300;
-	const dialogLeft = Math.floor(width / 2 - dialogWidth / 2);
-	const dialogTop = Math.floor(height / 2 - dialogHeight / 2);
+	const dialogLeft = Math.floor($canvas.width / 2 - dialogWidth / 2);
+	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
 	const dialogBackgroundColor = 'rgba(0, 0, 0, 0.9)';
 	const dialogBorderColor = '#170d0b';
 	const dialogFontFamily = 'Trebuchet MS';
@@ -33,7 +42,7 @@ const paintDialog = async (
 				}
 
 				// Clear it
-				ctx.clearRect(0, 0, width, height);
+				ctx.clearRect(0, 0, $canvas.width, $canvas.height);
 
 				ctx.fillStyle = dialogBackgroundColor;
 				ctx.strokeStyle = dialogBorderColor;
@@ -146,5 +155,13 @@ const paintDialog = async (
 	await animateDialogText();
 	await addActionButton();
 };
+
+dialog.subscribe(($dialog) => {
+	if ($dialog.visible) {
+		paintDialog($dialog);
+	} else {
+		clearDialog();
+	}
+});
 
 export default paintDialog;

@@ -3,6 +3,8 @@
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintSprites, paintDialog } from '$utils/paint';
 	import { user } from '$stores/user';
+	import { audio } from '$stores/audio';
+	import { dialog } from '$stores/dialogs';
 	import { canvas as canvasStore } from '$stores/canvas';
 	import { visibleSpaces } from '$stores/visibleSpaces';
 	import { styleToString } from '$utils/styleToString';
@@ -17,6 +19,10 @@
 		backgroundImage: "url('/background.jpg')",
 		backgroundPositionX: `-${$user.column * spaceWidth}px`,
 		backgroundPositionY: `-${$user.row * spaceWidth}px`
+	};
+
+	const triggerDialogAction = () => {
+		$dialog.actions[0].action();
 	};
 
 	onMount(() => {
@@ -45,8 +51,9 @@
 		// Create animation loop
 		paintSprites($canvasStore.spriteContext, canvasWidth, canvasHeight);
 
-		// Paint dialog
-		paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight, {
+		// Paint welcome dialog
+		dialog.set({
+			visible: true,
 			title: 'Welcome to Woodlands of Peril',
 			text:
 				"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyboard (WASD) or by touching the controls in the right bottom corner on mobile.",
@@ -55,7 +62,9 @@
 					cta: true,
 					label: 'Begin',
 					action: () => {
-						alert('Hej');
+						dialog.clear();
+						audio.toggleMusic();
+						audio.toggleSoundEffects();
 					}
 				}
 			]
@@ -69,7 +78,7 @@
 	});
 </script>
 
-<div class="container" style={styleToString(containerStyle)}>
+<div class="container" style={styleToString(containerStyle)} on:click={triggerDialogAction}>
 	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasBoard} />
 	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasSprites} />
 	<canvas width={$canvasStore.width} height={$canvasStore.height} bind:this={canvasDialog} />

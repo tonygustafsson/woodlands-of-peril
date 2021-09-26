@@ -1,4 +1,5 @@
 import { user } from '$stores/user';
+import { dialog } from '$stores/dialogs';
 import { get } from 'svelte/store';
 import { audio } from '$stores/audio';
 import { spaces } from '$stores/spaces';
@@ -7,8 +8,13 @@ import type { Direction, Space } from '../types';
 
 export const move = (direction: Direction): boolean | undefined => {
 	const $user = get(user);
+	const $dialog = get(dialog);
 	const $spaces = get(spaces);
 	let newPosition = $user.position;
+
+	if ($dialog.visible) {
+		return; // Cannot move when dialogs are open
+	}
 
 	switch (direction) {
 		case 'up':
