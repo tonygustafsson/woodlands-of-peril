@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
 
-type AudioStore = {
+type ScreenStore = {
 	size: 'sm' | 'lg';
 	innerWidth: number;
 	innerHeight: number;
 };
 
-const initValue: AudioStore = {
+const initValue: ScreenStore = {
 	size: 'sm',
 	innerWidth: 0,
 	innerHeight: 0

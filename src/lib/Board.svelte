@@ -47,8 +47,20 @@
 		paintSprites($canvasStore.spriteContext, canvasWidth, canvasHeight);
 
 		// Paint dialog
-		/*paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight, {
-			title: 'Welcome to Woodlands of Peril'
+		/*
+		paintDialog($canvasStore.dialogContext, canvasWidth, canvasHeight, {
+			title: 'Welcome to Woodlands of Peril',
+			text:
+				"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyborad (WASD) or by touching the controls in the right bottom corner on mobile.",
+			actions: [
+				{
+					cta: true,
+					label: 'Begin',
+					action: () => {
+						alert('Hej');
+					}
+				}
+			]
 		});*/
 
 		user.subscribe(() => {
