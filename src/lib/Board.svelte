@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { spaceWidth } from '../constants';
-	import { paintBoard, paintSprites, paintDialog } from '$utils/paint';
+	import { paintBoard, paintSprites } from '$utils/paint';
 	import { user } from '$stores/user';
 	import { audio } from '$stores/audio';
 	import { dialog } from '$stores/dialogs';
 	import { canvas as canvasStore } from '$stores/canvas';
 	import { visibleSpaces } from '$stores/visibleSpaces';
 	import { styleToString } from '$utils/styleToString';
+	import { get } from 'svelte/store';
 
 	let canvasBoard: HTMLCanvasElement;
 	let canvasSprites: HTMLCanvasElement;
@@ -21,8 +22,13 @@
 		backgroundPositionY: `-${$user.row * spaceWidth}px`
 	};
 
-	const triggerDialogAction = () => {
-		$dialog.actions[0].action();
+	const triggerDialogAction = (e: MouseEvent) => {
+		const $canvas = get(canvasStore);
+
+		if ($canvas.dialogContext.isPointInPath($dialog.actions[0].path, e.offsetX, e.offsetY)) {
+			// If inside button area, trigger button action
+			$dialog.actions[0].action();
+		}
 	};
 
 	onMount(() => {

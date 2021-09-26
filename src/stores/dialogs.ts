@@ -8,6 +8,7 @@ type DialogStore = {
 		cta?: boolean;
 		label: string;
 		action: () => void;
+		path?: Path2D;
 	}[];
 };
 
@@ -19,14 +20,20 @@ const initValue: DialogStore = {
 };
 
 const dialogStore = () => {
-	const { subscribe, set } = writable(initValue);
+	const { subscribe, set, update } = writable(initValue);
 
 	return {
 		subscribe,
 		set,
+		update,
 		clear: () => {
 			set(initValue);
-		}
+		},
+		setButtonPath: (button: Path2D) =>
+			update(($dialog) => {
+				$dialog.actions[0].path = button;
+				return $dialog;
+			})
 	};
 };
 

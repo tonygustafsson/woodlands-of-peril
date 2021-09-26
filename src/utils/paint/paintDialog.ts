@@ -5,6 +5,8 @@ import { get } from 'svelte/store';
 import { fillTextWordWrap } from './';
 import { dialog } from '$stores/dialogs';
 
+let dialogVisible = false;
+
 const clearDialog = () => {
 	const $canvas = get(canvas);
 	const ctx = $canvas.dialogContext;
@@ -127,13 +129,15 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 			const y = dialogTop + dialogHeight - 80;
 
 			const loop = (timestamp: number, resolve: (value: unknown) => void) => {
-				ctx.beginPath();
-				ctx.rect(x, y, width, height);
+				const button = new Path2D();
+				button.rect(x, y, width, height);
 				ctx.strokeStyle = dialogBorderColor;
 				ctx.lineWidth = 6;
-				ctx.stroke();
+				ctx.stroke(button);
 				ctx.fillStyle = '#000';
-				ctx.fill();
+				ctx.fill(button);
+
+				dialog.setButtonPath(button);
 
 				ctx.fillStyle = dialogTextColor;
 				ctx.font = `${dialogButtonFontSize} ${dialogFontFamily}`;
@@ -157,10 +161,12 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 };
 
 dialog.subscribe(($dialog) => {
-	if ($dialog.visible) {
+	if ($dialog.visible && !dialogVisible) {
 		paintDialog($dialog);
-	} else {
+		dialogVisible = true;
+	} else if (!$dialog.visible && dialogVisible) {
 		clearDialog();
+		dialogVisible = false;
 	}
 });
 
