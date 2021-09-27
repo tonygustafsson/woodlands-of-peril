@@ -58,11 +58,20 @@ const fetchSprite = (tileSource: string): Promise<AssetImage> =>
 const fetchSoundEffect = (soundEffectSource: string): Promise<AssetAudio> =>
 	new Promise((resolve) => {
 		const audio = new Audio();
-		audio.addEventListener('canplay', () => resolve({ id: soundEffectSource, audio }));
-		audio.addEventListener('error', () => resolve({ id: soundEffectSource, audio }));
+		const source = document.createElement('source');
 
-		audio.src = `./sound-effects/${soundEffectSource}.mp3`;
-		console.log('Loaded sound effect ' + audio.src);
+		if (audio.canPlayType('audio/mpeg')) {
+			audio.addEventListener('loadedmetadata', () => resolve({ id: soundEffectSource, audio }));
+			audio.addEventListener('error', () => resolve({ id: soundEffectSource, audio }));
+
+			source.type = 'audio/mpeg';
+			source.src = `./sound-effects/${soundEffectSource}.mp3`;
+			audio.appendChild(source);
+
+			console.log('Loaded sound effect ' + source.src);
+		} else {
+			resolve({ id: 'none', audio });
+		}
 	});
 
 const assetsStore = () => {
