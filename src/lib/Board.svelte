@@ -25,6 +25,10 @@
 	const triggerDialogAction = (e: MouseEvent) => {
 		const $canvas = get(canvasStore);
 
+		if (!$dialog.actions[0]?.path) {
+			return;
+		}
+
 		if ($canvas.dialogContext.isPointInPath($dialog.actions[0].path, e.offsetX, e.offsetY)) {
 			// If inside button area, trigger button action
 			$dialog.actions[0].action();

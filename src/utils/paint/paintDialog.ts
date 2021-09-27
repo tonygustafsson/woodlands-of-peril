@@ -22,17 +22,18 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 
 	const ctx = $canvas.dialogContext;
 
+	const backDropColor = 'rgba(0, 0, 0, 0.5)';
 	const dialogWidth = $screen.size === 'sm' ? 360 : 600;
 	const dialogHeight = 300;
 	const dialogLeft = Math.floor($canvas.width / 2 - dialogWidth / 2);
 	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
-	const dialogBackgroundColor = 'rgba(0, 0, 0, 0.9)';
-	const dialogBorderColor = '#170d0b';
+	const dialogBackgroundColor = '#000';
+	const dialogBorderColor = '#2e1500';
 	const dialogFontFamily = 'Trebuchet MS';
 	const dialogFontSize = '16px';
 	const dialogHeadingFontSize = $screen.size === 'sm' ? '22px' : '32px';
 	const dialogButtonFontSize = '24px';
-	const dialogTextColor = '#fff';
+	const dialogTextColor = '#ddd';
 
 	let currentDialogHeight = 0;
 
@@ -45,6 +46,8 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 
 				// Clear it
 				ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+				ctx.fillStyle = backDropColor;
+				ctx.fillRect(0, 0, $canvas.width, $canvas.height);
 
 				ctx.fillStyle = dialogBackgroundColor;
 				ctx.strokeStyle = dialogBorderColor;
