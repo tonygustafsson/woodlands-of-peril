@@ -92,7 +92,7 @@ const spriteSettings = {
 		destinationWidth: 36,
 		destinationHeight: 36,
 		topMargin: 0,
-		leftMargin: -2
+		leftMargin: 0
 	},
 	user: {
 		noOfFrames: 4,
