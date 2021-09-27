@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store';
 import type { Sprite } from '../types';
 import assets from './assets';
-import { user } from './user';
+import { user } from './';
 
 const spriteSettings = {
 	coin: {

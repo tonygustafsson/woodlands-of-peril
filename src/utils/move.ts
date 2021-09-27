@@ -1,8 +1,4 @@
-import { user } from '$stores/user';
-import { dialog } from '$stores/dialogs';
-import { get } from 'svelte/store';
-import { audio } from '$stores/audio';
-import { spaces } from '$stores/spaces';
+import { get, user, dialog, audio, spaces } from '../stores';
 import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
 import type { Direction, Space } from '../types';
 

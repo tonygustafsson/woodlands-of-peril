@@ -19,7 +19,6 @@ const config = {
 		vite: {
 			resolve: {
 				alias: {
-					$stores: resolve('./src/stores'),
 					$utils: resolve('./src/utils')
 				}
 			}

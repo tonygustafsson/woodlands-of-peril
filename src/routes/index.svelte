@@ -7,8 +7,7 @@
 	import Board from '$lib/Board.svelte';
 	import InfoPanel from '$lib/InfoPanel.svelte';
 	import Controls from '$lib/Controls.svelte';
-	import assets from '$stores/assets';
-	import { screen } from '$stores/screen';
+	import { screen, assets } from '../stores';
 	import '../app.css';
 
 	onMount(() => {

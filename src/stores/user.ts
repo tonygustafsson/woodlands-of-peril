@@ -68,4 +68,6 @@ const userStore = () => {
 	};
 };
 
-export const user = userStore();
+const user = userStore();
+
+export default user;

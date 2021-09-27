@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { audio } from '$stores/audio';
+	import { audio } from '../stores';
 	import Switch from '$lib/form/Switch.svelte';
 
 	const toggleSoundEffects = () => {

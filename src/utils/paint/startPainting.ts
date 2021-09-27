@@ -1,10 +1,6 @@
 import { spaceWidth } from '../../constants';
 import type { Space, User } from '../../types';
-import { visibleSpaces } from '$stores/visibleSpaces';
-import { user } from '$stores/user';
-import { get } from 'svelte/store';
-import sprites from '$stores/sprites';
-import assets from '$stores/assets';
+import { get, visibleSpaces, user, sprites, assets } from '../../stores';
 
 const getSpaceBackgroundColor = (space: Space, $user: User): string => {
 	if (space.content.label === 'User' && $user.isHurting) {

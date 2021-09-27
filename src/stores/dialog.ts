@@ -37,4 +37,6 @@ const dialogStore = () => {
 	};
 };
 
-export const dialog = dialogStore();
+const dialog = dialogStore();
+
+export default dialog;

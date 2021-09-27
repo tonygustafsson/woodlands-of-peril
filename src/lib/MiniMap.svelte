@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { user } from '$stores/user';
-	import { canvas } from '$stores/canvas';
+	import { user, canvas } from '../stores';
 	import { spacesPerRow, numberOfSpaces, spaceWidth } from '../constants';
 	import { styleToString } from '$utils/styleToString';
 

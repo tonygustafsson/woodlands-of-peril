@@ -53,4 +53,6 @@ const audioStore = () => {
 	};
 };
 
-export const audio = audioStore();
+const audio = audioStore();
+
+export default audio;

@@ -28,4 +28,6 @@ const screenStore = () => {
 	};
 };
 
-export const screen = screenStore();
+const screen = screenStore();
+
+export default screen;

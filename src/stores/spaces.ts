@@ -10,7 +10,7 @@ import {
 import { randomInArray } from '$utils/array';
 import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
-import { user } from './user';
+import user from './user';
 import { getBoardPosition } from '$utils/board';
 
 const createSpaces: () => Space[] = () => {
@@ -119,4 +119,6 @@ const spacesStore = () => {
 	};
 };
 
-export const spaces = spacesStore();
+const spaces = spacesStore();
+
+export default spaces;

@@ -1,6 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { canvas } from './canvas';
-import { spaces } from './spaces';
+import { canvas, spaces } from './';
 
 const $spaces = get(spaces);
 
@@ -32,4 +31,6 @@ const visibleSpacesStore = () => {
 	};
 };
 
-export const visibleSpaces = visibleSpacesStore();
+const visibleSpaces = visibleSpacesStore();
+
+export default visibleSpaces;

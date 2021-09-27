@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { audio } from '$stores/audio';
-	import assets from '$stores/assets';
+	import { audio, assets } from '../stores';
 
 	const musicAudio = new Audio();
 

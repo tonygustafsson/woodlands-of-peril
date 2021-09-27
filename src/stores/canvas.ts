@@ -29,4 +29,6 @@ const canvasStore = () => {
 	};
 };
 
-export const canvas = canvasStore();
+const canvas = canvasStore();
+
+export default canvas;

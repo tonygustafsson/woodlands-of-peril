@@ -1,9 +1,7 @@
 import type { DialogContent } from '../../types';
-import { screen } from '$stores/screen';
-import { canvas } from '$stores/canvas';
+import { screen, canvas, dialog } from '../../stores';
 import { get } from 'svelte/store';
 import { fillTextWordWrap } from './';
-import { dialog } from '$stores/dialogs';
 
 let dialogVisible = false;
 

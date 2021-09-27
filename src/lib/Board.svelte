@@ -2,13 +2,8 @@
 	import { onMount } from 'svelte';
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintSprites } from '$utils/paint';
-	import { user } from '$stores/user';
-	import { audio } from '$stores/audio';
-	import { dialog } from '$stores/dialogs';
-	import { canvas as canvasStore } from '$stores/canvas';
-	import { visibleSpaces } from '$stores/visibleSpaces';
+	import { get, user, audio, dialog, canvas as canvasStore, visibleSpaces } from '../stores';
 	import { styleToString } from '$utils/styleToString';
-	import { get } from 'svelte/store';
 
 	let canvasBoard: HTMLCanvasElement;
 	let canvasSprites: HTMLCanvasElement;
