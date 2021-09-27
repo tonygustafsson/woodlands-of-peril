@@ -35,7 +35,11 @@
 		}
 	};
 
-	onMount(() => {
+	const setCanvasMeasures = () => {
+		if (!canvasBoard || !canvasSprites || !canvasDialog) {
+			return;
+		}
+
 		const canvasWidth =
 			document.body.clientWidth <= 1300
 				? document.body.clientWidth
@@ -57,9 +61,22 @@
 			spriteContext: canvasSprites.getContext('2d'),
 			dialogContext: canvasDialog.getContext('2d')
 		});
+	};
 
-		// Create animation loop
-		paintSprites($canvasStore.spriteContext, canvasWidth, canvasHeight);
+	onMount(() => {
+		setCanvasMeasures();
+
+		const $canvas = get(canvasStore);
+
+		visibleSpaces.locateAndSave($user.row, $user.column);
+		paintSprites($canvasStore.spriteContext, $canvas.width, $canvas.height);
+
+		user.subscribe(() => {
+			visibleSpaces.locateAndSave($user.row, $user.column);
+
+			// Paint board on user movement
+			paintBoard($canvasStore.boardContext, $canvas.width, $canvas.height);
+		});
 
 		// Paint welcome dialog
 		dialog.set({
@@ -78,12 +95,6 @@
 					}
 				}
 			]
-		});
-
-		user.subscribe(() => {
-			visibleSpaces.locateAndSave($user.row, $user.column);
-
-			paintBoard($canvasStore.boardContext, canvasWidth, canvasHeight);
 		});
 	});
 </script>
