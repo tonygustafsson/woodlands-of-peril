@@ -74,23 +74,25 @@
 		});
 
 		// Paint welcome dialog
-		dialog.set({
-			visible: true,
-			title: 'Welcome to Woodlands of Peril',
-			text:
-				"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyboard (WASD) or by touching the controls in the right bottom corner on mobile.",
-			actions: [
-				{
-					cta: true,
-					label: 'Begin',
-					action: () => {
-						dialog.clear();
-						audio.toggleMusic();
-						audio.toggleSoundEffects();
+		if (window.location.search !== '?reload') {
+			dialog.set({
+				visible: true,
+				title: 'Welcome to Woodlands of Peril',
+				text:
+					"This is a game where you explore the woodlands. You'll look for treasure and fight enemies. You control the caracter by using the keyboard (WASD) or by touching the controls in the right bottom corner on mobile.",
+				actions: [
+					{
+						cta: true,
+						label: 'Begin',
+						action: () => {
+							dialog.clear();
+							audio.toggleMusic();
+							audio.toggleSoundEffects();
+						}
 					}
-				}
-			]
-		});
+				]
+			});
+		}
 	});
 </script>
 

@@ -57,6 +57,21 @@ export const move = (direction: Direction): boolean | undefined => {
 		} else {
 			// Let pass so dead icon could be placed where enemy where at
 			audio.playSoundEffect('death');
+
+			dialog.set({
+				visible: true,
+				title: 'You are dead!',
+				text: 'You died a gruesome death. Do you want to play again?',
+				actions: [
+					{
+						cta: true,
+						label: 'Start over',
+						action: () => {
+							window.location.search = 'reload';
+						}
+					}
+				]
+			});
 		}
 	}
 
