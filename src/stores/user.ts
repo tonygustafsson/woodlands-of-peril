@@ -1,8 +1,9 @@
 import { writable } from 'svelte/store';
 import type { Direction, User } from '../types';
 import { getBoardPosition } from '$utils/board';
+import storage from '$utils/storage';
 
-const initValue: User = {
+let initValue: User = {
 	position: 0,
 	row: 0,
 	column: 0,
@@ -15,6 +16,9 @@ const initValue: User = {
 		energy: 3
 	}
 };
+
+const [storageValue, storeStorage] = storage<User>('user', initValue);
+initValue = storageValue;
 
 const userStore = () => {
 	const { subscribe, update } = writable(initValue);
@@ -64,10 +68,29 @@ const userStore = () => {
 					return user;
 				});
 			}, 250);
+		},
+		clearStorage: () => {
+			storeStorage.clear();
 		}
 	};
 };
 
 const user = userStore();
+
+let storageTimer;
+
+// Fetch changes to store and save it to LocalStorage
+user.subscribe((value) => {
+	clearTimeout(storageTimer);
+
+	storageTimer = setTimeout(() => {
+		if (Object.keys(value).length <= 0) {
+			// Do not save empty set, from startup
+			return;
+		}
+
+		storeStorage.set(value);
+	}, 500);
+});
 
 export default user;

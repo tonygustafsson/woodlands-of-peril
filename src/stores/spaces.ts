@@ -12,6 +12,7 @@ import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
 import user from './user';
 import { getBoardPosition } from '$utils/board';
+import storage from '$utils/storage';
 
 const createSpaces: () => Space[] = () => {
 	const spaces: Space[] = [];
@@ -102,7 +103,9 @@ const createSpaces: () => Space[] = () => {
 	return spaces;
 };
 
-const initValue: Space[] = createSpaces();
+let initValue: Space[] = createSpaces();
+const [storageValue, storeStorage] = storage<Space[]>('spaces', initValue);
+initValue = storageValue;
 
 const spacesStore = () => {
 	const { subscribe, set, update } = writable(initValue);
@@ -115,10 +118,29 @@ const spacesStore = () => {
 				spaces[id] = newSpace;
 				return spaces;
 			});
+		},
+		clearStorage: () => {
+			storeStorage.clear();
 		}
 	};
 };
 
 const spaces = spacesStore();
+
+let storageTimer;
+
+// Fetch changes to store and save it to LocalStorage
+spaces.subscribe((value) => {
+	clearTimeout(storageTimer);
+
+	storageTimer = setTimeout(() => {
+		if (Object.keys(value).length <= 0) {
+			// Do not save empty set, from startup
+			return;
+		}
+
+		storeStorage.set(value);
+	}, 500);
+});
 
 export default spaces;

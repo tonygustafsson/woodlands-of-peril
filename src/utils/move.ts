@@ -67,6 +67,9 @@ export const move = (direction: Direction): boolean | undefined => {
 						cta: true,
 						label: 'Start over',
 						action: () => {
+							user.clearStorage();
+							spaces.clearStorage();
+
 							window.location.search = 'reload';
 						}
 					}
