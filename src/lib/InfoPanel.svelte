@@ -23,38 +23,44 @@
 {#if $screen.size === 'sm'}
 	<div class="mobile-menu" on:click={toggleMobileMenu}>
 		<div class="mobile-menu-item">
-			<Chest mr /> Inventory
+			<Chest mr /> Menu
 		</div>
+
+		<div class="mobile-menu-item"><Coin width={20} mr /> {$user.inventory.money}</div>
 
 		<div class="mobile-menu-item">
-			{#each Array($user.inventory.energy) as _}
-				<Heart />
-			{/each}
-			{#each Array(5 - $user.inventory.energy) as _}
-				<Heart filled={false} />
-			{/each}
-		</div>
-	</div>
-{/if}
-
-{#if $screen.size !== 'sm' || mobileMenuActive}
-	<div class="inventory" transition:slide={{ duration: 200 }}>
-		{#if $screen.size !== 'sm'}
-			<div class="item">
+			{#if $user.alive}
 				{#each Array($user.inventory.energy) as _}
 					<Heart />
 				{/each}
 				{#each Array(5 - $user.inventory.energy) as _}
 					<Heart filled={false} />
 				{/each}
-			</div>
-		{/if}
+			{:else}
+				<div class="mobile-menu-item"><Skull mr /> <strong>DEAD</strong></div>
+			{/if}
+		</div>
+	</div>
+{/if}
 
-		{#if !$user.alive}
-			<div class="item"><Skull mr /> <strong>DEAD</strong></div>
-		{/if}
+{#if $screen.size !== 'sm' || mobileMenuActive}
+	<div class="menu" transition:slide={{ duration: 200 }}>
+		{#if $screen.size !== 'sm'}
+			{#if $user.alive}
+				<div class="item">
+					{#each Array($user.inventory.energy) as _}
+						<Heart />
+					{/each}
+					{#each Array(5 - $user.inventory.energy) as _}
+						<Heart filled={false} />
+					{/each}
+				</div>
+			{:else}
+				<div class="item"><Skull mr /> <strong>DEAD</strong></div>
+			{/if}
 
-		<div class="item"><Coin mr /> {$user.inventory.money}</div>
+			<div class="item"><Coin mr /> {$user.inventory.money}</div>
+		{/if}
 
 		<div class="item">
 			<Compass mr />
@@ -90,7 +96,12 @@
 		align-items: center;
 	}
 
-	.inventory {
+	.mobile-menu-item:nth-child(2) {
+		margin-left: auto;
+		margin-right: 8px;
+	}
+
+	.menu {
 		width: 200px;
 		padding: 0.5em;
 		border-radius: 8px;
@@ -98,7 +109,7 @@
 	}
 
 	@media screen and (max-width: 1300px) {
-		.inventory {
+		.menu {
 			position: fixed;
 			width: 100%;
 			top: 40px;
