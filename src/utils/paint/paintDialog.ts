@@ -1,5 +1,5 @@
 import type { DialogContent } from '../../types';
-import { screen, canvas, dialog } from '../../stores';
+import { screen, canvas, dialog, theme } from '../../stores';
 import { get } from 'svelte/store';
 import { fillTextWordWrap } from './';
 
@@ -17,6 +17,7 @@ const clearDialog = () => {
 const paintDialog = async (content: DialogContent): Promise<void> => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
+	const $theme = get(theme);
 
 	const ctx = $canvas.dialogContext;
 
@@ -26,12 +27,12 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	const dialogLeft = Math.floor($canvas.width / 2 - dialogWidth / 2);
 	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
 	const dialogBackgroundColor = '#000';
-	const dialogBorderColor = '#2e1500';
+	const dialogBorderColor = $theme.brown;
 	const dialogFontFamily = 'Trebuchet MS';
 	const dialogFontSize = '16px';
 	const dialogHeadingFontSize = $screen.size === 'sm' ? '22px' : '32px';
 	const dialogButtonFontSize = '24px';
-	const dialogTextColor = '#ddd';
+	const dialogTextColor = '#fff';
 
 	let currentDialogHeight = 0;
 

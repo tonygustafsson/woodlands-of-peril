@@ -39,7 +39,7 @@
 
 	.map-viewport {
 		position: absolute;
-		background-color: var(--purple);
+		background-color: var(--pink);
 		z-index: 2;
 	}
 </style>

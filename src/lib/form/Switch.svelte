@@ -55,7 +55,7 @@
 	}
 
 	.switch-input:checked + .switch-label:before {
-		background-color: var(--purple);
+		background-color: var(--pink);
 	}
 
 	.switch-input:checked + .switch-label:after {

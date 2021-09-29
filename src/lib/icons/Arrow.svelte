@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { theme } from '../../stores';
+
 	export let width = 24;
 	export let height = 24;
 	export let mr = false;
@@ -31,7 +33,7 @@
 	{width}
 	{height}
 >
-	<g {transform} fill="#222" fill-opacity="0.8">
+	<g {transform} fill={$theme.grey} fill-opacity="0.8">
 		<path
 			d="M150 0a150 150 0 1 0 0 300 150 150 0 0 0 0-300zm67.7 189.8a14 14 0 0 1-19.8 0l-48.3-48.3-48.5 48.5a14 14 0 0 1-19.8-19.8l56.3-56.3a14 14 0 0 1 12-6.4 14 14 0 0 1 12 6.4l56 56a14 14 0 0 1 0 19.9z"
 		/>

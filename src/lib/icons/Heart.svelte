@@ -1,8 +1,10 @@
 <script>
+	import { theme } from '../../stores';
+
 	export let width = 24;
 	export let height = 24;
-	export let stroke = '#573a32';
-	export let fill = '#ff877f';
+	export let stroke = $theme.grey;
+	export let fill = $theme.pink;
 	export let filled = true;
 	export let mr = false;
 	export let ml = false;

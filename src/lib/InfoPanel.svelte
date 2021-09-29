@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user, screen } from '../stores';
+	import { user, screen, theme } from '../stores';
 	import AudioPanel from './AudioPanel.svelte';
 	import AudioPlayer from './AudioPlayer.svelte';
 	import MiniMap from './MiniMap.svelte';
@@ -78,7 +78,7 @@
 			target="_blank"
 			class="item item--extra-spacing"
 		>
-			<Github fill="#574159" mr /> Game info
+			<Github fill={$theme.pink} mr /> Game info
 		</a>
 	</div>
 {/if}
