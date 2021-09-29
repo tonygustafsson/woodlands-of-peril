@@ -66,11 +66,31 @@
 		visibleSpaces.locateAndSave($user.row, $user.column);
 		paintSprites($canvasStore.spriteContext, $canvas.width, $canvas.height);
 
-		user.subscribe(() => {
+		user.subscribe(($user) => {
 			visibleSpaces.locateAndSave($user.row, $user.column);
 
 			// Paint board on user movement
 			paintBoard($canvasStore.boardContext, $canvas.width, $canvas.height);
+
+			/*
+			if ($user.event.type === 'enemy') {
+				dialog.set({
+					visible: true,
+					title: 'You meet an enemy!!',
+					text: 'Oo are you to scared?!',
+					actions: [
+						{
+							cta: true,
+							label: 'Fight',
+							action: () => {
+								user.killEnemy();
+								user.hurt();
+							}
+						}
+					]
+				});
+			}
+			*/
 		});
 
 		// Paint welcome dialog

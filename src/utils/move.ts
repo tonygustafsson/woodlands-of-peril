@@ -48,6 +48,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	if ($spaces[newPosition].content.enemy) {
 		user.hurt();
+		user.meetEnemy($spaces[newPosition].content.label, 1);
 
 		const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
 		audio.playSoundEffect(soundEffect);

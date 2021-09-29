@@ -11,6 +11,9 @@ let initValue: User = {
 	moving: false,
 	alive: true,
 	isHurting: false,
+	event: {
+		type: 'none'
+	},
 	inventory: {
 		money: 0,
 		energy: 3
@@ -68,6 +71,26 @@ const userStore = () => {
 					return user;
 				});
 			}, 250);
+		},
+		meetEnemy: (enemyType: string, level: number) => {
+			update((user) => {
+				user.event = {
+					type: 'enemy',
+					enemyType,
+					level
+				};
+
+				return user;
+			});
+		},
+		killEnemy: () => {
+			update((user) => {
+				user.event = {
+					type: 'none'
+				};
+
+				return user;
+			});
 		},
 		clearStorage: () => {
 			storeStorage.clear();

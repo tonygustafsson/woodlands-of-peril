@@ -27,6 +27,12 @@ export type Inventory = {
 	energy: number;
 };
 
+export type Event = {
+	type: 'enemy' | 'none';
+	level?: number;
+	enemyType?: string;
+};
+
 export type User = {
 	position: number;
 	row: number;
@@ -35,6 +41,7 @@ export type User = {
 	moving: boolean;
 	alive: boolean;
 	isHurting: boolean;
+	event: Event;
 	inventory: Inventory;
 };
 
