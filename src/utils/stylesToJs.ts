@@ -41,6 +41,10 @@ const getElementCSSVariables = (
 };
 
 export const getAllCSSVariables = (): Record<string, string> => {
+	if (typeof document === 'undefined') {
+		return {};
+	}
+
 	const cssVars = getAllCSSVariableNames();
 
 	return getElementCSSVariables(cssVars, document.documentElement);
