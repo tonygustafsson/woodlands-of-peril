@@ -1,7 +1,6 @@
 import { writable, get } from 'svelte/store';
-import type { Sprite } from '../types';
+import type { Sprite, Direction } from '../types';
 import assets from './assets';
-import { user } from './';
 
 const spriteSettings = {
 	coin: {
@@ -116,11 +115,26 @@ const frameSpeed = 125;
 const initValue: Record<string, Sprite> = {};
 
 const spriteStore = () => {
-	const { subscribe, set } = writable(initValue);
+	const { subscribe, set, update } = writable(initValue);
 
 	return {
 		subscribe,
-		set
+		set,
+		changeUserSprite: (direction: Direction) => {
+			update(($sprites) => {
+				let nextFrame = $sprites['user'].currentFrame + 1;
+
+				if (nextFrame >= spriteSettings['user'].noOfFrames) {
+					nextFrame = 0;
+				}
+
+				$sprites['user'].sx = nextFrame * spriteSettings['user'].width;
+				$sprites['user'].sy = spriteSettings['user'].positions[direction].sy;
+				$sprites['user'].currentFrame = nextFrame;
+
+				return $sprites;
+			});
+		}
 	};
 };
 
@@ -155,24 +169,20 @@ assets.subscribe(($assets) => {
 
 setInterval(() => {
 	const $sprites = get(sprites);
-	const $user = get(user);
 
 	Object.keys($sprites).forEach((spriteId) => {
+		if (spriteId === 'user') {
+			return;
+		}
+
+		// Special handling for user sprite in changeUserSprite()
 		let nextFrame = $sprites[spriteId].currentFrame + 1;
 
 		if (nextFrame >= spriteSettings[spriteId].noOfFrames) {
 			nextFrame = 0;
 		}
 
-		if (spriteId !== 'user' || $user.moving) {
-			// Only move users frames while user moves
-			$sprites[spriteId].sx = nextFrame * spriteSettings[spriteId].width;
-		}
-
-		if (spriteId === 'user') {
-			// TODO: Make general
-			$sprites[spriteId].sy = spriteSettings[spriteId].positions[$user.direction].sy;
-		}
+		$sprites[spriteId].sx = nextFrame * spriteSettings[spriteId].width;
 
 		$sprites[spriteId].currentFrame = nextFrame;
 	});

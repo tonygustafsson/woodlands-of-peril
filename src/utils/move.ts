@@ -1,4 +1,4 @@
-import { get, user, dialog, audio, spaces } from '../stores';
+import { get, user, dialog, audio, spaces, sprites } from '../stores';
 import { emptyContent, deadContent, userContent, spacesPerRow } from '../constants';
 import type { Direction, Space } from '../types';
 
@@ -69,8 +69,6 @@ export const move = (direction: Direction): boolean | undefined => {
 						action: () => {
 							user.clearStorage();
 							spaces.clearStorage();
-
-							window.location.search = 'reload';
 						}
 					}
 				]
@@ -103,6 +101,7 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	spaces.setSpace(newPosition, newNewSpace);
 	user.setPosition(newPosition, direction);
+	sprites.changeUserSprite(direction);
 
 	return true;
 };
