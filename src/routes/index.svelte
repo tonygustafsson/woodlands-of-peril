@@ -8,6 +8,7 @@
 	import InfoPanel from '$lib/InfoPanel.svelte';
 	import Controls from '$lib/Controls.svelte';
 	import { screen, assets } from '../stores';
+	import '../theme.css';
 	import '../app.css';
 
 	onMount(() => {

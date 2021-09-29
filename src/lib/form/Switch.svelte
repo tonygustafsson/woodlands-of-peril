@@ -20,14 +20,11 @@
 
 	.switch-label {
 		display: block;
-		width: 48px;
-		height: 24px;
+		width: var(--switch-width);
+		height: var(--switch-height);
 		text-indent: -150%;
 		clip: rect(0 0 0 0);
 		color: transparent;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
 		user-select: none;
 	}
 
@@ -42,7 +39,7 @@
 	.switch-label:before {
 		width: 100%;
 		height: 100%;
-		background-color: #222;
+		background-color: var(--grey);
 		border-radius: 9999em;
 		transition: background-color 0.25s ease;
 	}
@@ -50,19 +47,18 @@
 	.switch-label:after {
 		top: 0;
 		left: 0;
-		width: 24px;
-		height: 24px;
+		width: var(--switch-height);
+		height: var(--switch-height);
 		border-radius: 50%;
 		background-color: #fff;
-		box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
 		transition: left 0.25s ease;
 	}
 
 	.switch-input:checked + .switch-label:before {
-		background-color: #574159;
+		background-color: var(--purple);
 	}
 
 	.switch-input:checked + .switch-label:after {
-		left: 24px;
+		left: var(--switch-height);
 	}
 </style>

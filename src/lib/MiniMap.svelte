@@ -31,7 +31,7 @@
 	.map {
 		width: 200px;
 		height: 150px;
-		background-color: #121212;
+		background-color: var(--grey-dark);
 		position: relative;
 		overflow: hidden;
 		z-index: 1;
@@ -39,7 +39,7 @@
 
 	.map-viewport {
 		position: absolute;
-		background-color: #574159;
+		background-color: var(--purple);
 		z-index: 2;
 	}
 </style>

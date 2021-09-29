@@ -1,0 +1,17 @@
+/* Values are moved into the theme store automatically and is accessible through JS */
+
+:root {
+	/* Text */
+	--text-color: #fff;
+	--font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
+		sans-serif;
+
+	/* Color */
+	--grey: #222;
+	--grey-dark: #121212;
+	--purple: #574159;
+
+	/* Switch */
+	--switch-width: 48px;
+	--switch-height: 24px;
+}

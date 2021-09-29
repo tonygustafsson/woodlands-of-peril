@@ -1,14 +1,8 @@
-:root {
-	--background: #000;
-	--text-color: #fff;
-}
-
 body {
 	min-height: 100vh;
 	margin: 0;
-	background-color: var(--background);
+	background-color: #000;
 	color: var(--text-color);
-	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial,
-		sans-serif;
+	font-family: var(--font-family);
 	overflow: hidden;
 }
