@@ -29,9 +29,17 @@ const dialogStore = () => {
 		clear: () => {
 			set(initValue);
 		},
-		setButtonPath: (button: Path2D) =>
+		setButtonPath: (actionId: number, buttonPath: Path2D) =>
 			update(($dialog) => {
-				$dialog.actions[0].path = button;
+				if (!$dialog.actions[actionId]) {
+					return $dialog;
+				}
+
+				const actions = [...$dialog.actions];
+				actions[actionId].path = buttonPath;
+
+				$dialog.actions = actions;
+
 				return $dialog;
 			})
 	};

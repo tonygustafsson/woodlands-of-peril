@@ -1,6 +1,5 @@
 import type { DialogContent } from '../../types';
-import { screen, canvas, dialog, theme } from '../../stores';
-import { get } from 'svelte/store';
+import { get, screen, canvas, dialog, theme } from '../../stores';
 import { fillTextWordWrap } from './';
 
 let dialogVisible = false;
@@ -28,6 +27,10 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
 	const dialogBackgroundColor = '#000';
 	const dialogBorderColor = $theme.brown;
+	const dialogButtonBorderColor = $theme.brown;
+	const dialogButtonWidth = $screen.size === 'sm' ? 140 : 200;
+	const dialogButtonHeight = $screen.size === 'sm' ? 40 : 60;
+	const dialogCtaButtonBorderColor = $theme.brownGolden;
 	const dialogFontFamily = 'Trebuchet MS';
 	const dialogFontSize = '16px';
 	const dialogHeadingFontSize = $screen.size === 'sm' ? '22px' : '32px';
@@ -123,32 +126,39 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 			window.requestAnimationFrame((timestamp) => loop(timestamp, resolve));
 		});
 
-	const addActionButton = () =>
+	const addActionButtons = () =>
 		new Promise((resolve) => {
-			const width = 200;
-			const height = 60;
-			const x = dialogLeft + dialogWidth / 2 - width / 2;
-			const y = dialogTop + dialogHeight - 80;
+			const width = dialogButtonWidth;
+			const height = dialogButtonHeight;
+			const buttonMargin = 20;
+			const buttonAreaWidth = (width + buttonMargin) * content.actions.length;
+			const buttonAreaX = dialogLeft + (dialogWidth - buttonAreaWidth) / 2;
 
 			const loop = (timestamp: number, resolve: (value: unknown) => void) => {
-				const button = new Path2D();
-				button.rect(x, y, width, height);
-				ctx.strokeStyle = dialogBorderColor;
-				ctx.lineWidth = 6;
-				ctx.stroke(button);
-				ctx.fillStyle = '#000';
-				ctx.fill(button);
+				for (let i = 0; i < content.actions.length; i++) {
+					const action = content.actions[i];
+					const button = new Path2D();
+					const x = buttonAreaX + (width + buttonMargin) * i + buttonMargin / 2;
+					const y = dialogTop + dialogHeight - 80;
 
-				dialog.setButtonPath(button);
+					button.rect(x, y, width, height);
+					ctx.strokeStyle = action.cta ? dialogCtaButtonBorderColor : dialogButtonBorderColor;
+					ctx.lineWidth = 6;
+					ctx.stroke(button);
+					ctx.fillStyle = '#000';
+					ctx.fill(button);
 
-				ctx.fillStyle = dialogTextColor;
-				ctx.font = `${dialogButtonFontSize} ${dialogFontFamily}`;
-				const textSize = ctx.measureText(content.actions[0].label.toUpperCase());
-				ctx.fillText(
-					content.actions[0].label.toUpperCase(),
-					x + width / 2 - textSize.width / 2,
-					y + height / 2 + 8
-				);
+					dialog.setButtonPath(i, button);
+
+					ctx.fillStyle = dialogTextColor;
+					ctx.font = `${dialogButtonFontSize} ${dialogFontFamily}`;
+					const textSize = ctx.measureText(action.label.toUpperCase());
+					ctx.fillText(
+						action.label.toUpperCase(),
+						x + width / 2 - textSize.width / 2,
+						y + height / 2 + 8
+					);
+				}
 
 				resolve('Done');
 			};
@@ -159,7 +169,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	await animateDialogRollDown();
 	await animateDialogTitle();
 	await animateDialogText();
-	await addActionButton();
+	await addActionButtons();
 };
 
 dialog.subscribe(($dialog) => {

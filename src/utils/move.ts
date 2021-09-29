@@ -47,35 +47,8 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	if ($spaces[newPosition].content.enemy) {
-		user.hurt();
 		user.meetEnemy($spaces[newPosition].content.label, 1);
-
-		const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
-		audio.playSoundEffect(soundEffect);
-
-		if ($user.inventory.energy > 0) {
-			return; // Cannot walk through enemies
-		} else {
-			// Let pass so dead icon could be placed where enemy where at
-			audio.playSoundEffect('death');
-
-			dialog.set({
-				visible: true,
-				title: 'You are dead!',
-				text: 'You died a gruesome death. Do you want to play again?',
-				actions: [
-					{
-						cta: true,
-						label: 'Start over',
-						action: () => {
-							user.clearStorage();
-							spaces.clearStorage();
-							window.location.reload();
-						}
-					}
-				]
-			});
-		}
+		return; // Stay when interacting with enemeies
 	}
 
 	if ($spaces[newPosition].content.giveMoney) {

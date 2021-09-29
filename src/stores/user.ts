@@ -72,18 +72,18 @@ const userStore = () => {
 				});
 			}, 250);
 		},
-		meetEnemy: (enemyType: string, level: number) => {
+		meetEnemy: (enemyType: string, enemylevel: number) => {
 			update((user) => {
 				user.event = {
 					type: 'enemy',
 					enemyType,
-					level
+					enemylevel
 				};
 
 				return user;
 			});
 		},
-		killEnemy: () => {
+		resetEvent: () => {
 			update((user) => {
 				user.event = {
 					type: 'none'

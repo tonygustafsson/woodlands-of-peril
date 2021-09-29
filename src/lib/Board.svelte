@@ -2,7 +2,15 @@
 	import { onMount } from 'svelte';
 	import { spaceWidth } from '../constants';
 	import { paintBoard, paintSprites } from '$utils/paint';
-	import { get, user, audio, dialog, canvas as canvasStore, visibleSpaces } from '../stores';
+	import {
+		get,
+		user,
+		audio,
+		dialog,
+		spaces,
+		canvas as canvasStore,
+		visibleSpaces
+	} from '../stores';
 	import { styleToString } from '$utils/styleToString';
 
 	let canvasBoard: HTMLCanvasElement;
@@ -20,14 +28,18 @@
 	const triggerDialogAction = (e: MouseEvent) => {
 		const $canvas = get(canvasStore);
 
-		if (!$dialog.actions[0]?.path) {
-			return;
-		}
+		$dialog.actions.forEach((action) => {
+			console.log(action);
 
-		if ($canvas.dialogContext.isPointInPath($dialog.actions[0].path, e.offsetX, e.offsetY)) {
-			// If inside button area, trigger button action
-			$dialog.actions[0].action();
-		}
+			if (!action.path) {
+				return;
+			}
+
+			if ($canvas.dialogContext.isPointInPath(action.path, e.offsetX, e.offsetY)) {
+				// If inside button area, trigger button action
+				action.action();
+			}
+		});
 	};
 
 	const setCanvasMeasures = () => {
@@ -72,25 +84,56 @@
 			// Paint board on user movement
 			paintBoard($canvasStore.boardContext, $canvas.width, $canvas.height);
 
-			/*
 			if ($user.event.type === 'enemy') {
 				dialog.set({
 					visible: true,
-					title: 'You meet an enemy!!',
-					text: 'Oo are you to scared?!',
+					title: `You meet a ${$user.event.enemyType} (Level ${$user.event.enemylevel})!`,
+					text: 'Do you want to fight or flight?',
 					actions: [
 						{
 							cta: true,
 							label: 'Fight',
 							action: () => {
-								user.killEnemy();
+								user.resetEvent();
 								user.hurt();
+								dialog.clear();
+
+								const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
+								audio.playSoundEffect(soundEffect);
+
+								if ($user.inventory.energy <= 0) {
+									// Death
+									audio.playSoundEffect('death');
+
+									dialog.set({
+										visible: true,
+										title: 'You are dead!',
+										text: 'You died a gruesome death. Do you want to play again?',
+										actions: [
+											{
+												cta: true,
+												label: 'Start over',
+												action: () => {
+													user.clearStorage();
+													spaces.clearStorage();
+													window.location.reload();
+												}
+											}
+										]
+									});
+								}
+							}
+						},
+						{
+							label: 'Evade',
+							action: () => {
+								user.resetEvent();
+								dialog.clear();
 							}
 						}
 					]
 				});
 			}
-			*/
 		});
 
 		// Paint welcome dialog
