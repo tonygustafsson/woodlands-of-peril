@@ -69,6 +69,7 @@ export const move = (direction: Direction): boolean | undefined => {
 						action: () => {
 							user.clearStorage();
 							spaces.clearStorage();
+							window.location.reload();
 						}
 					}
 				]
