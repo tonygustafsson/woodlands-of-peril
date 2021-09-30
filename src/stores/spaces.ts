@@ -63,6 +63,7 @@ const createSpaces: () => Space[] = () => {
 		if (random > 0.93) {
 			// Create enemy
 			newContent = randomInArray(enemies);
+			newContent.level = Math.floor(Math.random() * (12 - 0 + 1) + 0);
 		}
 
 		const boardPosition = getBoardPosition(x);

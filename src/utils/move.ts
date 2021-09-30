@@ -47,7 +47,7 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	if ($spaces[newPosition].content.enemy) {
-		user.meetEnemy($spaces[newPosition].content.label, 1);
+		user.meetEnemy($spaces[newPosition].content.label, $spaces[newPosition].content.level);
 		return; // Stay when interacting with enemeies
 	}
 

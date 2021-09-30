@@ -11,6 +11,7 @@ export type SpaceContent = {
 	label: string;
 	solid?: boolean;
 	enemy?: boolean;
+	level?: number;
 	giveEnergy?: boolean;
 	giveMoney?: boolean;
 };
