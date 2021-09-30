@@ -1,8 +1,8 @@
 <script>
 	export let width = 24;
 	export let height = 24;
-	export let stroke = '#fbd490';
-	export let fill = '#f0c419';
+	export let stroke = '#d0706a';
+	export let fill = '#f8c660';
 	export let mr = false;
 	export let ml = false;
 </script>

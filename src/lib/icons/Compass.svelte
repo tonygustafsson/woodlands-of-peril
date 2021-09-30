@@ -3,6 +3,9 @@
 	export let height = 24;
 	export let mr = false;
 	export let ml = false;
+	export let fillOuterRing = '#f8c660';
+	export let backFill = '#fff';
+	export let pointerFill = '#ff0000';
 </script>
 
 <svg
@@ -14,12 +17,9 @@
 	{height}
 	viewBox="0 0 512 512"
 >
-	<circle cx="256" cy="256" r="245.8" style="fill:#ff931e" />
-	<circle cx="256" cy="256" r="170.3" style="fill:#dde9ed" />
-	<path d="M295.8 256 256 382.5 216.2 256 256 129.5z" style="fill:#c9171d" />
-	<path
-		d="M256 512a254.3 254.3 0 0 1-181-75C26.6 388.7 0 324.4 0 256S26.6 123.3 75 75C123.3 26.6 187.6 0 256 0s132.7 26.6 181 75c48.4 48.3 75 112.6 75 181s-26.6 132.7-75 181a254.3 254.3 0 0 1-181 75zm0-491.6C126 20.4 20.4 126.1 20.4 256S126.1 491.6 256 491.6 491.6 385.9 491.6 256 385.9 20.4 256 20.4z"
-	/>
+	<circle cx="256" cy="256" r="245.8" fill={fillOuterRing} />
+	<circle cx="256" cy="256" r="170.3" fill={backFill} />
+	<path d="M295.8 256 256 382.5 216.2 256 256 129.5z" fill={pointerFill} />
 	<path
 		d="M256 436.5c-99.5 0-180.5-81-180.5-180.5S156.5 75.5 256 75.5s180.5 81 180.5 180.5-81 180.5-180.5 180.5zM256 96c-88.3 0-160.1 71.8-160.1 160.1S167.7 416.1 256 416.1 416.1 344.3 416.1 256 344.3 95.9 256 95.9z"
 	/>

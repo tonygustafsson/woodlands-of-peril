@@ -9,6 +9,7 @@
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
 	import Chest from '$lib/icons/Chest.svelte';
+	import Star from '$lib/icons/Star.svelte';
 	import Reset from '$lib/icons/Reset.svelte';
 	import { slide } from 'svelte/transition';
 
@@ -66,11 +67,23 @@
 				<div class="item"><Skull mr /> <strong>DEAD</strong></div>
 			{/if}
 
-			<div class="item"><Coin mr /> {$user.inventory.money}</div>
+			<div class="item">
+				<Star fill={$theme.yellow} backgroundFill={$theme.pink} mr />Level {$user.level}
+			</div>
+			<div class="item">
+				<Coin fill={$theme.yellow} stroke={$theme.pink} mr />
+				{$user.inventory.money} coins
+			</div>
+		{/if}
+
+		{#if $screen.size === 'sm'}
+			<div class="item">
+				<Star fill={$theme.yellow} backgroundFill={$theme.pink} mr />Level {$user.level}
+			</div>
 		{/if}
 
 		<div class="item">
-			<Compass mr />
+			<Compass fillOuterRing={$theme.yellow} pointerFill={$theme.pink} mr />
 			{$user.row} x {$user.column}
 		</div>
 

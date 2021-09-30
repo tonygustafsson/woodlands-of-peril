@@ -38,6 +38,7 @@ export type User = {
 	row: number;
 	column: number;
 	direction: Direction;
+	level: number;
 	moving: boolean;
 	alive: boolean;
 	isHurting: boolean;
