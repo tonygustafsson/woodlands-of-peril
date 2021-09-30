@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user, screen, theme } from '../stores';
+	import { user, screen, theme, spaces } from '../stores';
 	import AudioPanel from './AudioPanel.svelte';
 	import AudioPlayer from './AudioPlayer.svelte';
 	import MiniMap from './MiniMap.svelte';
@@ -9,12 +9,19 @@
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
 	import Chest from '$lib/icons/Chest.svelte';
+	import Reset from '$lib/icons/Reset.svelte';
 	import { slide } from 'svelte/transition';
 
 	$: mobileMenuActive = false;
 
 	const toggleMobileMenu = () => {
 		mobileMenuActive = !mobileMenuActive;
+	};
+
+	const resetGame = () => {
+		user.clearStorage();
+		spaces.clearStorage();
+		window.location.reload();
 	};
 </script>
 
@@ -73,11 +80,11 @@
 
 		<AudioPanel />
 
-		<a
-			href="https://github.com/tonygustafsson/woodlands-of-peril"
-			target="_blank"
-			class="item item--extra-spacing"
-		>
+		<a href="/reset" on:click|preventDefault={resetGame} class="item item--extra-spacing">
+			<Reset fill={$theme.pink} mr /> Start over
+		</a>
+
+		<a href="https://github.com/tonygustafsson/woodlands-of-peril" target="_blank" class="item">
 			<Github fill={$theme.pink} mr /> Game info
 		</a>
 	</div>
