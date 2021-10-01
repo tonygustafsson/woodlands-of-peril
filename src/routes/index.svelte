@@ -7,6 +7,7 @@
 	import Board from '$lib/Board.svelte';
 	import InfoPanel from '$lib/InfoPanel.svelte';
 	import Controls from '$lib/Controls.svelte';
+	import DialogCreator from '$lib/DialogCreator.svelte';
 	import { screen, assets } from '../stores';
 	import '../theme.css';
 	import '../app.css';
@@ -31,6 +32,7 @@
 	<section>
 		<Controls />
 		<InfoPanel />
+		<DialogCreator />
 		<Board />
 	</section>
 {:else}

@@ -84,6 +84,15 @@ const userStore = () => {
 				return user;
 			});
 		},
+		triggerGreeting: () => {
+			update((user) => {
+				user.event = {
+					type: 'greeting'
+				};
+
+				return user;
+			});
+		},
 		resetEvent: () => {
 			update((user) => {
 				user.event = {

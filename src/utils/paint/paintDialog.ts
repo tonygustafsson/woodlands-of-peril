@@ -20,6 +20,10 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 
 	const ctx = $canvas.dialogContext;
 
+	if (!ctx) {
+		return;
+	}
+
 	const backDropColor = 'rgba(0, 0, 0, 0.5)';
 	const dialogWidth = $screen.size === 'sm' ? 360 : 600;
 	const dialogHeight = 300;

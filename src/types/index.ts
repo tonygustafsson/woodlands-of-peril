@@ -29,7 +29,7 @@ export type Inventory = {
 };
 
 export type Event = {
-	type: 'enemy' | 'none';
+	type: 'enemy' | 'greeting' | 'none';
 	enemylevel?: number;
 	enemyType?: string;
 };
