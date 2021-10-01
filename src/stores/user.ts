@@ -92,6 +92,16 @@ const userStore = () => {
 
 				return user;
 			});
+
+			setTimeout(() => {
+				update((user) => {
+					user.event = {
+						type: 'none'
+					};
+
+					return user;
+				});
+			}, 0);
 		},
 		resetEvent: () => {
 			update((user) => {

@@ -1,5 +1,5 @@
 import type { DialogContent } from '../../types';
-import { get, screen, canvas, dialog, theme } from '../../stores';
+import { get, screen, canvas, dialog, theme, sprites } from '../../stores';
 import { fillTextWordWrap } from './';
 
 let dialogVisible = false;
@@ -176,13 +176,64 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	await addActionButtons();
 };
 
-dialog.subscribe(($dialog) => {
+const animateDialogDices = () => {
+	const $screen = get(screen);
+	const $canvas = get(canvas);
+
+	const ctx = $canvas.dialogContext;
+
+	const dialogWidth = $screen.size === 'sm' ? 360 : 600;
+	const dialogHeight = 300;
+	const dialogLeft = Math.floor($canvas.width / 2 - dialogWidth / 2);
+	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
+
+	return new Promise((resolve) => {
+		const x = dialogLeft + 20;
+		const y = dialogTop + 100;
+
+		const $sprites = get(sprites);
+		const sprite = $sprites['dice'];
+
+		const diceResult = Math.floor(Math.random() * 6);
+		let diceSide = -1;
+
+		const loop = (timestamp: number, resolve: (value: unknown) => void) => {
+			if (diceSide === diceResult) {
+				return resolve('Done');
+			}
+
+			console.log('Dice side', diceSide);
+
+			ctx.drawImage(
+				sprite.image,
+				sprite.sw * diceSide,
+				sprite.sy,
+				sprite.sw,
+				sprite.sh,
+				x,
+				y,
+				sprite.dw,
+				sprite.dh
+			);
+
+			diceSide = Math.floor(Math.random() * 6);
+		};
+
+		setInterval((timestamp) => loop(timestamp, resolve), 100);
+	});
+};
+
+dialog.subscribe(async ($dialog) => {
 	if ($dialog.visible && !dialogVisible) {
 		paintDialog($dialog);
 		dialogVisible = true;
 	} else if (!$dialog.visible && dialogVisible) {
 		clearDialog();
 		dialogVisible = false;
+	}
+
+	if ($dialog.rollingDice) {
+		await animateDialogDices();
 	}
 });
 

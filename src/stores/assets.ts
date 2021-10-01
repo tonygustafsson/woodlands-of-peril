@@ -23,7 +23,8 @@ const spriteSources: string[] = [
 	'spider',
 	'heart',
 	'pizza',
-	'skull'
+	'skull',
+	'dice'
 ];
 
 const soundEffectsSources: string[] = ['death', 'energy', 'hit1', 'hit2', 'money'];

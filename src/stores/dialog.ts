@@ -4,6 +4,7 @@ type DialogStore = {
 	visible: boolean;
 	title: string;
 	text: string;
+	rollingDice?: boolean;
 	actions: {
 		cta?: boolean;
 		label: string;
@@ -16,6 +17,7 @@ const initValue: DialogStore = {
 	visible: false,
 	title: '',
 	text: '',
+	rollingDice: false,
 	actions: []
 };
 
@@ -41,7 +43,23 @@ const dialogStore = () => {
 				$dialog.actions = actions;
 
 				return $dialog;
-			})
+			}),
+		rollDice: async () => {
+			update(($dialog) => {
+				$dialog.rollingDice = true;
+				return $dialog;
+			});
+
+			await new Promise((resolve) =>
+				setTimeout(() => {
+					update(($dialog) => {
+						$dialog.rollingDice = false;
+						return $dialog;
+					});
+					resolve('ok');
+				}, 1000)
+			);
+		}
 	};
 };
 

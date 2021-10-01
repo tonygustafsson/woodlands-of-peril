@@ -93,6 +93,15 @@ const spriteSettings = {
 		topMargin: 0,
 		leftMargin: 0
 	},
+	dice: {
+		noOfFrames: 6,
+		width: 150,
+		height: 150,
+		destinationWidth: 60,
+		destinationHeight: 60,
+		topMargin: 0,
+		leftMargin: 0
+	},
 	user: {
 		noOfFrames: 4,
 		width: 32,
@@ -171,7 +180,7 @@ setInterval(() => {
 	const $sprites = get(sprites);
 
 	Object.keys($sprites).forEach((spriteId) => {
-		if (spriteId === 'user') {
+		if (spriteId === 'user' || spriteId === 'dice') {
 			return;
 		}
 

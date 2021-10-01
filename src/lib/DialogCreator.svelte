@@ -11,7 +11,9 @@
 					{
 						cta: true,
 						label: 'Fight',
-						action: () => {
+						action: async () => {
+							await dialog.rollDice();
+
 							user.resetEvent();
 							user.hurt();
 							dialog.clear();
