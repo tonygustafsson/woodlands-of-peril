@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { user, dialog, audio, spaces } from '../stores';
+	import { getDiceResult } from '$utils/random';
+	import { emptyContent } from '../constants';
+	import type { Space } from '../types';
 
 	user.subscribe(($user) => {
 		if ($user.event.type === 'enemy') {
@@ -14,34 +17,63 @@
 						action: async () => {
 							await dialog.rollDice();
 
+							const userStrenth = $user.level + $dialog.dieLastResult;
+							const enemyDieResult = getDiceResult();
+							const enemyStrenth = $user.event.enemylevel + enemyDieResult;
+							const userWon = userStrenth > enemyStrenth;
+
+							console.log({
+								userLevel: $user.level,
+								userDie: $dialog.dieLastResult,
+								userStrenth,
+								enemyLevel: $user.event.enemylevel,
+								enemyDieResult,
+								enemyStrenth,
+								userWon
+							});
+
 							user.resetEvent();
-							user.hurt();
-							dialog.clear();
 
-							const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
-							audio.playSoundEffect(soundEffect);
+							if (userWon) {
+								user.increaseLevel();
+								//user.setPosition();
 
-							if ($user.inventory.energy <= 0) {
-								// Death
-								audio.playSoundEffect('death');
+								/*const newOldSpace: Space = {
+									...$spaces[$user.position],
+									content: emptyContent
+								};
+								spaces.setSpace($user.position, newOldSpace);
+								*/
+							} else {
+								user.hurt();
 
-								dialog.set({
-									visible: true,
-									title: 'You are dead!',
-									text: 'You died a gruesome death. Do you want to play again?',
-									actions: [
-										{
-											cta: true,
-											label: 'Start over',
-											action: () => {
-												user.clearStorage();
-												spaces.clearStorage();
-												window.location.reload();
+								const soundEffect = Math.random() > 0.5 ? 'hit1' : 'hit2';
+								audio.playSoundEffect(soundEffect);
+
+								if ($user.inventory.energy <= 0) {
+									// Death
+									audio.playSoundEffect('death');
+
+									dialog.set({
+										visible: true,
+										title: 'You are dead!',
+										text: 'You died a gruesome death. Do you want to play again?',
+										actions: [
+											{
+												cta: true,
+												label: 'Start over',
+												action: () => {
+													user.clearStorage();
+													spaces.clearStorage();
+													window.location.reload();
+												}
 											}
-										}
-									]
-								});
+										]
+									});
+								}
 							}
+
+							dialog.clear();
 						}
 					},
 					{

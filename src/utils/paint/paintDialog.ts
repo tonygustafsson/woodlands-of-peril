@@ -2,6 +2,7 @@ import type { DialogContent } from '../../types';
 import { get, screen, canvas, dialog, theme, sprites } from '../../stores';
 import { fillTextWordWrap } from './';
 import { sleep } from '$utils/sleep';
+import { getDiceResult } from '$utils/random';
 
 let dialogVisible = false;
 
@@ -180,6 +181,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 const paintDialogDices = () => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
+	const $dialog = get(dialog);
 
 	const ctx = $canvas.dialogContext;
 
@@ -195,14 +197,11 @@ const paintDialogDices = () => {
 		const $sprites = get(sprites);
 		const sprite = $sprites['dice'];
 
-		const getRandomDiceResult = () => Math.floor(Math.random() * 6) + 1;
-		const diceResult = getRandomDiceResult();
-
 		// Spin dice
 		const diceAnimationTimer = setInterval(() => {
 			ctx.drawImage(
 				sprite.image,
-				sprite.sw * getRandomDiceResult() - 1,
+				sprite.sw * (getDiceResult() - 1),
 				sprite.sy,
 				sprite.sw,
 				sprite.sh,
@@ -219,7 +218,7 @@ const paintDialogDices = () => {
 
 			ctx.drawImage(
 				sprite.image,
-				sprite.sw * diceResult - 1,
+				sprite.sw * ($dialog.dieLastResult - 1),
 				sprite.sy,
 				sprite.sw,
 				sprite.sh,

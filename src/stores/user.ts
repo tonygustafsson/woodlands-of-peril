@@ -112,6 +112,13 @@ const userStore = () => {
 				return user;
 			});
 		},
+		increaseLevel: () => {
+			update((user) => {
+				user.level = user.level + 1;
+
+				return user;
+			});
+		},
 		clearStorage: () => {
 			storeStorage.clear();
 		}

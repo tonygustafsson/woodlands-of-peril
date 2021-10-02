@@ -7,7 +7,7 @@ import {
 	numberOfSpaces,
 	spacesPerRow
 } from '../constants';
-import { randomInArray } from '$utils/array';
+import { inArray } from '$utils/random';
 import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
 import user from './user';
@@ -51,18 +51,18 @@ const createSpaces: () => Space[] = () => {
 			} else if (bottomSpace?.content.solid) {
 				newContent = bottomSpace.content;
 			} else {
-				newContent = randomInArray(surroundings);
+				newContent = inArray(surroundings);
 			}
 		}
 
 		if (random > 0.85 && random <= 0.93) {
 			// Create colletable
-			newContent = randomInArray(collectables);
+			newContent = inArray(collectables);
 		}
 
 		if (random > 0.93) {
 			// Create enemy
-			newContent = randomInArray(enemies);
+			newContent = inArray(enemies);
 			newContent.level = Math.floor(Math.random() * (12 - 0 + 1) + 0);
 		}
 
@@ -82,7 +82,7 @@ const createSpaces: () => Space[] = () => {
 	const $user = get(user);
 
 	while ($user.position === 0) {
-		const randomSpace = randomInArray(spaces);
+		const randomSpace = inArray(spaces);
 
 		if (randomSpace.content.spriteId || randomSpace.content.tileId) {
 			continue;
