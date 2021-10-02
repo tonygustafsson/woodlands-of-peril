@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { randomNumber } from '$utils/random';
 
 type AudioStore = {
 	musicTrack: string;
@@ -8,7 +9,7 @@ type AudioStore = {
 };
 
 const initValue: AudioStore = {
-	musicTrack: 'music1',
+	musicTrack: `music${randomNumber(1, 3)}`,
 	enableMusic: false,
 	soundEffect: '',
 	enableSoundEffects: false
