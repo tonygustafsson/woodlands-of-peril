@@ -50,14 +50,15 @@ const dialogStore = () => {
 				return $dialog;
 			});
 
-			await new Promise((resolve) =>
+			return new Promise((resolve) =>
 				setTimeout(() => {
 					update(($dialog) => {
 						$dialog.rollingDice = false;
 						return $dialog;
 					});
+
 					resolve('ok');
-				}, 1000)
+				}, 6000)
 			);
 		}
 	};

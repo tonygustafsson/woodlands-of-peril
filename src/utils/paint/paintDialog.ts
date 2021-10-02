@@ -1,6 +1,7 @@
 import type { DialogContent } from '../../types';
 import { get, screen, canvas, dialog, theme, sprites } from '../../stores';
 import { fillTextWordWrap } from './';
+import { sleep } from '$utils/sleep';
 
 let dialogVisible = false;
 
@@ -176,7 +177,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	await addActionButtons();
 };
 
-const animateDialogDices = () => {
+const paintDialogDices = () => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
 
@@ -194,19 +195,31 @@ const animateDialogDices = () => {
 		const $sprites = get(sprites);
 		const sprite = $sprites['dice'];
 
-		const diceResult = Math.floor(Math.random() * 6);
-		let diceSide = -1;
+		const getRandomDiceResult = () => Math.floor(Math.random() * 6) + 1;
+		const diceResult = getRandomDiceResult();
 
-		const loop = (timestamp: number, resolve: (value: unknown) => void) => {
-			if (diceSide === diceResult) {
-				return resolve('Done');
-			}
+		// Spin dice
+		const diceAnimationTimer = setInterval(() => {
+			ctx.drawImage(
+				sprite.image,
+				sprite.sw * getRandomDiceResult() - 1,
+				sprite.sy,
+				sprite.sw,
+				sprite.sh,
+				x,
+				y,
+				sprite.dw,
+				sprite.dh
+			);
+		}, 75);
 
-			console.log('Dice side', diceSide);
+		// Show result
+		setTimeout(async () => {
+			clearInterval(diceAnimationTimer);
 
 			ctx.drawImage(
 				sprite.image,
-				sprite.sw * diceSide,
+				sprite.sw * diceResult - 1,
 				sprite.sy,
 				sprite.sw,
 				sprite.sh,
@@ -216,14 +229,16 @@ const animateDialogDices = () => {
 				sprite.dh
 			);
 
-			diceSide = Math.floor(Math.random() * 6);
-		};
+			// Show the dice result for a while
+			await sleep(2000);
 
-		setInterval((timestamp) => loop(timestamp, resolve), 100);
+			// Done, keep on with what happens next
+			resolve('Done');
+		}, 4000);
 	});
 };
 
-dialog.subscribe(async ($dialog) => {
+dialog.subscribe(($dialog) => {
 	if ($dialog.visible && !dialogVisible) {
 		paintDialog($dialog);
 		dialogVisible = true;
@@ -233,7 +248,7 @@ dialog.subscribe(async ($dialog) => {
 	}
 
 	if ($dialog.rollingDice) {
-		await animateDialogDices();
+		paintDialogDices();
 	}
 });
 
