@@ -191,7 +191,14 @@ const paintDialogDices = async (mode: 'user' | 'enemy') => {
 	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
 
 	return new Promise((resolve) => {
-		const x = mode === 'user' ? dialogLeft + 160 : dialogLeft + 380;
+		let x = 0;
+
+		if ($screen.size === 'sm') {
+			x = mode === 'user' ? dialogLeft + 70 : dialogLeft + 230;
+		} else {
+			x = mode === 'user' ? dialogLeft + 160 : dialogLeft + 380;
+		}
+
 		const y = dialogTop + 120;
 
 		const $sprites = get(sprites);
