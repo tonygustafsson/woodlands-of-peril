@@ -13,6 +13,7 @@ let initValue: User = {
 	alive: true,
 	isHurting: false,
 	nextPosition: 0,
+	dieLastResult: { user: 0, enemy: 0 },
 	event: {
 		type: 'none'
 	},
@@ -104,6 +105,16 @@ const userStore = () => {
 					return user;
 				});
 			}, 0);
+		},
+		setDieResult: (userResult: number, enemyResult: number) => {
+			update((user) => {
+				user.dieLastResult = {
+					user: userResult,
+					enemy: enemyResult
+				};
+
+				return user;
+			});
 		},
 		resetEvent: () => {
 			update((user) => {

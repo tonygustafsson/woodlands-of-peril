@@ -45,6 +45,10 @@ export type User = {
 	nextPosition: number;
 	isHurting: boolean;
 	event: Event;
+	dieLastResult?: {
+		user: number;
+		enemy: number;
+	};
 	inventory: Inventory;
 };
 

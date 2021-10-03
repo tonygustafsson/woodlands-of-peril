@@ -16,14 +16,14 @@
 						action: async () => {
 							await dialog.rollDice();
 
-							const userStrength = $user.level + $dialog.dieLastResult.user;
-							const enemyDieResult = $dialog.dieLastResult.enemy;
+							const userStrength = $user.level + $user.dieLastResult.user;
+							const enemyDieResult = $user.dieLastResult.enemy;
 							const enemyStrength = $user.event.enemylevel + enemyDieResult;
 							const userWon = userStrength > enemyStrength;
 
 							console.log({
 								userLevel: $user.level,
-								userDie: $dialog.dieLastResult,
+								userDie: $user.dieLastResult,
 								userStrength,
 								enemyLevel: $user.event.enemylevel,
 								enemyDieResult,

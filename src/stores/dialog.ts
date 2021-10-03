@@ -1,15 +1,13 @@
 import { writable } from 'svelte/store';
 import { getDiceResult } from '$utils/random';
+import { user } from '../stores';
 
 type DialogStore = {
 	visible: boolean;
 	title: string;
 	text: string;
 	rollingDice?: boolean;
-	dieLastResult?: {
-		user: number;
-		enemy: number;
-	};
+
 	actions: {
 		cta?: boolean;
 		label: string;
@@ -23,7 +21,6 @@ const initValue: DialogStore = {
 	title: '',
 	text: '',
 	rollingDice: false,
-	dieLastResult: { user: 0, enemy: 0 },
 	actions: []
 };
 
@@ -54,9 +51,10 @@ const dialogStore = () => {
 			const diceUserResult = getDiceResult();
 			const diceEnemyResult = getDiceResult();
 
+			user.setDieResult(diceUserResult, diceEnemyResult);
+
 			update(($dialog) => {
 				$dialog.rollingDice = true;
-				$dialog.dieLastResult = { user: diceUserResult, enemy: diceEnemyResult };
 				return $dialog;
 			});
 

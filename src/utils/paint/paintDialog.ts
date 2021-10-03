@@ -1,5 +1,5 @@
 import type { DialogContent } from '../../types';
-import { get, screen, canvas, dialog, theme, sprites } from '../../stores';
+import { get, screen, canvas, dialog, user, theme, sprites } from '../../stores';
 import { fillTextWordWrap } from './';
 import { sleep } from '$utils/sleep';
 import { getDiceResult } from '$utils/random';
@@ -181,7 +181,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 const paintDialogDices = (mode: 'user' | 'enemy') => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
-	const $dialog = get(dialog);
+	const $user = get(user);
 
 	const ctx = $canvas.dialogContext;
 
@@ -218,8 +218,8 @@ const paintDialogDices = (mode: 'user' | 'enemy') => {
 
 			const sw =
 				mode === 'user'
-					? sprite.sw * ($dialog.dieLastResult.user - 1)
-					: sprite.sw * ($dialog.dieLastResult.enemy - 1);
+					? sprite.sw * ($user.dieLastResult.user - 1)
+					: sprite.sw * ($user.dieLastResult.enemy - 1);
 
 			ctx.drawImage(sprite.image, sw, sprite.sy, sprite.sw, sprite.sh, x, y, sprite.dw, sprite.dh);
 
