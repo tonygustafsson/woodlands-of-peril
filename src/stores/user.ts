@@ -19,7 +19,8 @@ let initValue: User = {
 	},
 	inventory: {
 		money: 0,
-		energy: 3
+		energy: 3,
+		potions: 0
 	}
 };
 
@@ -48,12 +49,23 @@ const userStore = () => {
 				return user;
 			});
 		},
-		increaseInventory: (item: string) => {
+		increaseInventory: (item: string, newLevel = 1) => {
 			update((user) => {
-				user.inventory[item]++;
+				user.inventory[item] += newLevel;
 
 				if (item === 'energy' && user.inventory[item] > 5) {
 					user.inventory[item] = 5;
+				}
+
+				return user;
+			});
+		},
+		decreaseInventory: (item: string, newLevel = 1) => {
+			update((user) => {
+				user.inventory[item] -= newLevel;
+
+				if (item === 'energy' && user.inventory[item] < 1) {
+					user.inventory[item] = 1;
 				}
 
 				return user;

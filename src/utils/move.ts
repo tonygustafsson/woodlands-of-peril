@@ -57,14 +57,12 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Stay when interacting with enemeies
 	}
 
-	if ($spaces[newPosition].content.giveMoney) {
-		audio.playSoundEffect('money');
-		user.increaseInventory('money');
+	if ($spaces[newPosition].content.inventoryIncrease) {
+		user.increaseInventory($spaces[newPosition].content.inventoryIncrease);
 	}
 
-	if ($spaces[newPosition].content.giveEnergy) {
-		audio.playSoundEffect('energy');
-		user.increaseInventory('energy');
+	if ($spaces[newPosition].content.soundEffect) {
+		audio.playSoundEffect($spaces[newPosition].content.soundEffect);
 	}
 
 	const newOldSpace: Space = {

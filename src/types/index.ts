@@ -12,8 +12,8 @@ export type SpaceContent = {
 	solid?: boolean;
 	enemy?: boolean;
 	level?: number;
-	giveEnergy?: boolean;
-	giveMoney?: boolean;
+	inventoryIncrease?: string;
+	soundEffect?: string;
 };
 
 export type BoardPosition = {
@@ -26,6 +26,7 @@ export type Direction = 'left' | 'right' | 'up' | 'down';
 export type Inventory = {
 	money: number;
 	energy: number;
+	potions: number;
 };
 
 export type Event = {

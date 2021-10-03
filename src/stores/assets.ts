@@ -24,7 +24,8 @@ const spriteSources: string[] = [
 	'heart',
 	'pizza',
 	'skull',
-	'dice'
+	'dice',
+	'potion'
 ];
 
 const soundEffectsSources: string[] = [
@@ -32,10 +33,12 @@ const soundEffectsSources: string[] = [
 	'energy',
 	'hit1',
 	'hit2',
-	'money',
+	'coin',
 	'roar1',
 	'roar2',
-	'won'
+	'won',
+	'potion',
+	'eat'
 ];
 
 const initValue: Assets = {

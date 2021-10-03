@@ -3,11 +3,12 @@ import {
 	emptyContent,
 	surroundings,
 	collectables,
+	unusualCollectables,
 	enemies,
 	numberOfSpaces,
 	spacesPerRow
 } from '../constants';
-import { inArray } from '$utils/random';
+import { inArray, randomNumber } from '$utils/random';
 import type { SpaceContent, Space } from '../types';
 import { userContent } from '../constants';
 import user from './user';
@@ -55,15 +56,19 @@ const createSpaces: () => Space[] = () => {
 			}
 		}
 
-		if (random > 0.85 && random <= 0.93) {
+		if (random > 0.85 && random <= 0.91) {
 			// Create colletable
 			newContent = inArray(collectables);
 		}
 
-		if (random > 0.93) {
+		if (random > 0.91 && random <= 0.912) {
+			newContent = inArray(unusualCollectables);
+		}
+
+		if (random > 0.912) {
 			// Create enemy
 			newContent = inArray(enemies);
-			newContent.level = Math.floor(Math.random() * (12 - 0 + 1) + 0);
+			newContent.level = randomNumber(0, 8);
 		}
 
 		const boardPosition = getBoardPosition(x);

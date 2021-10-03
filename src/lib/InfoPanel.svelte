@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user, screen, theme, spaces } from '../stores';
+	import { audio, user, screen, theme, spaces } from '../stores';
 	import AudioPanel from './AudioPanel.svelte';
 	import AudioPlayer from './AudioPlayer.svelte';
 	import MiniMap from './MiniMap.svelte';
@@ -8,6 +8,7 @@
 	import Github from '$lib/icons/Github.svelte';
 	import Compass from '$lib/icons/Compass.svelte';
 	import Skull from '$lib/icons/Skull.svelte';
+	import Potion from '$lib/icons/Potion.svelte';
 	import Chest from '$lib/icons/Chest.svelte';
 	import Star from '$lib/icons/Star.svelte';
 	import Reset from '$lib/icons/Reset.svelte';
@@ -23,6 +24,12 @@
 		user.clearStorage();
 		spaces.clearStorage();
 		window.location.reload();
+	};
+
+	const usePotion = () => {
+		audio.playSoundEffect('potion');
+		user.decreaseInventory('potions');
+		user.increaseInventory('energy', 5);
 	};
 </script>
 
@@ -80,6 +87,12 @@
 			<div class="item">
 				<Star fill={$theme.yellow} backgroundFill={$theme.pink} mr />Level {$user.level}
 			</div>
+		{/if}
+
+		{#if $user.inventory.potions > 0}
+			<a href="/potions" on:click|preventDefault={usePotion} class="item">
+				<Potion mr />{$user.inventory.potions} Potions
+			</a>
 		{/if}
 
 		<div class="item">

@@ -93,6 +93,15 @@ const spriteSettings = {
 		topMargin: 0,
 		leftMargin: 0
 	},
+	potion: {
+		noOfFrames: 12,
+		width: 64,
+		height: 64,
+		destinationWidth: 32,
+		destinationHeight: 32,
+		topMargin: 2,
+		leftMargin: 2
+	},
 	dice: {
 		noOfFrames: 6,
 		width: 150,

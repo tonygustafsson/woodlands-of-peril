@@ -29,9 +29,12 @@ export const surroundings: SpaceContent[] = [
 	{ tileId: 'bush1', label: 'Bush 1', solid: true }
 ];
 export const collectables: SpaceContent[] = [
-	{ spriteId: 'coin', label: 'Money', giveMoney: true },
-	{ spriteId: 'pizza', label: 'Pizza', giveEnergy: true },
-	{ spriteId: 'heart', label: 'Heart', giveEnergy: true }
+	{ spriteId: 'coin', label: 'Money', inventoryIncrease: 'money', soundEffect: 'coin' },
+	{ spriteId: 'pizza', label: 'Pizza', inventoryIncrease: 'energy', soundEffect: 'eat' },
+	{ spriteId: 'heart', label: 'Heart', inventoryIncrease: 'energy', soundEffect: 'energy' }
+];
+export const unusualCollectables: SpaceContent[] = [
+	{ spriteId: 'potion', label: 'Potion', inventoryIncrease: 'potions', soundEffect: 'potion' }
 ];
 export const enemies: SpaceContent[] = [
 	{ spriteId: 'bull', label: 'Bull', enemy: true },
