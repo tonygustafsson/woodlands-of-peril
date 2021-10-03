@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { user, dialog, audio, spaces } from '../stores';
-	import { getDiceResult } from '$utils/random';
 	import { emptyContent, userContent } from '../constants';
 	import type { Space } from '../types';
 
@@ -17,18 +16,18 @@
 						action: async () => {
 							await dialog.rollDice();
 
-							const userStrenth = $user.level + $dialog.dieLastResult;
-							const enemyDieResult = getDiceResult();
-							const enemyStrenth = $user.event.enemylevel + enemyDieResult;
-							const userWon = userStrenth > enemyStrenth;
+							const userStrength = $user.level + $dialog.dieLastResult.user;
+							const enemyDieResult = $dialog.dieLastResult.enemy;
+							const enemyStrength = $user.event.enemylevel + enemyDieResult;
+							const userWon = userStrength > enemyStrength;
 
 							console.log({
 								userLevel: $user.level,
 								userDie: $dialog.dieLastResult,
-								userStrenth,
+								userStrength,
 								enemyLevel: $user.event.enemylevel,
 								enemyDieResult,
-								enemyStrenth,
+								enemyStrength,
 								userWon
 							});
 

@@ -178,7 +178,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	await addActionButtons();
 };
 
-const paintDialogDices = () => {
+const paintDialogDices = (mode: 'user' | 'enemy') => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
 	const $dialog = get(dialog);
@@ -191,8 +191,8 @@ const paintDialogDices = () => {
 	const dialogTop = Math.floor($canvas.height / 2 - dialogHeight / 2) - 40;
 
 	return new Promise((resolve) => {
-		const x = dialogLeft + 20;
-		const y = dialogTop + 100;
+		const x = mode === 'user' ? dialogLeft + 160 : dialogLeft + 380;
+		const y = dialogTop + 120;
 
 		const $sprites = get(sprites);
 		const sprite = $sprites['dice'];
@@ -216,17 +216,12 @@ const paintDialogDices = () => {
 		setTimeout(async () => {
 			clearInterval(diceAnimationTimer);
 
-			ctx.drawImage(
-				sprite.image,
-				sprite.sw * ($dialog.dieLastResult - 1),
-				sprite.sy,
-				sprite.sw,
-				sprite.sh,
-				x,
-				y,
-				sprite.dw,
-				sprite.dh
-			);
+			const sw =
+				mode === 'user'
+					? sprite.sw * ($dialog.dieLastResult.user - 1)
+					: sprite.sw * ($dialog.dieLastResult.enemy - 1);
+
+			ctx.drawImage(sprite.image, sw, sprite.sy, sprite.sw, sprite.sh, x, y, sprite.dw, sprite.dh);
 
 			// Show the dice result for a while
 			await sleep(1000);
@@ -235,6 +230,11 @@ const paintDialogDices = () => {
 			resolve('Done');
 		}, 2000);
 	});
+};
+
+const paintUserDices = () => {
+	paintDialogDices('user');
+	paintDialogDices('enemy');
 };
 
 dialog.subscribe(($dialog) => {
@@ -247,7 +247,7 @@ dialog.subscribe(($dialog) => {
 	}
 
 	if ($dialog.rollingDice) {
-		paintDialogDices();
+		paintUserDices();
 	}
 });
 

@@ -6,7 +6,10 @@ type DialogStore = {
 	title: string;
 	text: string;
 	rollingDice?: boolean;
-	dieLastResult?: number;
+	dieLastResult?: {
+		user: number;
+		enemy: number;
+	};
 	actions: {
 		cta?: boolean;
 		label: string;
@@ -20,7 +23,7 @@ const initValue: DialogStore = {
 	title: '',
 	text: '',
 	rollingDice: false,
-	dieLastResult: 0,
+	dieLastResult: { user: 0, enemy: 0 },
 	actions: []
 };
 
@@ -48,11 +51,12 @@ const dialogStore = () => {
 				return $dialog;
 			}),
 		rollDice: async () => {
-			const diceResult = getDiceResult();
+			const diceUserResult = getDiceResult();
+			const diceEnemyResult = getDiceResult();
 
 			update(($dialog) => {
 				$dialog.rollingDice = true;
-				$dialog.dieLastResult = diceResult;
+				$dialog.dieLastResult = { user: diceUserResult, enemy: diceEnemyResult };
 				return $dialog;
 			});
 
