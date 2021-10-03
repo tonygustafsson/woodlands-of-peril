@@ -28,7 +28,7 @@ const spriteSources: string[] = [
 ];
 
 const soundEffectsSources: string[] = [
-	'death',
+	'gameover',
 	'energy',
 	'hit1',
 	'hit2',

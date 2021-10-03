@@ -49,7 +49,7 @@
 
 								if ($user.inventory.energy <= 0) {
 									// Death
-									audio.playSoundEffect('death');
+									audio.playSoundEffect('gameover');
 
 									dialog.clear();
 
