@@ -46,9 +46,11 @@ export const move = (direction: Direction): boolean | undefined => {
 		return; // Cannot move through solid materials
 	}
 
-	if ($spaces[newPosition].content.enemy) {
-		audio.playSoundEffect(Math.random() > 0.5 ? 'roar1' : 'roar2');
+	if ($spaces[newPosition].content.soundEffect) {
+		audio.playSoundEffect($spaces[newPosition].content.soundEffect);
+	}
 
+	if ($spaces[newPosition].content.enemy) {
 		user.meetEnemy(
 			newPosition,
 			$spaces[newPosition].content.label,
@@ -59,10 +61,6 @@ export const move = (direction: Direction): boolean | undefined => {
 
 	if ($spaces[newPosition].content.inventoryIncrease) {
 		user.increaseInventory($spaces[newPosition].content.inventoryIncrease);
-	}
-
-	if ($spaces[newPosition].content.soundEffect) {
-		audio.playSoundEffect($spaces[newPosition].content.soundEffect);
 	}
 
 	const newOldSpace: Space = {

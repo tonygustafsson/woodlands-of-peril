@@ -12,7 +12,7 @@ const spriteSettings = {
 		topMargin: 6,
 		leftMargin: 6
 	},
-	wizard: {
+	witch: {
 		noOfFrames: 4,
 		width: 32,
 		height: 48,
@@ -84,7 +84,7 @@ const spriteSettings = {
 		topMargin: 2,
 		leftMargin: 2
 	},
-	bird: {
+	eagle: {
 		noOfFrames: 18,
 		width: 32,
 		height: 32,

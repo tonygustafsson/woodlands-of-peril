@@ -14,10 +14,10 @@ const tileSources: string[] = [
 ];
 const spriteSources: string[] = [
 	'coin',
-	'wizard',
+	'witch',
 	'user',
 	'bull',
-	'bird',
+	'eagle',
 	'bat',
 	'rhino',
 	'spider',
@@ -34,11 +34,15 @@ const soundEffectsSources: string[] = [
 	'hit1',
 	'hit2',
 	'coin',
-	'roar1',
-	'roar2',
+	'bull',
+	'rhino',
+	'eagle',
+	'bat',
+	'witch',
 	'won',
 	'potion',
-	'eat'
+	'eat',
+	'spider'
 ];
 
 const initValue: Assets = {

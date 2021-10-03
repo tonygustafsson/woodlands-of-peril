@@ -37,10 +37,10 @@ export const unusualCollectables: SpaceContent[] = [
 	{ spriteId: 'potion', label: 'Potion', inventoryIncrease: 'potions', soundEffect: 'potion' }
 ];
 export const enemies: SpaceContent[] = [
-	{ spriteId: 'bull', label: 'Bull', enemy: true },
-	{ spriteId: 'bird', label: 'Bird', enemy: true },
-	{ spriteId: 'wizard', label: 'Wizard', enemy: true },
-	{ spriteId: 'bat', label: 'Bat', enemy: true },
-	{ spriteId: 'rhino', label: 'Rhino', enemy: true },
-	{ spriteId: 'spider', label: 'Spider', enemy: true }
+	{ spriteId: 'bull', label: 'Bull', enemy: true, soundEffect: 'bull' },
+	{ spriteId: 'eagle', label: 'Eagle', enemy: true, soundEffect: 'eagle' },
+	{ spriteId: 'witch', label: 'Witch', enemy: true, soundEffect: 'witch' },
+	{ spriteId: 'bat', label: 'Bat', enemy: true, soundEffect: 'bat' },
+	{ spriteId: 'rhino', label: 'Rhino', enemy: true, soundEffect: 'rhino' },
+	{ spriteId: 'spider', label: 'Spider', enemy: true, soundEffect: 'spider' }
 ];
