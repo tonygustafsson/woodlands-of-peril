@@ -21,16 +21,6 @@
 							const enemyStrength = $user.event.enemylevel + enemyDieResult;
 							const userWon = userStrength > enemyStrength;
 
-							console.log({
-								userLevel: $user.level,
-								userDie: $user.dieLastResult,
-								userStrength,
-								enemyLevel: $user.event.enemylevel,
-								enemyDieResult,
-								enemyStrength,
-								userWon
-							});
-
 							user.resetEvent();
 
 							if (userWon) {
@@ -49,6 +39,8 @@
 								spaces.setSpace($user.position, newOldSpace);
 								spaces.setSpace($user.nextPosition, newUserSpace);
 								user.setPosition($user.nextPosition);
+
+								dialog.clear();
 							} else {
 								user.hurt();
 
@@ -58,6 +50,8 @@
 								if ($user.inventory.energy <= 0) {
 									// Death
 									audio.playSoundEffect('death');
+
+									dialog.clear();
 
 									dialog.set({
 										visible: true,
@@ -75,10 +69,10 @@
 											}
 										]
 									});
+								} else {
+									dialog.clear();
 								}
 							}
-
-							dialog.clear();
 						}
 					},
 					{

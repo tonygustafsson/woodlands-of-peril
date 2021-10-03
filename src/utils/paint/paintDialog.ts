@@ -178,7 +178,7 @@ const paintDialog = async (content: DialogContent): Promise<void> => {
 	await addActionButtons();
 };
 
-const paintDialogDices = (mode: 'user' | 'enemy') => {
+const paintDialogDices = async (mode: 'user' | 'enemy') => {
 	const $screen = get(screen);
 	const $canvas = get(canvas);
 	const $user = get(user);
@@ -228,13 +228,13 @@ const paintDialogDices = (mode: 'user' | 'enemy') => {
 
 			// Done, keep on with what happens next
 			resolve('Done');
-		}, 2000);
+		}, 1000);
 	});
 };
 
-const paintUserDices = () => {
-	paintDialogDices('user');
-	paintDialogDices('enemy');
+const paintUserDices = async () => {
+	await paintDialogDices('user');
+	await paintDialogDices('enemy');
 };
 
 dialog.subscribe(($dialog) => {

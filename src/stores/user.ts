@@ -8,7 +8,7 @@ let initValue: User = {
 	row: 0,
 	column: 0,
 	direction: 'down',
-	level: 5,
+	level: 0,
 	moving: false,
 	alive: true,
 	isHurting: false,
