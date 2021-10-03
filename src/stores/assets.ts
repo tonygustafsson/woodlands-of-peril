@@ -27,7 +27,16 @@ const spriteSources: string[] = [
 	'dice'
 ];
 
-const soundEffectsSources: string[] = ['death', 'energy', 'hit1', 'hit2', 'money'];
+const soundEffectsSources: string[] = [
+	'death',
+	'energy',
+	'hit1',
+	'hit2',
+	'money',
+	'roar1',
+	'roar2',
+	'won'
+];
 
 const initValue: Assets = {
 	tiles: [],

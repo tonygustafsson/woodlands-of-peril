@@ -47,7 +47,13 @@ export const move = (direction: Direction): boolean | undefined => {
 	}
 
 	if ($spaces[newPosition].content.enemy) {
-		user.meetEnemy($spaces[newPosition].content.label, $spaces[newPosition].content.level);
+		audio.playSoundEffect(Math.random() > 0.5 ? 'roar1' : 'roar2');
+
+		user.meetEnemy(
+			newPosition,
+			$spaces[newPosition].content.label,
+			$spaces[newPosition].content.level
+		);
 		return; // Stay when interacting with enemeies
 	}
 

@@ -8,10 +8,11 @@ let initValue: User = {
 	row: 0,
 	column: 0,
 	direction: 'down',
-	level: 0,
+	level: 5,
 	moving: false,
 	alive: true,
 	isHurting: false,
+	nextPosition: 0,
 	event: {
 		type: 'none'
 	},
@@ -73,8 +74,9 @@ const userStore = () => {
 				});
 			}, 250);
 		},
-		meetEnemy: (enemyType: string, enemylevel: number) => {
+		meetEnemy: (nextPosition: number, enemyType: string, enemylevel: number) => {
 			update((user) => {
+				user.nextPosition = nextPosition;
 				user.event = {
 					type: 'enemy',
 					enemyType,

@@ -42,6 +42,7 @@ export type User = {
 	level: number;
 	moving: boolean;
 	alive: boolean;
+	nextPosition: number;
 	isHurting: boolean;
 	event: Event;
 	inventory: Inventory;

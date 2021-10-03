@@ -64,7 +64,7 @@ const dialogStore = () => {
 					});
 
 					resolve('OK');
-				}, 6000)
+				}, 3000)
 			);
 		}
 	};

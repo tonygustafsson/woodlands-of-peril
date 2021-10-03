@@ -83,6 +83,7 @@
 			paintBoard($canvasStore.boardContext, $canvas.width, $canvas.height);
 		});
 
+		dialog.clear();
 		user.triggerGreeting();
 	});
 </script>

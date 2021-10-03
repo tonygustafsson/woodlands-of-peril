@@ -229,11 +229,11 @@ const paintDialogDices = () => {
 			);
 
 			// Show the dice result for a while
-			await sleep(2000);
+			await sleep(1000);
 
 			// Done, keep on with what happens next
 			resolve('Done');
-		}, 4000);
+		}, 2000);
 	});
 };
 

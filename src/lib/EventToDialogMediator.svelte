@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { user, dialog, audio, spaces } from '../stores';
 	import { getDiceResult } from '$utils/random';
-	import { emptyContent } from '../constants';
+	import { emptyContent, userContent } from '../constants';
 	import type { Space } from '../types';
 
 	user.subscribe(($user) => {
@@ -35,15 +35,21 @@
 							user.resetEvent();
 
 							if (userWon) {
-								user.increaseLevel();
-								//user.setPosition();
+								audio.playSoundEffect('won');
 
-								/*const newOldSpace: Space = {
+								user.increaseLevel();
+
+								const newOldSpace: Space = {
 									...$spaces[$user.position],
 									content: emptyContent
 								};
+								const newUserSpace: Space = {
+									...$spaces[$user.nextPosition],
+									content: userContent
+								};
 								spaces.setSpace($user.position, newOldSpace);
-								*/
+								spaces.setSpace($user.nextPosition, newUserSpace);
+								user.setPosition($user.nextPosition);
 							} else {
 								user.hurt();
 
